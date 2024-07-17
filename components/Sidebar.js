@@ -5,16 +5,26 @@ import {
   List,
   ListItem,
   useBreakpointValue,
+  Flex,
 } from "@chakra-ui/react";
+import {
+  AiOutlineHome,
+  AiOutlineSearch,
+  AiOutlineShoppingCart,
+  AiOutlineHeart,
+  AiOutlineFileText,
+  AiOutlineUser,
+  AiOutlineQuestionCircle,
+} from "react-icons/ai"; // Import from react-icons/ai
 
 const navItems = [
-  { label: "Home", icon: "🏠" },
-  { label: "Search", icon: "🔍" },
-  { label: "Cart", icon: "🛒" },
-  { label: "Wishlist", icon: "❤️" },
-  { label: "Orders", icon: "📝" },
-  { label: "Account", icon: "👤" },
-  { label: "Help", icon: "❓" },
+  { label: "Home", icon: <AiOutlineHome size={32} /> },
+  { label: "Search", icon: <AiOutlineSearch size={32} /> },
+  { label: "Cart", icon: <AiOutlineShoppingCart size={32} /> },
+  { label: "Wishlist", icon: <AiOutlineHeart size={32} /> },
+  { label: "Orders", icon: <AiOutlineFileText size={32} /> },
+  { label: "Account", icon: <AiOutlineUser size={32} /> },
+  { label: "Help", icon: <AiOutlineQuestionCircle size={32} /> },
 ];
 
 const Sidebar = ({ isOpen, onClose, onOpen, ...rest }) => {
@@ -23,13 +33,13 @@ const Sidebar = ({ isOpen, onClose, onOpen, ...rest }) => {
     <Box
       bg="white"
       pos="fixed"
-      h="100vh"
+      h="100%"
       //   shadow="md"
       zIndex={10}
       transition="width 0.3s" // Add a smooth transition
       {...rest} // Apply width from index.js
       onClick={isCollapsed ? onOpen : undefined} // Open sidebar on click when collapsed
-      width={isCollapsed ? "60px" : "200px"} // Adjust width
+      width={isCollapsed ? "45px" : "200px"} // Adjust width
     >
       <List spacing={3} p={isCollapsed ? 1 : 4}>
         {" "}
@@ -41,14 +51,13 @@ const Sidebar = ({ isOpen, onClose, onOpen, ...rest }) => {
             _hover={{ bg: "gray.100", cursor: "pointer" }}
             display="flex"
             alignItems="center"
+            mb={30}
           >
-            <Text
-              ml={isCollapsed ? 0 : 2} // Adjust margin
-              fontSize={isCollapsed ? "2xl" : "md"} // Adjust font size
-            >
+            <Flex alignItems="center" ml={isCollapsed ? 0 : 2}>
               {item.icon} {/* Icon always visible */}
-              {!isCollapsed && item.label} {/* Label hidden when collapsed */}
-            </Text>
+              {!isCollapsed && <Text ml={2}>{item.label}</Text>}{" "}
+              {/* Label hidden when collapsed */}
+            </Flex>
           </ListItem>
         ))}
       </List>
