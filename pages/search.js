@@ -36,12 +36,7 @@ const SearchResults = () => {
       <p>
         Shape:{" "}
         {filters.shape.length > 0
-          ? filters.shape
-              .map((shapeId) =>
-                diamondShapes.find((shape) => shape.ShapeID === shapeId)
-              )
-              .map((shape) => shape.ShapeName)
-              .join(", ")
+          ? filters.shape.join(", ") // Directly use the shape IDs from the filters
           : "All"}
       </p>
     </div>
