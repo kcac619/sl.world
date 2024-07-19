@@ -1,4 +1,5 @@
 // components/Sidebar.js
+import { HamburgerIcon } from "@chakra-ui/icons";
 import {
   Box,
   Text,
@@ -38,18 +39,40 @@ const Sidebar = ({ isOpen, onClose, onOpen, ...rest }) => {
       zIndex={10}
       transition="width 0.3s" // Add a smooth transition
       {...rest} // Apply width from index.js
-      onClick={isCollapsed ? onOpen : undefined} // Open sidebar on click when collapsed
+      // onClick={isCollapsed ? onOpen : undefined} // Open sidebar on click when collapsed
       width={isCollapsed ? "45px" : "200px"} // Adjust width
+      onClick={onClose}
     >
       <List spacing={3} p={isCollapsed ? 1 : 4}>
         {" "}
         {/* Adjust padding */}
+        {isCollapsed && (
+          <ListItem
+            onClick={onClose}
+            _hover={{ bg: "gray.100", cursor: "pointer" }}
+            display="flex"
+            borderRadius={3}
+            pt={4}
+            alignItems="center"
+            justifyContent={"center"}
+            mb={30}
+          >
+            <HamburgerIcon
+              display={{ base: "none", md: "block" }}
+              onClick={onClose}
+              color={"black"}
+              boxSize="24px" // Adjust the size as needed
+            />
+          </ListItem>
+        )}
         {navItems.map((item) => (
           <ListItem
             key={item.label}
             onClick={onClose}
             _hover={{ bg: "gray.100", cursor: "pointer" }}
             display="flex"
+            borderRadius={3}
+            py={2}
             alignItems="center"
             mb={30}
           >

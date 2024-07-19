@@ -1,5 +1,9 @@
 // pages/index.js
 import { useState, useEffect, useRef } from "react";
+import { useRouter } from "next/router";
+import { useSession, signIn, signOut } from "next-auth/react";
+import { useDispatch, useSelector } from "react-redux";
+import { setFilter, resetFilters } from "../filterSlice";
 import {
   Box,
   Flex,
@@ -15,14 +19,11 @@ import {
   DrawerHeader,
   useBreakpointValue,
   Text,
-  Stack,
-  InputGroup,
-  Input,
-  Select,
   Grid,
   GridItem,
 } from "@chakra-ui/react";
-import { ChevronDownIcon, HamburgerIcon, SearchIcon } from "@chakra-ui/icons";
+import { ChevronDownIcon, HamburgerIcon } from "@chakra-ui/icons";
+import Image from "next/image";
 import vercel from "../public/next.svg";
 
 // Components
@@ -43,12 +44,14 @@ import {
   symmOptions,
   locationOptions,
 } from "@/lib/dummyData";
-import Image from "next/image";
 
 const Home = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
-
+  const router = useRouter();
+  const { data: session } = useSession();
+  const dispatch = useDispatch();
+  const filtersFromRedux = useSelector((state) => state.filters); // Get filters from Redux store
   const [shapes, setShapes] = useState([]);
   const [loadingShapes, setLoadingShapes] = useState(true);
 
@@ -64,12 +67,15 @@ const Home = () => {
   };
 
   useEffect(() => {
+    setSelectedFilters(filtersFromRedux);
+  }, [filtersFromRedux]);
+
+  useEffect(() => {
     const fetchShapes = async () => {
       try {
         const res = await fetch("/api/shapes");
         const data = await res.json();
         setShapes(data.shapes);
-        // console.log("Shapes:", data.shapes);
       } catch (error) {
         console.error("Error fetching shapes:", error);
         // Handle error (e.g., show an error message)
@@ -97,31 +103,132 @@ const Home = () => {
     lab: [],
     symm: [],
     location: [],
-    shape: [],
+    shape: [], // Make sure 'shape' is in your selectedFilters
   });
+
+  const filters = {
+    // Define the filters object
+    carat: selectedFilters.carat,
+    fluor: selectedFilters.fluor,
+    cut: selectedFilters.cut,
+    polish: selectedFilters.polish,
+    color: selectedFilters.color,
+    clarity: selectedFilters.clarity,
+    lab: selectedFilters.lab,
+    symm: selectedFilters.symm,
+    location: selectedFilters.location,
+    shape: selectedFilters.shape,
+  };
 
   const handleFilterChange = (filterType, value) => {
     setSelectedFilters((prevFilters) => {
       const filterValues = prevFilters[filterType] || [];
 
-      // Check if the value is already selected
       const isValueSelected = filterValues.includes(value);
 
-      // If it's selected, remove it, otherwise add it
       const updatedFilterValues = isValueSelected
         ? filterValues.filter((val) => val !== value)
         : [...filterValues, value];
 
-      console.log("Selected Filters:", selectedFilters);
       return {
         ...prevFilters,
         [filterType]: updatedFilterValues,
       };
     });
   };
+  useEffect(() => {
+    console.log("Selected Filters:", selectedFilters);
+  }, [selectedFilters]);
 
   const handleSearch = () => {
     console.log("Search Filters:", selectedFilters);
+
+    dispatch(
+      setFilter({
+        filterType: "carat",
+        values: selectedFilters.carat,
+      })
+    );
+    dispatch(
+      setFilter({
+        filterType: "fluor",
+        values: selectedFilters.fluor,
+      })
+    );
+    dispatch(
+      setFilter({
+        filterType: "length",
+        values: selectedFilters.length,
+      })
+    );
+    dispatch(
+      setFilter({
+        filterType: "polish",
+        values: selectedFilters.polish,
+      })
+    );
+    dispatch(
+      setFilter({
+        filterType: "color",
+        values: selectedFilters.color,
+      })
+    );
+    dispatch(
+      setFilter({
+        filterType: "clarity",
+        values: selectedFilters.clarity,
+      })
+    );
+    dispatch(
+      setFilter({
+        filterType: "lab",
+        values: selectedFilters.lab,
+      })
+    );
+    dispatch(
+      setFilter({
+        filterType: "symm",
+        values: selectedFilters.symm,
+      })
+    );
+    dispatch(
+      setFilter({
+        filterType: "location",
+        values: selectedFilters.location,
+      })
+    );
+    dispatch(
+      setFilter({
+        filterType: "shape",
+        values: selectedFilters.shape,
+      })
+    );
+    // Add your search logic here
+    if (session) {
+      // Authenticated user - redirect to the "search results" page
+      router.push({
+        pathname: "/search", // Or your desired results page
+        query: filters, // Pass filters in the query string
+      });
+    } else {
+      // Unauthenticated user - redirect to login with callback URL
+      router.push({
+        pathname: "/auth/login",
+        query: { callbackUrl: router.asPath }, // Pass current URL as callback
+      });
+    }
+  };
+
+  const handleNavigation = () => {
+    if (session) {
+      if (session.user.role === "admin") {
+        router.push("/admin/dashboard");
+      } else {
+        router.push("/user/dashboard");
+      }
+    } else {
+      router.push("/auth/login");
+    }
   };
 
   return (
@@ -133,23 +240,114 @@ const Home = () => {
         align="center"
         position={"-webkit-sticky"}
         top={0}
+        right={0}
         ml={{ base: 0, md: isSidebarOpen ? "205px" : "50px" }}
+        transition="margin-left 0.3s, width 0s"
+        overflowX={"hidden"}
+        width={{
+          base: "100%",
+          md: isSidebarOpen ? "calc(100% - 205px)" : "calc(100% - 50px)",
+        }}
         zIndex={100}
-        width="100%"
+        // width="100%"
+        justifyContent="space-between" // Add justifyContent
       >
-        <HamburgerIcon
-          display={{ base: "block", md: "none" }}
-          onClick={onOpen}
-          color={"white"}
-        />
-        <Image
-          src={vercel}
-          alt="Logo"
-          width={100}
-          height={50}
-          style={{ marginLeft: "20px", marginRight: "20px" }}
-        />
-        <SearchBar />
+        <Flex align="center">
+          {" "}
+          {/* Wrap HamburgerIcon and Image in a Flex */}
+          <HamburgerIcon
+            display={{ base: "block", md: "none" }}
+            onClick={onOpen}
+            color={"white"}
+          />
+          <Image
+            src={vercel}
+            alt="Logo"
+            width={100}
+            height={50}
+            style={{ marginLeft: "20px", marginRight: "20px" }}
+          />
+          <SearchBar />
+        </Flex>
+        {session ? (
+          <Button colorScheme={"blackAlpha"} onClick={() => signOut()}>
+            Logout
+          </Button>
+        ) : (
+          <Button
+            // mr={50}
+            colorScheme="whiteAlpha"
+            onClick={() => {
+              dispatch(
+                setFilter({
+                  filterType: "carat",
+                  values: selectedFilters.carat,
+                })
+              );
+              dispatch(
+                setFilter({
+                  filterType: "fluor",
+                  values: selectedFilters.fluor,
+                })
+              );
+              dispatch(
+                setFilter({
+                  filterType: "length",
+                  values: selectedFilters.length,
+                })
+              );
+              dispatch(
+                setFilter({
+                  filterType: "polish",
+                  values: selectedFilters.polish,
+                })
+              );
+              dispatch(
+                setFilter({
+                  filterType: "color",
+                  values: selectedFilters.color,
+                })
+              );
+              dispatch(
+                setFilter({
+                  filterType: "clarity",
+                  values: selectedFilters.clarity,
+                })
+              );
+              dispatch(
+                setFilter({
+                  filterType: "lab",
+                  values: selectedFilters.lab,
+                })
+              );
+              dispatch(
+                setFilter({
+                  filterType: "symm",
+                  values: selectedFilters.symm,
+                })
+              );
+              dispatch(
+                setFilter({
+                  filterType: "location",
+                  values: selectedFilters.location,
+                })
+              );
+              dispatch(
+                setFilter({
+                  filterType: "shape",
+                  values: selectedFilters.shape,
+                })
+              );
+
+              router.push({
+                pathname: "/auth/login",
+                query: { callbackUrl: router.asPath },
+              });
+            }}
+          >
+            Login
+          </Button>
+        )}
       </Flex>
 
       <Flex ref={sidebarContainerRef} mt={0}>
@@ -315,6 +513,7 @@ const Home = () => {
             size="sm"
             mt={4}
             mb={6}
+            onClick={handleSearch}
           >
             Show Advance Filters
           </Button>
@@ -328,18 +527,28 @@ const Home = () => {
               backgroundColor="blue.700"
               color={"white"}
               mr={2}
-              onClick={() => setSelectedFilters({})}
+              onClick={() => {
+                dispatch(resetFilters()); // Reset filters in Redux store
+              }}
             >
               Reset
             </Button>
             <Button
               backgroundColor="blue.700"
               color={"white"}
-              onClick={handleSearch}
+              onClick={() => {
+                handleSearch();
+              }}
             >
               Search
             </Button>
-            <Button ml={2} rightIcon={<ChevronDownIcon />}>
+            <Button
+              backgroundColor="blue.700"
+              color={"white"}
+              ml={2}
+              rightIcon={<ChevronDownIcon />}
+              onClick={handleSearch} // Redirect on "Save Search"
+            >
               Save Search
             </Button>
           </Flex>
