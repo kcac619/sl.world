@@ -1,0 +1,210 @@
+﻿|---components
+|   |---DiamondShape.js
+|   |---FilterSection.js
+|   |---SearchBar.js
+|   ---Sidebar.js
+|---lib
+|   |---dummyData.js
+|   ---theme.js
+|---pages
+|   |---admin
+|   |   ---dashboard.js
+|   |---api
+|   |   |---auth
+|   |   |   ---[...nextauth].js
+|   |   |---db.js
+|   |   |---hello.js
+|   |   |---shapes.js
+|   |   ---users.js
+|   |---auth
+|   |   ---login.js
+|   |---user
+|   |   ---dashboard.js
+|   |---index.js
+|   |---search.js
+|   |---solitaire.js
+|   |---tree.txt
+|   |---_app.js
+|   ---_document.js
+|---public
+|   |---catalog
+|   |   ---view
+|   |       |---javascript
+|   |       |   |---bootstrap
+|   |       |   |   ---js
+|   |       |   |       ---bootstrap.bundle.min.js
+|   |       |   |---font-awesome
+|   |       |   |   ---css
+|   |       |   |       ---font-awesome.min.css
+|   |       |   |---jquery
+|   |       |   |   |---datetimepicker
+|   |       |   |   |   |---daterangepicker.css
+|   |       |   |   |   |---daterangepicker.js
+|   |       |   |   |   |---moment-with-locales.js
+|   |       |   |   |   |---moment-with-locales.min.js
+|   |       |   |   |   ---moment.min.js
+|   |       |   |   |---swiper
+|   |       |   |   |   |---css
+|   |       |   |   |   |   |---slick-theme.css
+|   |       |   |   |   |   ---slick.css
+|   |       |   |   |   ---js
+|   |       |   |   |       ---slick.js
+|   |       |   |   ---jquery-3.6.0.min.js
+|   |       |   |---js
+|   |       |   |   |---src
+|   |       |   |   |   |---dom
+|   |       |   |   |   |   |---data.js
+|   |       |   |   |   |   |---event-handler.js
+|   |       |   |   |   |   |---manipulator.js
+|   |       |   |   |   |   ---selector-engine.js
+|   |       |   |   |   |---util
+|   |       |   |   |   |   |---backdrop.js
+|   |       |   |   |   |   |---component-functions.js
+|   |       |   |   |   |   |---focustrap.js
+|   |       |   |   |   |   |---index.js
+|   |       |   |   |   |   |---sanitizer.js
+|   |       |   |   |   |   ---scrollbar.js
+|   |       |   |   |   |---alert.js
+|   |       |   |   |   |---base-component.js
+|   |       |   |   |   |---button.js
+|   |       |   |   |   |---carousel.js
+|   |       |   |   |   |---collapse.js
+|   |       |   |   |   |---dropdown.js
+|   |       |   |   |   |---modal.js
+|   |       |   |   |   |---offcanvas.js
+|   |       |   |   |   |---popover.js
+|   |       |   |   |   |---scrollspy.js
+|   |       |   |   |   |---tab.js
+|   |       |   |   |   |---toast.js
+|   |       |   |   |   ---tooltip.js
+|   |       |   |   ---index.umd.js
+|   |       |   |---workdo
+|   |       |   |   |---custom.js
+|   |       |   |   ---option.js
+|   |       |   ---common.js
+|   |       ---stylesheet
+|   |           |---fonts
+|   |           |   ---fontawesome
+|   |           |       |---css
+|   |           |       |   ---all.min.css
+|   |           |       ---webfonts
+|   |           |           ---fa-solid-900.woff2
+|   |           |---bootstrap.css
+|   |           ---stylesheet.css
+|   |---extension
+|   |   ---workdonewsletter
+|   |       ---catalog
+|   |           ---view
+|   |               ---jquery
+|   |                   ---workdonewsletter.js
+|   |---image
+|   |   |---cache
+|   |   |   ---catalog
+|   |   |       |---blog
+|   |   |       |   |---1-1000x670.jpg
+|   |   |       |   |---2-1000x670.jpg
+|   |   |       |   |---3-1000x670.jpg
+|   |   |       |   |---4-1000x670.jpg
+|   |   |       |   ---5-1000x670.jpg
+|   |   |       |---brand-logo
+|   |   |       |   ---1-172x41.png
+|   |   |       |---category
+|   |   |       |   |---1-270x335.jpg
+|   |   |       |   |---2-270x335.jpg
+|   |   |       |   |---3-270x335.jpg
+|   |   |       |   ---4-270x335.jpg
+|   |   |       |---imgbanner
+|   |   |       |   ---1-555x335.jpg
+|   |   |       |---left-banner
+|   |   |       |   ---1-580x465.png
+|   |   |       |---offerbanner
+|   |   |       |   |---1-260x260.jpg
+|   |   |       |   |---2-260x260.jpg
+|   |   |       |   |---3-260x260.jpg
+|   |   |       |   |---4-260x260.jpg
+|   |   |       |   |---5-260x260.jpg
+|   |   |       |   ---6-260x260.jpg
+|   |   |       |---product
+|   |   |       |   |---1
+|   |   |       |   |   |---1-1000x1000.png
+|   |   |       |   |   ---2-1000x1000.png
+|   |   |       |   |---10
+|   |   |       |   |   |---1-1000x1000.png
+|   |   |       |   |   ---2-1000x1000.png
+|   |   |       |   |---11
+|   |   |       |   |   |---1-1000x1000.png
+|   |   |       |   |   ---2-1000x1000.png
+|   |   |       |   |---12
+|   |   |       |   |   |---1-1000x1000.png
+|   |   |       |   |   ---2-1000x1000.png
+|   |   |       |   |---13
+|   |   |       |   |   |---1-1000x1000.png
+|   |   |       |   |   ---2-1000x1000.png
+|   |   |       |   |---14
+|   |   |       |   |   |---1-1000x1000.png
+|   |   |       |   |   ---2-1000x1000.png
+|   |   |       |   |---2
+|   |   |       |   |   |---1-1000x1000.png
+|   |   |       |   |   ---2-1000x1000.png
+|   |   |       |   |---3
+|   |   |       |   |   |---1-1000x1000.png
+|   |   |       |   |   ---2-1000x1000.png
+|   |   |       |   |---4
+|   |   |       |   |   |---1-1000x1000.png
+|   |   |       |   |   ---2-1000x1000.png
+|   |   |       |   |---5
+|   |   |       |   |   |---1-1000x1000.png
+|   |   |       |   |   ---2-1000x1000.png
+|   |   |       |   |---6
+|   |   |       |   |   |---1-1000x1000.png
+|   |   |       |   |   ---2-1000x1000.png
+|   |   |       |   |---7
+|   |   |       |   |   |---1-1000x1000.png
+|   |   |       |   |   ---2-1000x1000.png
+|   |   |       |   |---8
+|   |   |       |   |   |---1-1000x1000.png
+|   |   |       |   |   ---2-1000x1000.png
+|   |   |       |   ---9
+|   |   |       |       |---1-1000x1000.png
+|   |   |       |       ---2-1000x1000.png
+|   |   |       |---right-banner
+|   |   |       |   |---1-270x335.jpg
+|   |   |       |   ---2-270x335.jpg
+|   |   |       |---slider
+|   |   |       |   |---1-1920x750.png
+|   |   |       |   ---2-1920x750.png
+|   |   |       ---specialbanner
+|   |   |           ---1-580x465.png
+|   |   ---catalog
+|   |       |---storlogo
+|   |       |   ---logo.png
+|   |       |---testimonial
+|   |       |   |---1.png
+|   |       |   ---2.png
+|   |       |---compare.svg
+|   |       |---hcart.svg
+|   |       |---huser.svg
+|   |       |---pay.svg
+|   |       |---search.png
+|   |       |---ship.svg
+|   |       |---stor-bg.svg
+|   |       |---support.svg
+|   |       ---wishlist.svg
+|   |---img
+|   |   |---RBC (2).jpg
+|   |   |---RBC.jpg
+|   |   ---Round-brilliant.png
+|   |---vid
+|   |   ---login-video.mp4
+|   |---favicon.ico
+|   |---next.svg
+|   ---vercel.svg
+|---styles
+|   |---globals.css
+|   ---Home.module.css
+|---filterSlice.js
+|---jsconfig.json
+|---next.config.mjs
+|---next_app_structure.txt
+|---package.json
+---store.js

@@ -2,10 +2,10 @@
 import sql from "mssql";
 
 const config = {
-  user: "HksLogin",
-  password: "July@2024", // *** VERY IMPORTANT *** Change this password immediately
-  server: "13.234.188.4",
-  database: "hks",
+  user: process.env.SQL_USERNAME,
+  password: process.env.SQL_PASSWORD, // *** VERY IMPORTANT *** Change this password immediately
+  server: process.env.SQL_HOST,
+  database: process.env.SQL_DBNAME,
   options: {
     encrypt: false,
     trustServerCertificate: true,

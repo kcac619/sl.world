@@ -1,6 +1,6 @@
 // components/DiamondShape.js
 import { Box, Text, Center } from "@chakra-ui/react";
-import rbc from "../public/img/RBC.png";
+import rbc from "../public/img/RBC.jpg";
 import Image from "next/image";
 const DiamondShape = ({ shape, isSelected, onClick }) => {
   return (
