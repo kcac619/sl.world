@@ -1,6 +1,7 @@
 ﻿|---components
 |   |---DiamondShape.js
 |   |---FilterSection.js
+|   |---MainSlider.js
 |   |---SearchBar.js
 |   ---Sidebar.js
 |---lib
@@ -191,8 +192,8 @@
 |   |       |---support.svg
 |   |       ---wishlist.svg
 |   |---img
-|   |   |---RBC (2).jpg
 |   |   |---RBC.jpg
+|   |   |---RBC.png
 |   |   ---Round-brilliant.png
 |   |---vid
 |   |   ---login-video.mp4
@@ -207,4 +208,5 @@
 |---next.config.mjs
 |---next_app_structure.txt
 |---package.json
+|---pnpm-lock.yaml
 ---store.js

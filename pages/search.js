@@ -7,7 +7,7 @@ const SearchResults = () => {
   const filters = useSelector((state) => state.filters); // Access filters from Redux store
 
   return (
-    <div>
+    <div style={{ color: "#f2dfcf" }}>
       <h1>Search Results</h1>
       {/* Display all filters */}
       <p>

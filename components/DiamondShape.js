@@ -1,20 +1,23 @@
 // components/DiamondShape.js
 import { Box, Text, Center } from "@chakra-ui/react";
-import rbc from "../public/img/RBC.jpg";
+import rbc from "../public/img/R.png";
 import Image from "next/image";
 const DiamondShape = ({ shape, isSelected, onClick }) => {
   return (
     <Center
-      border="1px"
-      borderColor="gray.300"
+      // border="1px"
+      // borderColor="#f2dfcf"
+      boxShadow={"0px 3px 10px rgba(255, 255, 255, 0.05)"}
       borderRadius="md"
       flex={1}
       flexDir={"column"}
-      p={1}
+      p={2}
       textAlign="center"
       backgroundColor="transparent"
       cursor="pointer"
-      bg={isSelected ? "lightblue" : "white"} // Conditional background
+      fontFamily="outfit"
+      color={isSelected ? "#0d1e1c" : "#f2dfcf"} // Conditional text color
+      bg={isSelected ? "#F2DFCF" : "#0d1e1c"} // Conditional background
       onClick={onClick}
       // Add active state styles (optional)
     >

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Head from "next/head";
 import Link from "next/link";
+import MainSlider from "@/components/MainSlider";
 
 const Index = () => {
   return (
@@ -196,7 +197,10 @@ const Index = () => {
           </div>
           <div id="alert" />
           <header>
-            <div className="top-header hidden-xs">
+            <div
+              className="top-header hidden-xs"
+              style={{ fontFamily: "outfit" }}
+            >
               <div className="container">
                 <div className="row">
                   <div className="topbspinner">
@@ -719,7 +723,8 @@ const Index = () => {
           <div className="row">
             <div id="content" className="col">
               <div className="col-xs-12">
-                <div className="s-panel">
+                <MainSlider />
+                {/* <div className="s-panel">
                   <div className="imgslider">
                     <div className="sliderel">
                       <div className="container">
@@ -800,7 +805,7 @@ const Index = () => {
                       </a>
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
               <div className="wbimg">
                 <div className="container">
@@ -5900,8 +5905,8 @@ const Index = () => {
                                         <input
                                           type="text"
                                           className="form-control input-md inputNew"
-                                          onBlur="javascript:if(this.value=='')this.value='Type your address email...';"
-                                          onFocus="javascript:if(this.value=='Type your address email...')this.value='';"
+                                          onblur="javascript:if(this.value=='')this.value='Type your address email...';"
+                                          onfocus="javascript:if(this.value=='Type your address email...')this.value='';"
                                           defaultValue="Type your address email..."
                                           size={18}
                                           name="email"
