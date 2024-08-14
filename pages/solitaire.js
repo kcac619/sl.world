@@ -31,19 +31,8 @@ import Sidebar from "../components/Sidebar";
 import DiamondShape from "../components/DiamondShape";
 import FilterSection from "../components/FilterSection";
 import SearchBar from "@/components/SearchBar";
-// Data
-import {
-  diamondShapes,
-  caratOptions,
-  fluorOptions,
-  cutOptions,
-  polishOptions,
-  colorOptions,
-  clarityOptions,
-  labOptions,
-  symmOptions,
-  locationOptions,
-} from "@/lib/dummyData";
+
+import axios from "axios";
 
 const Solitaire = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -54,6 +43,16 @@ const Solitaire = () => {
   const filtersFromRedux = useSelector((state) => state.filters); // Get filters from Redux store
   const [shapes, setShapes] = useState([]);
   const [loadingShapes, setLoadingShapes] = useState(true);
+  const [carats, setCarats] = useState([]);
+  const [colors, setColors] = useState([]);
+  const [flours, setFlours] = useState([]);
+  const [purities, setPurities] = useState([]);
+  const [cuts, setCuts] = useState([]);
+  const [labs, setLabs] = useState([]);
+  const [polishs, setPolishs] = useState([]);
+  const [symmetries, setSymmetries] = useState([]);
+  const [locations, setLocations] = useState([]);
+  const [totalCount, setTotalCount] = useState(0); // New state for total count
 
   const sidebarWidth = useBreakpointValue({
     base: "60px",
@@ -71,24 +70,39 @@ const Solitaire = () => {
   }, [filtersFromRedux]);
 
   useEffect(() => {
-    const fetchShapes = async () => {
-      try {
-        const res = await fetch("/api/shapes");
-        const data = await res.json();
-        console.log(data);
-        if (data) {
-          setShapes(data.shapes);
-        }
-      } catch (error) {
-        console.error("Error fetching shapes:", error);
-        // Handle error (e.g., show an error message)
-      } finally {
-        setLoadingShapes(false);
-      }
-    };
-
-    fetchShapes();
+    fetchAllFilterData();
   }, []);
+
+  const fetchAllFilterData = async () => {
+    setLoadingShapes(true);
+    // setError(null); // Reset error state
+
+    try {
+      const response = await axios.get("/api/solitaire");
+      // console.log("fetch all filter data response:", response);
+      if (response.status === 200) {
+        setShapes(response.data.shapes);
+        setCarats(response.data.carats);
+        setColors(response.data.colors);
+        setFlours(response.data.flours);
+        setPurities(response.data.purities);
+        setCuts(response.data.cuts);
+        setLabs(response.data.labs);
+        setPolishs(response.data.polishs);
+        setSymmetries(response.data.symmetries);
+        setLocations(response.data.locations);
+        setTotalCount(response.data.totalCount);
+      } else {
+        console.error("Error fetching filter data:", response.data.error);
+        // setError("Error fetching filter data.");
+      }
+    } catch (error) {
+      console.error("Error fetching all filter data:", error);
+      // setError("An error occurred. Please try again.");
+    } finally {
+      setLoadingShapes(false);
+    }
+  };
 
   useEffect(() => {
     if (sidebarWidth !== "60px") {
@@ -146,64 +160,97 @@ const Solitaire = () => {
   const handleSearch = () => {
     console.log("Search Filters:", selectedFilters);
 
+    // Helper function to get the name from an ID
+    const getNameFromId = (filterType, id) => {
+      switch (filterType) {
+        case "carat":
+          return carats.find((c) => c.CaratID === id)?.HighLimit; // Return the high limit of the carat range
+        case "fluor":
+          return flours.find((f) => f.FluorID === id)?.FluorName;
+        case "cut":
+          return cuts.find((c) => c.CutID === id)?.CutName;
+        case "polish":
+          return polishs.find((p) => p.PolishID === id)?.PolishName;
+        case "color":
+          return colors.find((c) => c.ColorID === id)?.ColorName;
+        case "clarity":
+          return purities.find((p) => p.PurityID === id)?.PurityName;
+        case "lab":
+          return labs.find((l) => l.LabID === id)?.LabName;
+        case "symm":
+          return symmetries.find((s) => s.SymmetryID === id)?.SymmetryName;
+        case "location":
+          return locations.find((l) => l.LocationID === id)?.LocationName;
+        case "shape":
+          return shapes.find((s) => s.ShapeID === id)?.ShapeName;
+        default:
+          return null;
+      }
+    };
+
+    // Dispatch filter names to Redux
     dispatch(
       setFilter({
         filterType: "carat",
-        values: selectedFilters.carat,
+        values: selectedFilters.carat.map((id) => getNameFromId("carat", id)),
       })
     );
     dispatch(
       setFilter({
         filterType: "fluor",
-        values: selectedFilters.fluor,
+        values: selectedFilters.fluor.map((id) => getNameFromId("fluor", id)),
       })
     );
     dispatch(
       setFilter({
-        filterType: "length",
-        values: selectedFilters.length,
+        filterType: "cut",
+        values: selectedFilters.cut.map((id) => getNameFromId("cut", id)),
       })
     );
     dispatch(
       setFilter({
         filterType: "polish",
-        values: selectedFilters.polish,
+        values: selectedFilters.polish.map((id) => getNameFromId("polish", id)),
       })
     );
     dispatch(
       setFilter({
         filterType: "color",
-        values: selectedFilters.color,
+        values: selectedFilters.color.map((id) => getNameFromId("color", id)),
       })
     );
     dispatch(
       setFilter({
         filterType: "clarity",
-        values: selectedFilters.clarity,
+        values: selectedFilters.clarity.map((id) =>
+          getNameFromId("clarity", id)
+        ),
       })
     );
     dispatch(
       setFilter({
         filterType: "lab",
-        values: selectedFilters.lab,
+        values: selectedFilters.lab.map((id) => getNameFromId("lab", id)),
       })
     );
     dispatch(
       setFilter({
         filterType: "symm",
-        values: selectedFilters.symm,
+        values: selectedFilters.symm.map((id) => getNameFromId("symm", id)),
       })
     );
     dispatch(
       setFilter({
         filterType: "location",
-        values: selectedFilters.location,
+        values: selectedFilters.location.map((id) =>
+          getNameFromId("location", id)
+        ),
       })
     );
     dispatch(
       setFilter({
         filterType: "shape",
-        values: selectedFilters.shape,
+        values: selectedFilters.shape.map((id) => getNameFromId("shape", id)),
       })
     );
     // Add your search logic here
@@ -922,7 +969,10 @@ const Solitaire = () => {
             )}
           </Box>
 
-          <hr style={{ color: "#f2dfcf" }} />
+          <hr style={{ color: "#f2dfcf", margin: "2px" }} />
+          <hr
+            style={{ color: "#f2dfcf", margin: "2px", marginBottom: "16px" }}
+          />
 
           {/* Filters Section - Using Grid for two-column layout */}
           <Grid templateColumns={{ base: "1fr", md: "1fr 1fr" }} gap={6}>
@@ -930,25 +980,38 @@ const Solitaire = () => {
             <GridItem>
               <FilterSection
                 label="Carat"
-                options={caratOptions}
+                options={carats.map((carat) => ({
+                  label: `${carat.LowLimit} - ${carat.HighLimit}`,
+                  value: carat.CaratID,
+                }))}
                 selectedValues={selectedFilters.carat}
                 onFilterChange={(value) => handleFilterChange("carat", value)}
               />
               <FilterSection
                 label="Fluor."
-                options={fluorOptions}
+                options={flours.map((fluor) => ({
+                  label: fluor.FluorName,
+                  value: fluor.FluorID,
+                }))}
                 selectedValues={selectedFilters.fluor}
                 onFilterChange={(value) => handleFilterChange("fluor", value)}
               />
               <FilterSection
                 label="Cut"
-                options={cutOptions}
+                options={cuts.map((cut) => ({
+                  label: cut.CutName,
+                  value: cut.CutID,
+                }))}
                 selectedValues={selectedFilters.cut}
                 onFilterChange={(value) => handleFilterChange("cut", value)}
               />
               <FilterSection
                 label="Polish"
-                options={polishOptions}
+                options={polishs.map((polish) => ({
+                  // Assuming 'polishs' is the correct state variable
+                  label: polish.PolishName,
+                  value: polish.PolishID,
+                }))}
                 selectedValues={selectedFilters.polish}
                 onFilterChange={(value) => handleFilterChange("polish", value)}
               />
@@ -960,13 +1023,16 @@ const Solitaire = () => {
                 <Text
                   fontWeight="bold"
                   mb={2}
-                  fontFamily="Playfair Display"
+                  // fontFamily="Playfair Display"
                   color="#f2dfcf"
                 >
                   Color
                 </Text>
                 <FilterSection
-                  options={colorOptions}
+                  options={colors.map((color) => ({
+                    label: color.ColorName,
+                    value: color.ColorID,
+                  }))}
                   selectedValues={selectedFilters.color}
                   onFilterChange={(value) => handleFilterChange("color", value)}
                 />
@@ -975,13 +1041,16 @@ const Solitaire = () => {
                 <Text
                   fontWeight="bold"
                   mb={2}
-                  fontFamily="Playfair Display"
+                  // fontFamily="Playfair Display"
                   color="#f2dfcf"
                 >
-                  Clarity
+                  Purity
                 </Text>
                 <FilterSection
-                  options={clarityOptions}
+                  options={purities.map((purity) => ({
+                    label: purity.PurityName,
+                    value: purity.PurityID,
+                  }))}
                   selectedValues={selectedFilters.clarity}
                   onFilterChange={(value) =>
                     handleFilterChange("clarity", value)
@@ -992,13 +1061,16 @@ const Solitaire = () => {
                 <Text
                   fontWeight="bold"
                   mb={2}
-                  fontFamily="Playfair Display"
+                  // fontFamily="Playfair Display"
                   color="#f2dfcf"
                 >
                   Lab
                 </Text>
                 <FilterSection
-                  options={labOptions}
+                  options={labs.map((lab) => ({
+                    label: lab.LabName,
+                    value: lab.LabID,
+                  }))}
                   selectedValues={selectedFilters.lab}
                   onFilterChange={(value) => handleFilterChange("lab", value)}
                 />
@@ -1007,13 +1079,16 @@ const Solitaire = () => {
                 <Text
                   fontWeight="bold"
                   mb={2}
-                  fontFamily="Playfair Display"
+                  // fontFamily="Playfair Display"
                   color="#f2dfcf"
                 >
                   Symmerty
                 </Text>
                 <FilterSection
-                  options={symmOptions}
+                  options={symmetries.map((symm) => ({
+                    label: symm.SymmetryName,
+                    value: symm.SymmetryID,
+                  }))}
                   selectedValues={selectedFilters.symm}
                   onFilterChange={(value) => handleFilterChange("symm", value)}
                 />
@@ -1022,13 +1097,16 @@ const Solitaire = () => {
                 <Text
                   fontWeight="bold"
                   mb={2}
-                  fontFamily="Playfair Display"
+                  // fontFamily="Playfair Display"
                   color="#f2dfcf"
                 >
                   Location
                 </Text>
                 <FilterSection
-                  options={locationOptions}
+                  options={locations.map((location) => ({
+                    label: location.LocationName,
+                    value: location.LocationID,
+                  }))}
                   selectedValues={selectedFilters.location}
                   onFilterChange={(value) =>
                     handleFilterChange("location", value)

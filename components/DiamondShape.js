@@ -12,6 +12,7 @@ const DiamondShape = ({ shape, isSelected, onClick }) => {
       flex={1}
       flexDir={"column"}
       p={2}
+      _hover={{ boxShadow: "inset 0 0 0 1px rgb(242,223,207, 1)" }}
       textAlign="center"
       backgroundColor="transparent"
       cursor="pointer"

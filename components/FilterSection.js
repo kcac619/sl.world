@@ -13,7 +13,7 @@ const FilterSection = ({
       <Text
         fontWeight="bold"
         mb={{ base: 1, md: 0 }}
-        fontFamily="Playfair Display"
+        fontFamily="outfit"
         color="#f2dfcf"
       >
         {label}
@@ -24,16 +24,18 @@ const FilterSection = ({
           <Center
             key={option.value}
             // variant="outline"
-            fontWeight={300}
+            fontWeight={200}
             borderRadius="4px"
             fontFamily="outfit"
-            boxShadow={"2px 2px 4px rgba(255, 255, 255, 0.05)"}
+            boxShadow={"0px 3px 10px rgba(255, 255, 255, 0.05)"}
             minWidth="40px"
-            fontSize="sm"
+            fontSize="xs"
+            _hover={{ boxShadow: "inset 0 0 0 1px rgb(242,223,207, 1)" }}
             cursor="pointer"
+            textAlign={"center"}
             p={{ base: 1, md: 2 }}
-            mr={0}
-            pr={10}
+            mr={2}
+            // pr={10}
             onClick={() => onFilterChange(option.value)}
             // Add active/selected state styles
             backgroundColor={
