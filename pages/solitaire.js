@@ -254,19 +254,23 @@ const Solitaire = () => {
       })
     );
     // Add your search logic here
-    if (session) {
-      // Authenticated user - redirect to the "search results" page
-      router.push({
-        pathname: "/search", // Or your desired results page
-        query: filters, // Pass filters in the query string
-      });
-    } else {
-      // Unauthenticated user - redirect to login with callback URL
-      router.push({
-        pathname: "/auth/login",
-        query: { callbackUrl: router.asPath }, // Pass current URL as callback
-      });
-    }
+    // if (session) {
+    //   // Authenticated user - redirect to the "search results" page
+    //   router.push({
+    //     pathname: "/search", // Or your desired results page
+    //     query: filters, // Pass filters in the query string
+    //   });
+    // } else {
+    //   // Unauthenticated user - redirect to login with callback URL
+    //   router.push({
+    //     pathname: "/auth/login",
+    //     query: { callbackUrl: router.asPath }, // Pass current URL as callback
+    //   });
+    // }
+    router.push({
+      pathname: "/search", // Or your desired results page
+      // query: filters, // Pass filters in the query string
+    });
   };
 
   const handleNavigation = () => {

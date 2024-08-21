@@ -1,35 +1,20 @@
-import { callStoredProcedure } from "./db"; // Import from db.js
+import { callStoredProcedure } from "./db";
 import { getObjectSignedUrl } from "./s3";
 
 export default async (req, res) => {
   if (req.method === "GET") {
     try {
-      const result = await callStoredProcedure("sp_AdminGetSolitaires", {}, [
-        "StatusID",
-        "StatusMessage",
-        "TotalCount",
-        "SolitaireID",
-        "ShapeName",
-        "Carat",
-        "ColorName",
-        "FluorName",
-        "PurityName",
-        "CutName",
-        "LabName",
-        "PolishName",
-        "SymmName",
-        "LocationName",
-        "CerificateNumber",
-        "UniqueCode",
-        "Image1",
-        "Image2",
-        "Image3",
-        "Image4",
-        "Image5",
-        "PDFKey",
-        "VideoKey",
-        "IsActive",
-      ]);
+      const pageNumber = parseInt(req.query.pageNumber) || 1; // Default to page 1
+      const pageSize = parseInt(req.query.pageSize) || 20; // Default to page size 20
+
+      const result = await callStoredProcedure(
+        "sp_GetSolitairesByPage",
+        {
+          PageNumber: pageNumber,
+          PageSize: pageSize,
+        },
+        ["StatusID", "StatusMessage", "TotalCount"]
+      );
 
       if (result.status === 1) {
         const solitairesWithUrls = await Promise.all(
@@ -57,15 +42,12 @@ export default async (req, res) => {
                       error
                     );
                   }
-                } else {
-                  console.log(
-                    `No image found for solitaire ${solitaire.SolitaireID} (${key})`
-                  );
                 }
                 return imageUrl;
               })
             );
 
+            // Generate signed URLs for PDF and Video
             let pdfUrl = null;
             if (solitaire.PDFKey) {
               try {
@@ -80,10 +62,6 @@ export default async (req, res) => {
                   error
                 );
               }
-            } else {
-              console.log(
-                `No PDF found for solitaire ${solitaire.SolitaireID}`
-              );
             }
 
             let videoUrl = null;
@@ -100,10 +78,6 @@ export default async (req, res) => {
                   error
                 );
               }
-            } else {
-              console.log(
-                `No Video found for solitaire ${solitaire.SolitaireID}`
-              );
             }
 
             return {
@@ -119,6 +93,9 @@ export default async (req, res) => {
           })
         );
 
+        res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); //  Prevent caching
+        res.setHeader("Pragma", "no-cache"); //  Prevent caching
+        res.setHeader("Expires", "0"); //  Prevent caching
         res.json({
           statusid: result.status,
           statusmessage: result.message,
@@ -134,5 +111,7 @@ export default async (req, res) => {
         .status(500)
         .json({ statusid: 0, statusmessage: "Error fetching solitaires" });
     }
+  } else {
+    res.status(405).end(); // Method Not Allowed
   }
 };
