@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import { Skeleton, SkeletonCircle, SkeletonText } from "@chakra-ui/react";
+import { ChevronDownIcon } from "@chakra-ui/icons";
 
 const SearchResults = () => {
   const router = useRouter();
@@ -14,11 +15,15 @@ const SearchResults = () => {
   const [showLoading, setShowLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1); // To track total pages
+  const [isFetching, setIsFetching] = useState(false);
+  const [isNearBottom, setIsNearBottom] = useState(false);
   const solitairesPerPage = 15;
 
   const fetchSolitaires = async (pageNumber = currentPage) => {
+    // if (isFetching) return;
     setIsLoading(true);
     setShowLoading(true);
+    // setIsFetching(true);
     try {
       const response = await axios.get("/api/searchsolitaire", {
         params: {
@@ -26,15 +31,17 @@ const SearchResults = () => {
           pageSize: solitairesPerPage,
         },
       });
-      console.log("response", response);
+      // console.log("response", response);
       if (response.data.statusid === 1) {
         console.log("solitaires", response.data.solitaires);
         setSolitaires((prevSolitaires) => [
           ...prevSolitaires,
           ...response.data.solitaires,
         ]);
-        console.log("after set solitaires", solitaires);
-        setTotalPages(Math.ceil(response.data.totalCount / solitairesPerPage));
+        // console.log("after set solitaires", solitaires);
+        // setTotalPages(
+        //   Math.ceil(Number(response.data.totalcount) / solitairesPerPage)
+        // );
       }
     } catch (error) {
       console.error("Error fetching solitaires:", error);
@@ -42,6 +49,7 @@ const SearchResults = () => {
     } finally {
       setIsLoading(false);
       setShowLoading(false);
+      setIsFetching(false);
     }
   };
 
@@ -67,8 +75,14 @@ const SearchResults = () => {
     }
   }, [router]); // Run this effect when the router changes
 
+  const [hasFetchedData, setHasFetchedData] = useState(false);
+
   useEffect(() => {
+    // if (!hasFetchedData) {
+    // Only fetch if data hasn't been fetched yet
     fetchSolitaires();
+    // setHasFetchedData(true);
+    // }
   }, []);
 
   const isSolitaireMatch = (solitaire) => {
@@ -142,31 +156,81 @@ const SearchResults = () => {
     // ... [Your existing sorting logic] ...
   };
 
-  const fetchNextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage((prevPage) => prevPage + 1);
-      fetchSolitaires(currentPage + 1);
+  // const fetchNextPage = () => {
+  //   if (currentPage < totalPages && hasFetchedData && !isFetching) {
+  //     setCurrentPage((prevPage) => prevPage + 1);
+  //     fetchSolitaires(currentPage + 1);
+  //   }
+  // };
+
+  // // Scroll to bottom listener for lazy loading
+  // const scrollRef = useRef(null);
+  // useEffect(() => {
+  //   const handleScroll = () => {
+  //     if (scrollRef.current) {
+  //       const { scrollTop, clientHeight, scrollHeight } = scrollRef.current;
+
+  //       console.log("Scroll Top:", scrollTop);
+  //       console.log("Client Height:", clientHeight);
+  //       console.log("Scroll Height:", scrollHeight);
+
+  //       // Check if the user has scrolled within a certain distance from the bottom
+  //       const threshold = 10; // Adjust this threshold as needed
+
+  //       // Set the isNearBottom flag when near the bottom
+  //       if (scrollHeight - scrollTop - clientHeight <= threshold) {
+  //         setIsNearBottom(true);
+  //         setTotalPages((prevTotalPages) => prevTotalPages + 1);
+  //       } else {
+  //         setIsNearBottom(false);
+  //       }
+  //     }
+  //   };
+
+  //   if (scrollRef.current) {
+  //     scrollRef.current.addEventListener("scroll", handleScroll);
+
+  //     return () => {
+  //       if (scrollRef.current) {
+  //         scrollRef.current.removeEventListener("scroll", handleScroll);
+  //       }
+  //     };
+  //   }
+  // }, []); // No dependencies needed here
+
+  // useEffect for fetching next page
+  // useEffect(() => {
+  //   if (
+  //     isNearBottom &&
+  //     currentPage < totalPages &&
+  //     hasFetchedData &&
+  //     !isFetching
+  //   ) {
+  //     console.log("Reached the bottom! Fetching next page...");
+  //     fetchNextPage();
+  //   }
+  // }, [isNearBottom]);
+
+  const uniqueSolitaires = matchedSolitaires.reduce((acc, solitaire) => {
+    if (!acc.some((item) => item.SolitaireID === solitaire.SolitaireID)) {
+      acc.push(solitaire);
     }
+    return acc;
+  }, []);
+
+  const uniqueAllSolitaires = solitaires.reduce((acc, solitaire) => {
+    if (!acc.some((item) => item.SolitaireID === solitaire.SolitaireID)) {
+      acc.push(solitaire);
+    }
+    return acc;
+  }, []);
+
+  const handleMoreClick = () => {
+    setCurrentPage((prevPage) => prevPage + 1);
+    fetchSolitaires(currentPage + 1);
   };
 
-  // Scroll to bottom listener for lazy loading
-  const scrollRef = useRef(null);
-  useEffect(() => {
-    const handleScroll = () => {
-      if (
-        scrollRef.current &&
-        scrollRef.current.scrollTop + scrollRef.current.clientHeight >=
-          scrollRef.current.scrollHeight
-      ) {
-        fetchNextPage();
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [currentPage, totalPages]);
-
-  console.log(" matched  solitaires", matchedSolitaires);
+  // console.log(" matched  solitaires", matchedSolitaires);
   return (
     <div style={{ width: "100vw" }}>
       <div
@@ -185,7 +249,7 @@ const SearchResults = () => {
         {isLoading && <p className="text-center text-white">Loading...</p>}
         {error && <p className="text-center text-danger">{error}</p>}
 
-        <div ref={scrollRef} className="row" style={{ overflowY: "auto" }}>
+        <div className="row" style={{ overflowY: "auto" }}>
           {/* Skeleton While Loading */}
           {showLoading && (
             <div className="row">
@@ -203,69 +267,104 @@ const SearchResults = () => {
             </div>
           )}
           {!showLoading &&
-            matchedSolitaires.map((solitaire) => (
-              <div
-                key={solitaire.SolitaireID}
-                className="col-sm-6 col-md-3 col-lg-3 mb-4"
-              >
-                <div className="product-block cless">
-                  <div className="blogshadow blog-thumbnail">
-                    <div className="blog-left">
-                      <div
-                        className="workdo-blog-image"
-                        style={{
-                          height: "201px",
-                          display: "flex",
-                          overflow: "hidden",
-                          borderTopLeftRadius: "20px",
-                          borderTopRightRadius: "20px",
-                          backgroundColor: "#ffffff",
-                          justifyContent: "center",
-                          alignItems: "center",
-                        }}
-                      >
-                        {solitaire.Image1 && (
-                          <img
-                            src={solitaire.Image1}
-                            alt={`Solitaire  ${solitaire.SolitaireID}`}
-                            className="img-fluid"
-                            style={{ maxWidth: "100%", height: "auto" }}
-                          />
-                        )}
-                        <div className="blog-post-image-hover"></div>
+            (showAllSolitaires ? uniqueAllSolitaires : uniqueSolitaires).map(
+              (solitaire) => (
+                <div
+                  key={solitaire.SolitaireID}
+                  className="col-6 col-sm-6 col-md-3 col-lg-3 mb-4"
+                >
+                  <div className="product-block cless">
+                    <div className="blogshadow blog-thumbnail">
+                      <div className="blog-left">
+                        <div
+                          className="workdo-blog-image"
+                          style={{
+                            height: "201px",
+                            display: "flex",
+                            overflow: "hidden",
+                            borderTopLeftRadius: "20px",
+                            borderTopRightRadius: "20px",
+                            backgroundColor: "#ffffff",
+                            justifyContent: "center",
+                            alignItems: "center",
+                          }}
+                        >
+                          {solitaire.Image1 && (
+                            <img
+                              src={solitaire.Image1}
+                              alt={`Solitaire  ${solitaire.SolitaireID}`}
+                              className="img-fluid"
+                              style={{ maxWidth: "100%", height: "auto" }}
+                            />
+                          )}
+                          <div className="blog-post-image-hover"></div>
+                        </div>
                       </div>
-                    </div>
-                    <div className="blog-right">
-                      <h4>
-                        <a href="#">Shape: {solitaire.ShapeName}</a>
-                      </h4>
-                      <div className="blog-desc">
-                        {/* <p className="card-text">Shape: {solitaire.ShapeName}</p> */}
-                        <p className="card-text">Carat: {solitaire.Carat}</p>
-                        <p className="card-text">
-                          Description: Lorem ipsum dolor sit amet, consectetur
-                          adipiscing elit.
-                        </p>
-                      </div>
-                      <div className="blog-date blog-bottom">
-                        <div className="read_link">
-                          <a href="#" className="btn btn-primary read_more">
-                            Read More
-                          </a>
+                      <div className="blog-right">
+                        <h4>
+                          <a href="#">Shape: {solitaire.ShapeName}</a>
+                        </h4>
+                        <div className="blog-desc">
+                          {/* <p className="card-text">Shape: {solitaire.ShapeName}</p> */}
+                          <p className="card-text">Carat: {solitaire.Carat}</p>
+                          <p className="card-text">
+                            Description: Lorem ipsum dolor sit amet, consectetur
+                            adipiscing elit.
+                          </p>
+                        </div>
+                        <div className="blog-date blog-bottom">
+                          <div className="read_link">
+                            <a href="#" className="btn btn-primary read_more">
+                              Read More
+                            </a>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
+              )
+            )}
+          {console.log("current page", currentPage, "total pages", totalPages)}
+          {!showLoading &&
+            currentPage === totalPages &&
+            solitaires.length > 0 && (
+              <div className="col-md-12 text-center mt-4">
+                <p
+                  className="text-muted small"
+                  style={{ fontFamily: "outfit" }}
+                >
+                  No more solitaires to show.
+                </p>
               </div>
-            ))}
+            )}
         </div>
         {/* "No Results" Message */}
+
         {!showLoading && solitaires.length === 0 && (
           <div className="col-md-12">
             <p className="alert alert-warning">NO MATCHING SOLITAIRE FOUND</p>
           </div>
         )}
+        {/* "More" Button */}
+        {
+          <div className="row mt-3">
+            <div className="col-md-12 text-center">
+              <button
+                onClick={handleMoreClick}
+                style={{
+                  backgroundColor: "#f2dfcf",
+                  color: "#0d1e1c",
+                  borderRadius: "20px",
+                  fontFamily: "Outfit, sans-serif",
+                }}
+                className="btn btn-secondary"
+              >
+                More <ChevronDownIcon />
+              </button>
+            </div>
+          </div>
+        }
         {/* Toggle Button (Removed Pagination) */}
         <div className="row mt-3">
           <div className="col-md-4">
