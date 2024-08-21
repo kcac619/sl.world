@@ -206,7 +206,19 @@ const SearchResults = () => {
               <div className="product-block cless">
                 <div className="blogshadow blog-thumbnail">
                   <div className="blog-left">
-                    <div className="workdo-blog-image">
+                    <div
+                      className="workdo-blog-image"
+                      style={{
+                        height: "201px",
+                        display: "flex",
+                        overflow: "hidden",
+                        borderTopLeftRadius: "20px",
+                        borderTopRightRadius: "20px",
+                        backgroundColor: "#ffffff",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
                       {solitaire.Image1 && (
                         <img
                           src={solitaire.Image1}
