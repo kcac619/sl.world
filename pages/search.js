@@ -168,114 +168,122 @@ const SearchResults = () => {
 
   console.log(" matched  solitaires", matchedSolitaires);
   return (
-    <div
-      className="container mt-5"
-      style={{
-        minHeight: "100vh",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-evenly",
-      }}
-    >
-      <h1 className="mb-4 text-white" style={{ textAlign: "center" }}>
-        Search Results
-      </h1>
-      {isLoading && <p className="text-center text-white">Loading...</p>}
-      {error && <p className="text-center text-danger">{error}</p>}
+    <div style={{ width: "100vw" }}>
+      <div
+        className="container mt-5"
+        style={{
+          minHeight: "100vh",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+          padding: "0px",
+        }}
+      >
+        <h1 className="mb-4 text-white" style={{ textAlign: "center" }}>
+          Search Results
+        </h1>
+        {isLoading && <p className="text-center text-white">Loading...</p>}
+        {error && <p className="text-center text-danger">{error}</p>}
 
-      <div ref={scrollRef} className="row" style={{ overflowY: "auto" }}>
-        {/* Skeleton While Loading */}
-        {showLoading && (
-          <div className="row">
-            {[...Array(solitairesPerPage)].map((_, index) => (
-              <div key={index} className="col-md-4 mb-4">
-                <div className="product-block cless">
-                  <div className="blogshadow blog-thumbnail">
-                    <div className="card-body">
-                      <Skeleton height="150px" />
+        <div ref={scrollRef} className="row" style={{ overflowY: "auto" }}>
+          {/* Skeleton While Loading */}
+          {showLoading && (
+            <div className="row">
+              {[...Array(solitairesPerPage)].map((_, index) => (
+                <div key={index} className="col-md-3 col-lg-2 mb-4">
+                  <div className="product-block cless">
+                    <div className="blogshadow blog-thumbnail">
+                      <div className="card-body">
+                        <Skeleton height="150px" />
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        )}
-        {!showLoading &&
-          matchedSolitaires.map((solitaire) => (
-            <div key={solitaire.SolitaireID} className="col-md-4 mb-4">
-              <div className="product-block cless">
-                <div className="blogshadow blog-thumbnail">
-                  <div className="blog-left">
-                    <div
-                      className="workdo-blog-image"
-                      style={{
-                        height: "201px",
-                        display: "flex",
-                        overflow: "hidden",
-                        borderTopLeftRadius: "20px",
-                        borderTopRightRadius: "20px",
-                        backgroundColor: "#ffffff",
-                        justifyContent: "center",
-                        alignItems: "center",
-                      }}
-                    >
-                      {solitaire.Image1 && (
-                        <img
-                          src={solitaire.Image1}
-                          alt={`Solitaire  ${solitaire.SolitaireID}`}
-                          className="img-fluid"
-                          style={{ maxWidth: "100%", height: "auto" }}
-                        />
-                      )}
-                      <div className="blog-post-image-hover"></div>
+              ))}
+            </div>
+          )}
+          {!showLoading &&
+            matchedSolitaires.map((solitaire) => (
+              <div
+                key={solitaire.SolitaireID}
+                className="col-sm-6 col-md-3 col-lg-3 mb-4"
+              >
+                <div className="product-block cless">
+                  <div className="blogshadow blog-thumbnail">
+                    <div className="blog-left">
+                      <div
+                        className="workdo-blog-image"
+                        style={{
+                          height: "201px",
+                          display: "flex",
+                          overflow: "hidden",
+                          borderTopLeftRadius: "20px",
+                          borderTopRightRadius: "20px",
+                          backgroundColor: "#ffffff",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
+                        {solitaire.Image1 && (
+                          <img
+                            src={solitaire.Image1}
+                            alt={`Solitaire  ${solitaire.SolitaireID}`}
+                            className="img-fluid"
+                            style={{ maxWidth: "100%", height: "auto" }}
+                          />
+                        )}
+                        <div className="blog-post-image-hover"></div>
+                      </div>
                     </div>
-                  </div>
-                  <div className="blog-right">
-                    <h4>
-                      <a href="#">Shape: {solitaire.ShapeName}</a>
-                    </h4>
-                    <div className="blog-desc">
-                      {/* <p className="card-text">Shape: {solitaire.ShapeName}</p> */}
-                      <p className="card-text">Carat: {solitaire.Carat}</p>
-                      <p className="card-text">
-                        Description: Lorem ipsum dolor sit amet, consectetur
-                        adipiscing elit.
-                      </p>
-                    </div>
-                    <div className="blog-date blog-bottom">
-                      <div className="read_link">
-                        <a href="#" className="btn btn-primary read_more">
-                          Read More
-                        </a>
+                    <div className="blog-right">
+                      <h4>
+                        <a href="#">Shape: {solitaire.ShapeName}</a>
+                      </h4>
+                      <div className="blog-desc">
+                        {/* <p className="card-text">Shape: {solitaire.ShapeName}</p> */}
+                        <p className="card-text">Carat: {solitaire.Carat}</p>
+                        <p className="card-text">
+                          Description: Lorem ipsum dolor sit amet, consectetur
+                          adipiscing elit.
+                        </p>
+                      </div>
+                      <div className="blog-date blog-bottom">
+                        <div className="read_link">
+                          <a href="#" className="btn btn-primary read_more">
+                            Read More
+                          </a>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
-      </div>
-      {/* "No Results" Message */}
-      {!showLoading && solitaires.length === 0 && (
-        <div className="col-md-12">
-          <p className="alert alert-warning">NO MATCHING SOLITAIRE FOUND</p>
+            ))}
         </div>
-      )}
-      {/* Toggle Button (Removed Pagination) */}
-      <div className="row mt-3">
-        <div className="col-md-4">
-          <button
-            onClick={() => setShowAllSolitaires(!showAllSolitaires)}
-            className="btn btn-secondary btn-block"
-            style={{
-              backgroundColor: "#f2dfcf",
-              color: "#0d1e1c",
-              borderRadius: "20px",
-              fontFamily: "Outfit, sans-serif",
-            }}
-          >
-            {showAllSolitaires ? "Hide All Solitaires" : "View All Solitaires"}
-          </button>
+        {/* "No Results" Message */}
+        {!showLoading && solitaires.length === 0 && (
+          <div className="col-md-12">
+            <p className="alert alert-warning">NO MATCHING SOLITAIRE FOUND</p>
+          </div>
+        )}
+        {/* Toggle Button (Removed Pagination) */}
+        <div className="row mt-3">
+          <div className="col-md-4">
+            <button
+              onClick={() => setShowAllSolitaires(!showAllSolitaires)}
+              className="btn btn-secondary btn-block"
+              style={{
+                backgroundColor: "#f2dfcf",
+                color: "#0d1e1c",
+                borderRadius: "20px",
+                fontFamily: "Outfit, sans-serif",
+              }}
+            >
+              {showAllSolitaires
+                ? "Hide All Solitaires"
+                : "View All Solitaires"}
+            </button>
+          </div>
         </div>
       </div>
     </div>
