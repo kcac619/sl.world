@@ -8,7 +8,7 @@ import {
   addToCart,
   removeFromCart,
   updateCartItemQuantity,
-} from "./cartfns";
+} from "../utils/cartfns";
 
 const SolitaireDetails = () => {
   const router = useRouter();

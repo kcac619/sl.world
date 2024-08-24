@@ -10,7 +10,7 @@ import {
   addToCart,
   removeFromCart,
   updateCartItemQuantity,
-} from "./cartfns";
+} from "../utils/cartfns";
 
 const SearchResults = () => {
   const router = useRouter();

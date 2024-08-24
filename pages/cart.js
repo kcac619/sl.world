@@ -5,7 +5,7 @@ import {
   addToCart,
   removeFromCart,
   updateCartItemQuantity,
-} from "./cartfns";
+} from "../utils/cartfns";
 
 const CartPage = () => {
   const [cartItems, setCartItems] = useState([]);
