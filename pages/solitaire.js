@@ -30,6 +30,12 @@ import Link from "next/link";
 import Sidebar from "../components/Sidebar";
 import DiamondShape from "../components/DiamondShape";
 import FilterSection from "../components/FilterSection";
+import {
+  getCartItemsFromLocalStorage,
+  addToCart,
+  removeFromCart,
+  updateCartItemQuantity,
+} from "../utils/cartfns";
 import SearchBar from "@/components/SearchBar";
 
 import axios from "axios";
@@ -53,6 +59,38 @@ const Solitaire = () => {
   const [symmetries, setSymmetries] = useState([]);
   const [locations, setLocations] = useState([]);
   const [totalCount, setTotalCount] = useState(0); // New state for total count
+  const [cartItems, setCartItems] = useState([]);
+  const [cartDropdownOpen, setCartDropdownOpen] = useState(false); // For dropdown
+
+  useEffect(() => {
+    const updateCart = () => {
+      setCartItems(getCartItemsFromLocalStorage());
+    };
+
+    window.addEventListener("storage", updateCart);
+    return () => window.removeEventListener("storage", updateCart);
+  }, []);
+
+  useEffect(() => {
+    setCartItems(getCartItemsFromLocalStorage());
+  }, []);
+
+  // Function to remove item from cart and update state
+  const handleRemoveFromCart = (solitaireId) => {
+    removeFromCart(solitaireId);
+    setCartItems(getCartItemsFromLocalStorage());
+  };
+
+  // Toggle the cart dropdown
+  const toggleCartDropdown = () => {
+    setCartDropdownOpen(!cartDropdownOpen);
+  };
+  // Calculate subtotal and total
+  const subTotal = cartItems.reduce(
+    (total, item) => total + item.Price * item.quantity,
+    0
+  );
+  const total = subTotal;
 
   const sidebarWidth = useBreakpointValue({
     base: "60px",
@@ -871,22 +909,128 @@ const Solitaire = () => {
                               type="button"
                               data-bs-toggle="dropdown"
                               className="btn btn-inverse dropdown-toggle"
+                              onClick={toggleCartDropdown}
+                              aria-expanded={cartDropdownOpen}
                             >
+                              {/* ... [Your existing cart icon and text] ...  */}
                               <div className="xuser">
                                 <img src="image/catalog/hcart.svg" alt="cart" />
                               </div>
                               <span className="cartl">
-                                <span className="cartt">0</span>
+                                <span className="cartt">
+                                  {cartItems.reduce(
+                                    (acc, item) => acc + item.quantity,
+                                    0
+                                  )}{" "}
+                                </span>
                                 <span className="cartna">cart: items</span>
-                                <strong>$0.00usd</strong>
+                                <strong>Items</strong>
                               </span>
                             </button>
-                            <ul className="dropdown-menu dropdown-menu-right">
-                              <li>
-                                <p className="text-center">
+
+                            {/* Cart Dropdown (Custom Styled) */}
+                            <ul
+                              className={`dropdown-menu dropdown-menu-right${
+                                cartDropdownOpen ? " show" : ""
+                              }`}
+                              aria-labelledby="cart"
+                              style={{
+                                padding: "1rem",
+                                maxWidth: "300px",
+                                backgroundColor: "#0d1e1c", // Dark background color
+                                boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+                                border: "1px solid #dee2e6",
+                              }}
+                            >
+                              {cartItems.length === 0 ? (
+                                <li className="text-center">
                                   Your shopping cart is empty!
-                                </p>
-                              </li>
+                                </li>
+                              ) : (
+                                <>
+                                  <div
+                                    style={{
+                                      maxHeight: "250px",
+                                      overflowY: "auto",
+                                    }}
+                                  >
+                                    {cartItems.map((item) => (
+                                      <div
+                                        key={item.SolitaireID}
+                                        className="d-flex align-items-center mb-3"
+                                      >
+                                        <Link href={`/${item.SolitaireID}`}>
+                                          <img
+                                            src={item.Image1}
+                                            alt={
+                                              item.ShapeName +
+                                              "-" +
+                                              item.SolitaireID
+                                            }
+                                            style={{
+                                              width: "50px",
+                                              height: "50px",
+                                              objectFit: "cover",
+                                              marginRight: "10px",
+                                            }}
+                                          />
+                                        </Link>
+                                        <div>
+                                          <Link href={`/${item.SolitaireID}`}>
+                                            <h6
+                                              className="mb-0"
+                                              style={{
+                                                color: "#f2dfcf",
+                                                fontFamily: "outfit",
+                                              }}
+                                            >
+                                              {item.ShapeName +
+                                                "-" +
+                                                item.SolitaireID}
+                                            </h6>
+                                          </Link>
+                                          <span className="text-muted small">
+                                            Qty: {item.quantity} x ${item.Price}
+                                          </span>
+                                        </div>
+                                        <button
+                                          type="button"
+                                          className="btn btn-sm btn-link text-danger ml-auto"
+                                          onClick={() =>
+                                            handleRemoveFromCart(
+                                              item.SolitaireID
+                                            )
+                                          }
+                                        >
+                                          <i className="fa fa-times"></i>
+                                        </button>
+                                      </div>
+                                    ))}
+                                  </div>
+
+                                  {/* Cart Totals */}
+                                  <div className="text-right">
+                                    <p className="mb-1">
+                                      Subtotal:{" "}
+                                      <span className="font-weight-bold">
+                                        ${subTotal.toFixed(2)}
+                                      </span>
+                                    </p>
+                                    <p className="mb-1">
+                                      Total:{" "}
+                                      <span className="font-weight-bold">
+                                        ${total.toFixed(2)}
+                                      </span>
+                                    </p>
+                                    <Link
+                                      href="/cart"
+                                      className="btn btn-primary btn-block"
+                                    >
+                                      View Cart
+                                    </Link>
+                                  </div>
+                                </>
+                              )}
                             </ul>
                           </div>
                         </span>
