@@ -4,6 +4,13 @@ import { useEffect, useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import { Skeleton, SkeletonCircle, SkeletonText } from "@chakra-ui/react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
+import Link from "next/link";
+import {
+  getCartItemsFromLocalStorage,
+  addToCart,
+  removeFromCart,
+  updateCartItemQuantity,
+} from "./cartfns";
 
 const SearchResults = () => {
   const router = useRouter();
@@ -18,6 +25,27 @@ const SearchResults = () => {
   const [isFetching, setIsFetching] = useState(false);
   const [isNearBottom, setIsNearBottom] = useState(false);
   const solitairesPerPage = 15;
+
+  const [cartItems, setCartItems] = useState([]);
+
+  useEffect(() => {
+    const updateCart = () => {
+      setCartItems(getCartItemsFromLocalStorage());
+    };
+
+    window.addEventListener("storage", updateCart);
+    return () => window.removeEventListener("storage", updateCart);
+  }, []);
+
+  useEffect(() => {
+    // Fetch cart items from localStorage when the component mounts
+    setCartItems(getCartItemsFromLocalStorage());
+  }, []);
+
+  const handleAddToCart = (solitaire) => {
+    addToCart({ ...solitaire, quantity: 1 });
+    setCartItems(getCartItemsFromLocalStorage());
+  };
 
   const fetchSolitaires = async (pageNumber = currentPage) => {
     // if (isFetching) return;
@@ -314,10 +342,32 @@ const SearchResults = () => {
                         </div>
                         <div className="blog-date blog-bottom">
                           <div className="read_link">
-                            <a href="#" className="btn btn-primary read_more">
-                              Read More
-                            </a>
+                            <Link
+                              href={`/${solitaire.SolitaireID}`}
+                              className="btn btn-primary read_more"
+                            >
+                              Get Details
+                            </Link>
                           </div>
+                          {/*  Add to Cart Button with isInCart Logic  */}
+                          {cartItems.some(
+                            (item) => item.SolitaireID === solitaire.SolitaireID
+                          ) ? (
+                            <button
+                              className="btn btn-primary"
+                              disabled
+                              style={{ fontSize: "0.7rem" }}
+                            >
+                              Added to Cart
+                            </button>
+                          ) : (
+                            <button
+                              className="btn btn-primary"
+                              onClick={() => handleAddToCart(solitaire)}
+                            >
+                              Add to Cart
+                            </button>
+                          )}
                         </div>
                       </div>
                     </div>
