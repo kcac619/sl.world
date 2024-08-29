@@ -975,14 +975,14 @@ const SearchResults = () => {
                         <div className="blog-date blog-bottom">
                           <div className="read_link">
                             <Link
-                              href={`/${solitaire.SolitaireID}`}
+                              href={`/${solitaire.Slug}`}
                               className="btn btn-primary read_more"
                             >
                               Get Details
                             </Link>
                           </div>
                           {/*  Add to Cart Button with isInCart Logic  */}
-                          {cartItems.some(
+                          {/* {cartItems.some(
                             (item) => item.SolitaireID === solitaire.SolitaireID
                           ) ? (
                             <button
@@ -999,7 +999,7 @@ const SearchResults = () => {
                             >
                               Add to Cart
                             </button>
-                          )}
+                          )} */}
                         </div>
                       </div>
                     </div>

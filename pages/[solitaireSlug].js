@@ -12,7 +12,7 @@ import {
 
 const SolitaireDetails = () => {
   const router = useRouter();
-  const { solitaireId } = router.query;
+  const { solitaireSlug } = router.query;
 
   const [solitaire, setSolitaire] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -62,17 +62,17 @@ const SolitaireDetails = () => {
   const total = subTotal;
 
   useEffect(() => {
-    if (solitaireId) {
-      fetchSolitaireDetails(solitaireId);
+    if (solitaireSlug) {
+      fetchSolitaireDetails(solitaireSlug);
     }
-  }, [solitaireId]);
+  }, [solitaireSlug]);
 
-  const fetchSolitaireDetails = async (id) => {
+  const fetchSolitaireDetails = async (slug) => {
     setIsLoading(true);
     setError(null);
 
     try {
-      const response = await axios.get(`/api/solitairebyId/${id}`);
+      const response = await axios.get(`/api/solitairebySlug/${slug}`);
 
       if (response.status === 200) {
         setSolitaire(response.data.solitaire);
@@ -870,9 +870,7 @@ const SolitaireDetails = () => {
                             </form>
                           </div>
 
-                          <h1>
-                            {solitaire.ShapeName + "-" + solitaire.SolitaireID}
-                          </h1>
+                          <h1>{solitaire.SolitaireName}</h1>
 
                           <div
                             className="products-specific"

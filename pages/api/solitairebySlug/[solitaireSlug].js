@@ -4,10 +4,10 @@ import { getObjectSignedUrl } from "../s3";
 export default async (req, res) => {
   if (req.method === "GET") {
     try {
-      const solitaireId = req.query.solitaireId;
+      const solitaireSlug = req.query.solitaireSlug; // Get slug from the URL
 
-      const result = await callStoredProcedure("sp_GetSolitaireById", {
-        SolitaireID: solitaireId,
+      const result = await callStoredProcedure("sp_GetSolitaireBySlug", {
+        SolitaireSlug: solitaireSlug, // Use SolitaireSlug parameter
       });
 
       if (result.status === 1 && result.data.length > 0) {
@@ -17,7 +17,7 @@ export default async (req, res) => {
         const signedUrls = await generateSignedUrls(solitaire);
 
         res.status(200).json({
-          solitaire: { ...solitaire, ...signedUrls }, // Combine data and signed URLs
+          solitaire: { ...solitaire, ...signedUrls },
         });
       } else if (result.status === 1 && result.data.length === 0) {
         res.status(404).json({ error: "Solitaire not found." });
@@ -32,7 +32,6 @@ export default async (req, res) => {
     res.status(405).end();
   }
 };
-
 // Helper function to generate signed URLs
 const generateSignedUrls = async (solitaire) => {
   const imageKeys = ["Image1", "Image2", "Image3", "Image4", "Image5"];
