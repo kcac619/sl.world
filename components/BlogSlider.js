@@ -1,12 +1,13 @@
 // components/BlogSlider.js
 import React from "react";
 import Slider from "react-slick";
+import { Box, Skeleton } from "@chakra-ui/react";
 
 // Import Slick CSS (if not already imported in _document.js)
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-const BlogSlider = () => {
+const BlogSlider = ({ blogs, isLoadingBlogs, errorBlogs }) => {
   const settings = {
     dots: false,
     infinite: true,
@@ -55,93 +56,61 @@ const BlogSlider = () => {
     ],
   };
 
-  const blogPosts = [
-    {
-      imageUrl:
-        "https://opencart.workdo.io/diamond/image/cache/catalog/blog/5-1000x670.jpg",
-      title: "Best bracelet and necklaces",
-      description:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry....",
-      link: "https://opencart.workdo.io/diamond/index.php?route=extension/blogger/information/blogger&blogger_id=5",
-      date: "13 Dec, 2022",
-    },
-    {
-      imageUrl:
-        "https://opencart.workdo.io/diamond/image/cache/catalog/blog/4-1000x670.jpg",
-      title: "Best bracelet and necklaces",
-      description:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry....",
-      link: "https://opencart.workdo.io/diamond/index.php?route=extension/blogger/information/blogger&blogger_id=4",
-      date: "13 Dec, 2022",
-    },
-    {
-      imageUrl:
-        "https://opencart.workdo.io/diamond/image/cache/catalog/blog/3-1000x670.jpg",
-      title: "Best bracelet and necklaces",
-      description:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry....",
-      link: "https://opencart.workdo.io/diamond/index.php?route=extension/blogger/information/blogger&blogger_id=3",
-      date: "13 Dec, 2022",
-    },
-    {
-      imageUrl:
-        "https://opencart.workdo.io/diamond/image/cache/catalog/blog/2-1000x670.jpg",
-      title: "Best bracelet and necklaces",
-      description:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry....",
-      link: "https://opencart.workdo.io/diamond/index.php?route=extension/blogger/information/blogger&blogger_id=2",
-      date: "12 Dec, 2022",
-    },
-    {
-      imageUrl:
-        "https://opencart.workdo.io/diamond/image/cache/catalog/blog/1-1000x670.jpg",
-      title: "Best bracelet and necklaces",
-      description:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry....",
-      link: "https://opencart.workdo.io/diamond/index.php?route=extension/blogger/information/blogger&blogger_id=1",
-      date: "12 Dec, 2022",
-    },
-  ];
+  const blogPosts = blogs;
 
   return (
     <div className="wbblog">
-      <Slider {...settings}>
-        {blogPosts.map((post, index) => (
-          <div key={index} className="product-block  cless">
-            <div className="blogshadow blog-thumbnail">
-              <div className="blog-left">
-                <div className="workdo-blog-image">
-                  <img
-                    src={post.imageUrl}
-                    alt={post.title}
-                    title={post.title}
-                    className="img-fluid"
-                  />
-                  <div className="blog-post-image-hover"></div>
-                </div>
-              </div>
-              <div className="blog-right">
-                <h4>
-                  <a href={post.link}>{post.title}</a>
-                </h4>
-                {/* <div className="workdo-post-author"></div> */}{" "}
-                {/*  Optional - You can add author details */}
-                <div className="blog-desc">{post.description}</div>
-                <div className="blog-date blog-bottom">
-                  <div className="read_link">
-                    <a className="btn btn-primary read_more" href={post.link}>
-                      read more
-                    </a>
+      {isLoadingBlogs ? (
+        <Box>
+          <Skeleton height="200px" />
+          <Skeleton height="20px" mt="4" />
+          <Skeleton height="20px" mt="4" />
+        </Box>
+      ) : (
+        <Slider {...settings} style={{ height: "200px !important" }}>
+          {blogPosts.map((post, index) => (
+            <div key={index} className="product-block cless">
+              <div className="blogshadow blog-thumbnail">
+                <div className="blog-left">
+                  <div className="workdo-blog-image">
+                    <img
+                      src={post.ImageUrl}
+                      alt={post.Title}
+                      title={post.Title}
+                      className="img-fluid"
+                    />
+                    <div className="blog-post-image-hover"></div>
                   </div>
-                  <div className="date-time blogdt">
-                    <span className="date-time">{post.date}</span>
+                </div>
+                <div className="blog-right">
+                  <h4 style={{ fontFamily: "outfit" }}>
+                    <a href={post.Link}>
+                      {post.Title.length > 24
+                        ? `${post.Title.substring(0, 24)} ...`
+                        : post.Title}
+                    </a>
+                  </h4>
+                  <div className="blog-desc">
+                    {post.Description.length > 50
+                      ? `${post.Description.substring(0, 50)} ...`
+                      : post.Description}
+                  </div>
+                  <div className="blog-date blog-bottom">
+                    <div className="read_link">
+                      <a className="btn btn-primary read_more" href={post.Link}>
+                        read more
+                      </a>
+                    </div>
+                    {/* <div className="date-time blogdt">
+                      <span className="date-time">{post.Date}</span>
+                    </div> */}
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        ))}
-      </Slider>
+          ))}
+        </Slider>
+      )}
     </div>
   );
 };

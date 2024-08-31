@@ -9,6 +9,7 @@ import WdCategorySlider from "@/components/WdCategorySlider";
 import TestimonialSlider from "@/components/TestimonialSlider";
 import BlogSlider from "@/components/BlogSlider";
 import OfferBannerSlider from "@/components/OfferBannerSlider";
+import axios from "axios";
 import {
   getCartItemsFromLocalStorage,
   addToCart,
@@ -19,6 +20,15 @@ import {
 const Index = () => {
   const [cartItems, setCartItems] = useState([]);
   const [cartDropdownOpen, setCartDropdownOpen] = useState(false); // For dropdown
+  // Testimonials
+  const [testimonials, setTestimonials] = useState([]);
+  const [isLoadingTestimonials, setIsLoadingTestimonials] = useState(true);
+  const [errorTestimonials, setErrorTestimonials] = useState(null);
+
+  // Blogs
+  const [blogs, setBlogs] = useState([]);
+  const [isLoadingBlogs, setIsLoadingBlogs] = useState(true);
+  const [errorBlogs, setErrorBlogs] = useState(null);
 
   useEffect(() => {
     const updateCart = () => {
@@ -37,6 +47,56 @@ const Index = () => {
   const handleRemoveFromCart = (solitaireId) => {
     removeFromCart(solitaireId);
     setCartItems(getCartItemsFromLocalStorage());
+  };
+  useEffect(() => {
+    fetchTestimonials();
+  }, []);
+
+  const fetchTestimonials = async () => {
+    setIsLoadingTestimonials(true);
+    console.log("loading testimonials true");
+    setErrorTestimonials(null);
+
+    try {
+      const response = await axios.get("/api/testimonials");
+      console.log("testimoinals response", response);
+      if (response.status === 200) {
+        setTestimonials(response.data.testimonials);
+      } else {
+        console.error("Error fetching testimonials:", response.data.error);
+        setErrorTestimonials("Error fetching testimonials.");
+      }
+    } catch (error) {
+      console.error("Error fetching testimonials:", error);
+      setErrorTestimonials("An error occurred.");
+    } finally {
+      setIsLoadingTestimonials(false);
+      console.log("testimonials finnaly clause reached ");
+    }
+  };
+
+  useEffect(() => {
+    fetchBlogs();
+  }, []);
+
+  const fetchBlogs = async () => {
+    setIsLoadingBlogs(true);
+    setErrorBlogs(null);
+
+    try {
+      const response = await axios.get("/api/blogs");
+      if (response.status === 200) {
+        setBlogs(response.data.blogs);
+      } else {
+        console.error("Error fetching blogs:", response.data.error);
+        setErrorBlogs("Error fetching blogs.");
+      }
+    } catch (error) {
+      console.error("Error fetching blogs:", error);
+      setErrorBlogs("An error occurred.");
+    } finally {
+      setIsLoadingBlogs(false);
+    }
   };
 
   // Toggle the cart dropdown
@@ -1289,7 +1349,11 @@ const Index = () => {
                     </div>
                     <div className="row">
                       <div className="col-xs-12 testi">
-                        <TestimonialSlider />
+                        <TestimonialSlider
+                          testimonials={testimonials}
+                          isLoadingTestimonials={isLoadingTestimonials}
+                          errorTestimonials={errorTestimonials}
+                        />
                       </div>
                     </div>
                   </div>
@@ -1305,7 +1369,11 @@ const Index = () => {
                   <div className="row">
                     <div className="col-xs-12 box-content">
                       <div className="box-product">
-                        <BlogSlider />
+                        <BlogSlider
+                          blogs={blogs}
+                          isLoadingBlogs={isLoadingBlogs}
+                          errorBlogs={errorBlogs}
+                        />
                       </div>
                     </div>
                   </div>
