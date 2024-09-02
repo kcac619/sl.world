@@ -27,7 +27,11 @@ const SearchResults = () => {
   const solitairesPerPage = 15;
   const [cartItems, setCartItems] = useState([]);
   const [cartDropdownOpen, setCartDropdownOpen] = useState(false); // For dropdown
+  const [isOpen, setIsOpen] = useState(false);
 
+  const toggleDrawer = () => {
+    setIsOpen(!isOpen);
+  };
   useEffect(() => {
     const updateCart = () => {
       setCartItems(getCartItemsFromLocalStorage());
@@ -330,13 +334,16 @@ const SearchResults = () => {
             <div className="row">
               <div className="sub_megamenu">
                 <div className="container_wb_megamenu">
-                  <div id="stamenu">
+                  <div
+                    id="stamenu"
+                    className={` ${isOpen ? "active" : ""} menu-fixed`}
+                  >
                     <nav id="menu" className="navbar">
                       <div className="navbar-expand-md">
                         <button
                           type="button"
                           className="btn-navbar navbar-toggler"
-                          onclick="openNav()"
+                          onClick={toggleDrawer}
                           data-bs-toggle="collapse"
                           data-bs-target=".navbar-ex1-collapse"
                         >
@@ -352,24 +359,34 @@ const SearchResults = () => {
                           aria-controls="collapseExample"
                         ></div>
                       </div>
-                      <div id="mySidenav" className="sidenav menu-vertical">
+                      <div
+                        id="mySidenav"
+                        className={`sidenav menu-vertical ${
+                          isOpen ? "open" : ""
+                        }`}
+                      >
                         <div id="under-menu" className="">
                           <div className="close-nav">
-                            <span className="categories">Categories</span>
-                            <a
-                              href="javascript:void(0)"
-                              className="closebtn float-end"
-                              onclick="closeNav()"
+                            <span
+                              className="categories"
+                              style={{ color: "#f2dfcf" }}
+                            >
+                              Categories
+                            </span>
+                            <button
+                              type="button"
+                              className=" float-end"
+                              onClick={toggleDrawer}
                             >
                               <i className="fa fa-close" />
-                            </a>
+                            </button>
                           </div>
                           <div className="navbar-collapse navbar-ex1-collapse">
                             <ul className="nav navbar-nav">
                               <li className="nav-item">
-                                <a href={"/solitaire"} className="nav-item">
+                                <Link href={"/solitaire"} className="nav-item">
                                   Solitaire
-                                </a>
+                                </Link>
                               </li>
                               <li className="nav-item">
                                 <a
@@ -389,24 +406,6 @@ const SearchResults = () => {
                                   Blue Sapphire
                                 </a>
                               </li>
-                              <li className="nav-item">
-                                <a
-                                  href="https://opencart.workdo.io/diamond/index.php?route=product/category&language=en-gb&path=17"
-                                  className="nav-link"
-                                >
-                                  {/*<img src="https://opencart.workdo.io/diamond/image/cache/catalog/menu-icon/coffee--tea-14x14.png" alt="Black Diamond" title="Black Diamond"> */}{" "}
-                                  Black Diamond
-                                </a>
-                              </li>
-                              <li className="nav-item">
-                                <a
-                                  href="https://opencart.workdo.io/diamond/index.php?route=product/category&language=en-gb&path=68"
-                                  className="nav-link"
-                                >
-                                  {/*<img src="https://opencart.workdo.io/diamond/image/cache/catalog/menu-icon/chocolate-crackers-14x14.png" alt="Ametrine" title="Ametrine"> */}{" "}
-                                  Ametrine
-                                </a>
-                              </li>
                             </ul>
                           </div>
                         </div>
@@ -414,8 +413,11 @@ const SearchResults = () => {
                     </nav>
                     <div
                       className="w3-overlay w3-animate-opacity"
-                      onclick="closeNav()"
-                      style={{ cursor: "pointer" }}
+                      onclick={toggleDrawer}
+                      style={{
+                        cursor: "pointer",
+                        display: isOpen ? "block" : "none",
+                      }}
                       id="myOverlay"
                     />
                   </div>
@@ -425,13 +427,16 @@ const SearchResults = () => {
                 <div className="top-manu">
                   <div className="megamenu">
                     <div className="container_wb_megamenu">
-                      <div id="stamenu">
+                      <div
+                        id="stamenu"
+                        // className={` ${isOpen ? "active" : ""} menu-fixed`}
+                      >
                         <nav id="menu" className="navbar">
                           <div className="navbar-expand-md">
                             <button
                               type="button"
                               className="btn-navbar navbar-toggler"
-                              onclick="openNav()"
+                              onClick={toggleDrawer}
                               data-bs-toggle="collapse"
                               data-bs-target=".navbar-ex1-collapse"
                             >
@@ -447,17 +452,27 @@ const SearchResults = () => {
                               aria-controls="collapseExample"
                             ></div>
                           </div>
-                          <div id="mySidenav" className="sidenav menu-vertical">
+                          <div
+                            id="mySidenav"
+                            className={`sidenav menu-vertical ${
+                              isOpen ? "open" : ""
+                            }`}
+                          >
                             <div id="under-menu" className="">
                               <div className="close-nav">
-                                <span className="categories">Categories</span>
-                                <a
-                                  href="javascript:void(0)"
-                                  className="closebtn float-end"
-                                  onclick="closeNav()"
+                                <span
+                                  className="categories"
+                                  style={{ color: "#f2dfcf" }}
+                                >
+                                  Categories
+                                </span>
+                                <button
+                                  type="button"
+                                  className=" float-end"
+                                  onClick={toggleDrawer}
                                 >
                                   <i className="fa fa-close" />
-                                </a>
+                                </button>
                               </div>
                               <div className="navbar-collapse navbar-ex1-collapse">
                                 <ul className="nav navbar-nav">
@@ -487,24 +502,6 @@ const SearchResults = () => {
                                       Blue Sapphire
                                     </a>
                                   </li>
-                                  <li className="nav-item">
-                                    <a
-                                      href="https://opencart.workdo.io/diamond/index.php?route=product/category&language=en-gb&path=17"
-                                      className="nav-link"
-                                    >
-                                      {/*<img src="https://opencart.workdo.io/diamond/image/cache/catalog/menu-icon/coffee--tea-14x14.png" alt="Black Diamond" title="Black Diamond"> */}{" "}
-                                      Black Diamond
-                                    </a>
-                                  </li>
-                                  <li className="nav-item">
-                                    <a
-                                      href="https://opencart.workdo.io/diamond/index.php?route=product/category&language=en-gb&path=68"
-                                      className="nav-link"
-                                    >
-                                      {/*<img src="https://opencart.workdo.io/diamond/image/cache/catalog/menu-icon/chocolate-crackers-14x14.png" alt="Ametrine" title="Ametrine"> */}{" "}
-                                      Ametrine
-                                    </a>
-                                  </li>
                                 </ul>
                               </div>
                             </div>
@@ -512,8 +509,11 @@ const SearchResults = () => {
                         </nav>
                         <div
                           className="w3-overlay w3-animate-opacity"
-                          onclick="closeNav()"
-                          style={{ cursor: "pointer" }}
+                          onclick={toggleDrawer}
+                          style={{
+                            cursor: "pointer",
+                            // display: isOpen ? "block" : "none",
+                          }}
                           id="myOverlay"
                         />
                       </div>

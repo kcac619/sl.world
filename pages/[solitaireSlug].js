@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import Head from "next/head";
 import Link from "next/link"; // For routing
+import Slider from "react-slick";
 import {
   getCartItemsFromLocalStorage,
   addToCart,
@@ -20,6 +21,11 @@ const SolitaireDetails = () => {
   const [quantity, setQuantity] = useState(1);
   const [cartItems, setCartItems] = useState([]);
   const [cartDropdownOpen, setCartDropdownOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleDrawer = () => {
+    setIsOpen(!isOpen);
+  };
 
   useEffect(() => {
     const updateCart = () => {
@@ -120,14 +126,32 @@ const SolitaireDetails = () => {
   if (!solitaire) {
     return <div style={{ color: "#f2dfcf" }}>Solitaire not found.</div>;
   }
+  const gallerySettings = {
+    dots: false,
+    infinite: false, // Don't repeat if only a few images
+    speed: 500,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    arrows: true,
+    centerMode: true, // Center the active image
+    responsive: [
+      // ... [Your responsive settings if needed] ...
+    ],
+  };
+
+  // Collect image URLs from solitaire data
+  const galleryImages = [
+    solitaire.Image1,
+    solitaire.Image2,
+    solitaire.Image3,
+    solitaire.Image4,
+    solitaire.Image5,
+  ].filter(Boolean);
 
   return (
     <div>
       <Head>
-        <title>
-          {solitaire.ProductName} {solitaire.SolitaireID} -{" "}
-          {solitaire.ShapeName}
-        </title>
+        <title>{solitaire.SolitaireName}</title>
         {/* ... [Add other meta tags] ... */}
       </Head>
 
@@ -169,13 +193,16 @@ const SolitaireDetails = () => {
             <div className="row">
               <div className="sub_megamenu">
                 <div className="container_wb_megamenu">
-                  <div id="stamenu">
+                  <div
+                    id="stamenu"
+                    className={` ${isOpen ? "active" : ""} menu-fixed`}
+                  >
                     <nav id="menu" className="navbar">
                       <div className="navbar-expand-md">
                         <button
                           type="button"
                           className="btn-navbar navbar-toggler"
-                          onclick="openNav()"
+                          onClick={toggleDrawer}
                           data-bs-toggle="collapse"
                           data-bs-target=".navbar-ex1-collapse"
                         >
@@ -191,24 +218,34 @@ const SolitaireDetails = () => {
                           aria-controls="collapseExample"
                         ></div>
                       </div>
-                      <div id="mySidenav" className="sidenav menu-vertical">
+                      <div
+                        id="mySidenav"
+                        className={`sidenav menu-vertical ${
+                          isOpen ? "open" : ""
+                        }`}
+                      >
                         <div id="under-menu" className="">
                           <div className="close-nav">
-                            <span className="categories">Categories</span>
-                            <a
-                              href="javascript:void(0)"
-                              className="closebtn float-end"
-                              onclick="closeNav()"
+                            <span
+                              className="categories"
+                              style={{ color: "#f2dfcf" }}
+                            >
+                              Categories
+                            </span>
+                            <button
+                              type="button"
+                              className=" float-end"
+                              onClick={toggleDrawer}
                             >
                               <i className="fa fa-close" />
-                            </a>
+                            </button>
                           </div>
                           <div className="navbar-collapse navbar-ex1-collapse">
                             <ul className="nav navbar-nav">
                               <li className="nav-item">
-                                <a href={"/solitaire"} className="nav-item">
+                                <Link href={"/solitaire"} className="nav-item">
                                   Solitaire
-                                </a>
+                                </Link>
                               </li>
                               <li className="nav-item">
                                 <a
@@ -228,24 +265,6 @@ const SolitaireDetails = () => {
                                   Blue Sapphire
                                 </a>
                               </li>
-                              <li className="nav-item">
-                                <a
-                                  href="https://opencart.workdo.io/diamond/index.php?route=product/category&language=en-gb&path=17"
-                                  className="nav-link"
-                                >
-                                  {/*<img src="https://opencart.workdo.io/diamond/image/cache/catalog/menu-icon/coffee--tea-14x14.png" alt="Black Diamond" title="Black Diamond"> */}{" "}
-                                  Black Diamond
-                                </a>
-                              </li>
-                              <li className="nav-item">
-                                <a
-                                  href="https://opencart.workdo.io/diamond/index.php?route=product/category&language=en-gb&path=68"
-                                  className="nav-link"
-                                >
-                                  {/*<img src="https://opencart.workdo.io/diamond/image/cache/catalog/menu-icon/chocolate-crackers-14x14.png" alt="Ametrine" title="Ametrine"> */}{" "}
-                                  Ametrine
-                                </a>
-                              </li>
                             </ul>
                           </div>
                         </div>
@@ -253,8 +272,11 @@ const SolitaireDetails = () => {
                     </nav>
                     <div
                       className="w3-overlay w3-animate-opacity"
-                      onclick="closeNav()"
-                      style={{ cursor: "pointer" }}
+                      onclick={toggleDrawer}
+                      style={{
+                        cursor: "pointer",
+                        display: isOpen ? "block" : "none",
+                      }}
                       id="myOverlay"
                     />
                   </div>
@@ -264,13 +286,16 @@ const SolitaireDetails = () => {
                 <div className="top-manu">
                   <div className="megamenu">
                     <div className="container_wb_megamenu">
-                      <div id="stamenu">
+                      <div
+                        id="stamenu"
+                        // className={` ${isOpen ? "active" : ""} menu-fixed`}
+                      >
                         <nav id="menu" className="navbar">
                           <div className="navbar-expand-md">
                             <button
                               type="button"
                               className="btn-navbar navbar-toggler"
-                              onclick="openNav()"
+                              onClick={toggleDrawer}
                               data-bs-toggle="collapse"
                               data-bs-target=".navbar-ex1-collapse"
                             >
@@ -286,17 +311,27 @@ const SolitaireDetails = () => {
                               aria-controls="collapseExample"
                             ></div>
                           </div>
-                          <div id="mySidenav" className="sidenav menu-vertical">
+                          <div
+                            id="mySidenav"
+                            className={`sidenav menu-vertical ${
+                              isOpen ? "open" : ""
+                            }`}
+                          >
                             <div id="under-menu" className="">
                               <div className="close-nav">
-                                <span className="categories">Categories</span>
-                                <a
-                                  href="javascript:void(0)"
-                                  className="closebtn float-end"
-                                  onclick="closeNav()"
+                                <span
+                                  className="categories"
+                                  style={{ color: "#f2dfcf" }}
+                                >
+                                  Categories
+                                </span>
+                                <button
+                                  type="button"
+                                  className=" float-end"
+                                  onClick={toggleDrawer}
                                 >
                                   <i className="fa fa-close" />
-                                </a>
+                                </button>
                               </div>
                               <div className="navbar-collapse navbar-ex1-collapse">
                                 <ul className="nav navbar-nav">
@@ -326,24 +361,6 @@ const SolitaireDetails = () => {
                                       Blue Sapphire
                                     </a>
                                   </li>
-                                  <li className="nav-item">
-                                    <a
-                                      href="https://opencart.workdo.io/diamond/index.php?route=product/category&language=en-gb&path=17"
-                                      className="nav-link"
-                                    >
-                                      {/*<img src="https://opencart.workdo.io/diamond/image/cache/catalog/menu-icon/coffee--tea-14x14.png" alt="Black Diamond" title="Black Diamond"> */}{" "}
-                                      Black Diamond
-                                    </a>
-                                  </li>
-                                  <li className="nav-item">
-                                    <a
-                                      href="https://opencart.workdo.io/diamond/index.php?route=product/category&language=en-gb&path=68"
-                                      className="nav-link"
-                                    >
-                                      {/*<img src="https://opencart.workdo.io/diamond/image/cache/catalog/menu-icon/chocolate-crackers-14x14.png" alt="Ametrine" title="Ametrine"> */}{" "}
-                                      Ametrine
-                                    </a>
-                                  </li>
                                 </ul>
                               </div>
                             </div>
@@ -351,8 +368,11 @@ const SolitaireDetails = () => {
                         </nav>
                         <div
                           className="w3-overlay w3-animate-opacity"
-                          onclick="closeNav()"
-                          style={{ cursor: "pointer" }}
+                          onclick={toggleDrawer}
+                          style={{
+                            cursor: "pointer",
+                            // display: isOpen ? "block" : "none",
+                          }}
                           id="myOverlay"
                         />
                       </div>
@@ -758,35 +778,59 @@ const SolitaireDetails = () => {
                                     data-zoom-image={solitaire.Image1}
                                     title={solitaire.ShapeName}
                                     alt={solitaire.ShapeName}
-                                    style={{ top: "50px", scale: "0.85" }}
+                                    style={{
+                                      top: "50px",
+                                      scale: "0.85",
+                                      border: "1px solid #fedfcf",
+                                      borderRadius: "20px",
+                                      padding: "5px",
+                                    }}
                                     className="img-thumbnail img-fluid"
                                   />
                                 </a>
                               )}
                             </div>
-                            <div className="col-md-12 col-sm-12 col-xs-12 gal-img">
-                              <div id="gal1" className="gallery_img">
-                                {/* Render additional images here */}
-                                {solitaire.Image2 && (
-                                  <a
-                                    href={solitaire.Image2}
-                                    className="elevatezoom-gallery img-fluid"
-                                    title={solitaire.ShapeName}
-                                    data-update=""
-                                    data-image={solitaire.Image2}
-                                    data-zoom-image={solitaire.Image2}
-                                  >
-                                    <img
-                                      src={solitaire.Image2}
-                                      data-zoom-image={solitaire.Image2}
-                                      id="img_02"
-                                      title={solitaire.ShapeName}
-                                      alt={solitaire.ShapeName}
-                                      className="img-thumbnail"
-                                    />
-                                  </a>
-                                )}
-                                {/* ... Add Image3, Image4, Image5 similarly */}
+                            {/*  Smaller Gallery Images (using CSS Grid)  */}
+                            <div
+                              className="col-md-12 col-sm-12 col-xs-12 mt-3"
+                              style={{
+                                alignItems: "center",
+                                justifyContent: "center",
+                                scale: "0.85",
+                              }}
+                            >
+                              <div
+                                style={{
+                                  display: "grid",
+                                  width: "80%",
+                                  gridTemplateColumns:
+                                    "repeat(auto-fit, minmax(50px, 1fr))", // Responsive columns
+                                  gap: "10px", // Spacing between images
+                                  justifyContent: "space-evenly", // Center the grid
+                                }}
+                              >
+                                {galleryImages.map((imageUrl, index) => (
+                                  <div key={index}>
+                                    <a
+                                      href={imageUrl}
+                                      title={solitaire.ProductName}
+                                    >
+                                      <img
+                                        src={imageUrl}
+                                        alt={`Gallery Image ${index + 1}`}
+                                        style={{
+                                          width: "75%",
+                                          borderRadius: "10px",
+                                          border: "1px solid #fedfcf",
+                                          padding: "3px",
+
+                                          height: "auto",
+                                          maxWidth: "100px", // Adjust as needed
+                                        }}
+                                      />
+                                    </a>
+                                  </div>
+                                ))}
                               </div>
                             </div>
                           </div>
@@ -809,11 +853,7 @@ const SolitaireDetails = () => {
                                 </Link>
                               </li>
                               <li className="breadcrumb-item">
-                                <Link href="#">
-                                  {solitaire.ShapeName +
-                                    "-" +
-                                    solitaire.SolitaireID}
-                                </Link>
+                                <Link href="#">{solitaire.SolitaireName}</Link>
                               </li>
                             </ul>
                           </div>
@@ -845,12 +885,13 @@ const SolitaireDetails = () => {
                                   textAlign: "center",
                                   alignItems: "center",
                                   justifyContent: "center",
+                                  justifyItems: "center",
                                 }}
                               >
-                                <img
-                                  src="image/catalog/wishlist.svg"
-                                  alt="wishlist"
-                                />
+                                <i
+                                  className="fas fa-heart"
+                                  style={{ fontSize: "16px" }}
+                                ></i>
                               </button>
 
                               <button
@@ -863,9 +904,10 @@ const SolitaireDetails = () => {
                                   // Add your logic here to handle adding to compare
                                 }}
                               >
-                                <svg width="16px" height="16px">
-                                  <use xlinkHref="#compare"></use>
-                                </svg>
+                                <i
+                                  className="fas fa-exchange-alt"
+                                  style={{ fontSize: "16px" }}
+                                ></i>
                               </button>
                             </form>
                           </div>
@@ -1004,8 +1046,14 @@ const SolitaireDetails = () => {
                                 <ul className="list-unstyled">
                                   <li className="text-decor-bold">
                                     <h2>
-                                      <span className="price-new">
-                                        ${solitaire.Price}
+                                      <span
+                                        className="price-new"
+                                        style={{
+                                          fontFamily: "outfit",
+                                          fontWeight: "200",
+                                        }}
+                                      >
+                                        $999{solitaire.Price}
                                       </span>
                                     </h2>
                                   </li>
@@ -1022,15 +1070,17 @@ const SolitaireDetails = () => {
                                       justifyContent: "center",
                                     }}
                                   >
-                                    <p
-                                      className="text-success"
+                                    <button
+                                      className="btn btn-primary btn-lg btn-block text-success"
                                       style={{
                                         marginRight: "10px",
-                                        display: "inline-block",
+                                        display: "flex",
+                                        alignItems: "center",
                                       }}
+                                      disabled
                                     >
                                       Already in cart!
-                                    </p>
+                                    </button>
                                     <Link
                                       href="/cart"
                                       className="btn btn-primary btn-lg btn-block"

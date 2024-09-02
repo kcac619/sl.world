@@ -10034,7 +10034,7 @@ footer .newsletter .container {
     right: 0;
     bottom: 0;
     background-color: rgba(0, 0, 0, 0.5);
-    z-index: 3;
+    z-index: 999999;
   }
 
   #stamenu .menu-vertical {
@@ -10052,9 +10052,9 @@ footer .newsletter .container {
     bottom: 0;
     left: 0;
     right: auto;
-    z-index: 999;
+    z-index: 99999999;
     background: var(--black);
-    width: 280px;
+    width: 300px;
     transform: translateX(-100%);
     transition: all 0.5s ease-out 0s;
   }
@@ -10124,6 +10124,78 @@ footer .newsletter .container {
     margin-left: 0;
     background-color: var(--black);
   }
+
+  /* nav test */
+  /* CSS for Side Drawer */
+  /* .sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #fff;
+    overflow-x: hidden;
+    padding-top: 60px;
+    transition: 0.5s;
+  }
+
+  .sidenav.open {
+    width: 250px;
+  }
+
+  .sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 16px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+  }
+
+  .sidenav a:hover {
+    color: #f1f1f1;
+  }
+
+  .sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+    background: transparent;
+    border: none;
+  }
+
+  .w3-overlay {
+    position: fixed;
+    display: none;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 2;
+    cursor: pointer;
+  }
+
+  .w3-animate-opacity {
+    animation: opacity 0.8s;
+  }
+
+  @keyframes opacity {
+    from {
+      opacity: 0
+    }
+
+    to {
+      opacity: 1
+    }
+  } */
+
+  /* nav test end */
 
   .deliveryinfo li:last-child {
     margin-left: 0;
@@ -10343,7 +10415,7 @@ footer .newsletter .container {
 
   .wc-btn {
     bottom: 0;
-    right: 60px;
+    right: 30px;
   }
 
   #product .compare,
