@@ -884,6 +884,7 @@ const SolitaireDetails = () => {
                                       top: "50%",
                                       transform: "translateY(-50%)",
                                       width: "100%",
+
                                       display: "flex",
                                       justifyContent: "space-between",
                                     }}
@@ -892,7 +893,7 @@ const SolitaireDetails = () => {
                                       className="glide__arrow glide__arrow--left"
                                       data-glide-dir="<"
                                       style={{
-                                        backgroundColor: "transparent",
+                                        backgroundColor: "rgb(0,0,0,0.2)",
                                         border: "none",
                                         padding: "10px",
                                         borderRadius: "50%",
@@ -906,10 +907,10 @@ const SolitaireDetails = () => {
                                       className="glide__arrow glide__arrow--right"
                                       data-glide-dir=">"
                                       style={{
-                                        backgroundColor: "transparent",
+                                        backgroundColor: "rgb(0,0,0,0.2)",
                                         border: "none",
                                         padding: "10px",
-                                        borderRadius: "50%",
+                                        borderRadius: "40%",
                                         cursor: "pointer",
                                       }}
                                     >
