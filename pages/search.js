@@ -807,11 +807,7 @@ const SearchResults = () => {
                                         <Link href={`/${item.SolitaireID}`}>
                                           <img
                                             src={item.Image1}
-                                            alt={
-                                              item.ShapeName +
-                                              "-" +
-                                              item.SolitaireID
-                                            }
+                                            alt={item.SolitaireName}
                                             style={{
                                               width: "50px",
                                               height: "50px",
@@ -898,7 +894,10 @@ const SearchResults = () => {
           padding: "0px",
         }}
       >
-        <h1 className="mb-4 text-white" style={{ textAlign: "center" }}>
+        <h1
+          className="mb-4 text-white"
+          style={{ textAlign: "center", color: "var(--main-color)" }}
+        >
           Search Results
         </h1>
         {isLoading && <p className="text-center text-white">Loading...</p>}
@@ -957,7 +956,7 @@ const SearchResults = () => {
                       </div>
                       <div className="blog-right">
                         <h4>
-                          <a href="#">Shape: {solitaire.ShapeName}</a>
+                          <a href="#">{solitaire.SolitaireName}</a>
                         </h4>
                         <div className="blog-desc">
                           {/* <p className="card-text">Shape: {solitaire.ShapeName}</p> */}

@@ -15,6 +15,7 @@ import {
   removeFromCart,
   updateCartItemQuantity,
 } from "../utils/cartfns";
+import { Skeleton } from "@chakra-ui/react";
 
 const SolitaireDetails = () => {
   const router = useRouter();
@@ -29,11 +30,15 @@ const SolitaireDetails = () => {
   const [mainImageUrl, setMainImageUrl] = useState(
     solitaire ? solitaire.Image1 : null
   ); // State to manage main image URL
-
+  const [showSkeleton, setShowSkeleton] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
   const handleGalleryImageClick = (imageUrl) => {
-    setMainImageUrl(imageUrl);
+    setShowSkeleton(true); // Show Skeleton before image change
+    setTimeout(() => {
+      setMainImageUrl(imageUrl);
+      setShowSkeleton(false); // Hide Skeleton after image loads
+    }, 300); // Adjust delay as needed
   };
   const toggleDrawer = () => {
     setIsOpen(!isOpen);
@@ -102,14 +107,16 @@ const SolitaireDetails = () => {
       setMainImageUrl(solitaire.Image1); // Set main image after solitaire data is fetched
     }
 
-    const slides = galleryRef.current.querySelectorAll(".glide__slide");
-    slides.forEach((slide) => {
-      slide.addEventListener("click", (event) => {
-        // Find the image URL from the clicked slide
-        const clickedImageUrl = event.currentTarget.querySelector("img").src;
-        handleGalleryImageClick(clickedImageUrl);
+    if (galleryRef.current) {
+      const slides = galleryRef.current.querySelectorAll(".glide__slide");
+      slides.forEach((slide) => {
+        slide.addEventListener("click", (event) => {
+          // Find the image URL from the clicked slide
+          const clickedImageUrl = event.currentTarget.querySelector("img").src;
+          handleGalleryImageClick(clickedImageUrl);
+        });
       });
-    });
+    }
   }, [solitaire]);
 
   const fetchSolitaireDetails = async (slug) => {
@@ -801,28 +808,44 @@ const SolitaireDetails = () => {
                         <div className="pro-bg">
                           <div className="image magnific-popup row">
                             <div className="col-md-12 col-sm-12 col-xs-12 big-img">
-                              {solitaire.Image1 && (
+                              {/* Main Image (Dynamically Updated) */}
+                              {mainImageUrl && ( // Only render image when URL is available
                                 <a
                                   href={mainImageUrl}
-                                  title={solitaire.SolitaireName}
+                                  title={solitaire.ProductName}
                                 >
-                                  <img
-                                    id="img_01"
-                                    src={mainImageUrl}
-                                    data-zoom-image={mainImageUrl}
-                                    title={solitaire.SolitaireName}
-                                    alt={solitaire.SolitaireName}
-                                    style={{
-                                      top: "50px",
-                                      scale: "0.85",
-                                      // border: "2px solid var(--main-color)",
-                                      boxShadow:
-                                        "4px 4px 4px 4px rgb(0,0,0,0.3)",
-                                      borderRadius: "20px",
-                                      padding: "5px",
-                                    }}
-                                    className="img-thumbnail img-fluid"
-                                  />
+                                  {/* Skeleton Overlay */}
+                                  {showSkeleton ? (
+                                    <Skeleton
+                                      startColor="brown.300"
+                                      endColor="gray.500"
+                                      className="img-thumbnail img-fluid"
+                                      height="100%"
+                                      minWidth={"350px"}
+                                      minHeight={"350px"}
+                                      opacity={100}
+                                      zIndex="5" // Ensure Skeleton is on top
+                                    />
+                                  ) : (
+                                    <img
+                                      id="img_01"
+                                      src={mainImageUrl}
+                                      data-zoom-image={mainImageUrl}
+                                      title={solitaire.ProductName}
+                                      alt={solitaire.ProductName}
+                                      className="img-thumbnail img-fluid"
+                                      style={{
+                                        width: "100%",
+                                        height: "auto",
+                                        maxWidth: "400px", // Set a maximum width for the image
+                                        display: "block", // Make sure the image is a block element
+                                        boxShadow:
+                                          "4px 4px 4px 4px rgb(0,0,0,0.3)",
+                                        borderRadius: "20px",
+                                        zIndex: "1",
+                                      }}
+                                    />
+                                  )}
                                 </a>
                               )}
                             </div>
