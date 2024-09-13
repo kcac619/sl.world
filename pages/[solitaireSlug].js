@@ -97,6 +97,20 @@ const SolitaireDetails = () => {
       fetchSolitaireDetails(solitaireSlug);
     }
   }, [solitaireSlug]);
+  useEffect(() => {
+    if (solitaire) {
+      setMainImageUrl(solitaire.Image1); // Set main image after solitaire data is fetched
+    }
+
+    const slides = galleryRef.current.querySelectorAll(".glide__slide");
+    slides.forEach((slide) => {
+      slide.addEventListener("click", (event) => {
+        // Find the image URL from the clicked slide
+        const clickedImageUrl = event.currentTarget.querySelector("img").src;
+        handleGalleryImageClick(clickedImageUrl);
+      });
+    });
+  }, [solitaire]);
 
   const fetchSolitaireDetails = async (slug) => {
     setIsLoading(true);
@@ -820,7 +834,7 @@ const SolitaireDetails = () => {
                                 justifyContent: "center",
                               }}
                             >
-                              <div style={{ width: "80%" }} ref={galleryRef}>
+                              <div style={{ width: "100%" }} ref={galleryRef}>
                                 {" "}
                                 {/* Attach the ref to the container */}
                                 <div className="glide">
