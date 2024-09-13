@@ -19,6 +19,7 @@
     "@fontsource/playfair-display": "^5.0.24",
     "@fontsource/raleway": "^5.0.19",
     "@fontsource/roboto": "^5.0.13",
+    "@glidejs/glide": "^3.6.2",
     "@reduxjs/toolkit": "^2.2.6",
     "aws-sdk": "^2.1672.0",
     "axios": "^1.7.2",

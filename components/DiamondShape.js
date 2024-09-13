@@ -6,7 +6,7 @@ const DiamondShape = ({ shape, isSelected, onClick }) => {
   return (
     <Center
       // border="1px"
-      // borderColor="#f2dfcf"
+      // borderColor="#20C997"
       boxShadow={"0px 3px 10px rgba(255, 255, 255, 0.05)"}
       borderRadius="md"
       flex={1}
@@ -17,8 +17,8 @@ const DiamondShape = ({ shape, isSelected, onClick }) => {
       backgroundColor="transparent"
       cursor="pointer"
       fontFamily="outfit"
-      color={isSelected ? "#0d1e1c" : "#f2dfcf"} // Conditional text color
-      bg={isSelected ? "#F2DFCF" : "#0d1e1c"} // Conditional background
+      color={isSelected ? "#f2dfcf" : "#20C997"} // Conditional text color
+      bg={isSelected ? "#20C997" : "#f2dfcf"} // Conditional background
       onClick={onClick}
       // Add active state styles (optional)
     >

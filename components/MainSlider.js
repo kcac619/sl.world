@@ -28,7 +28,7 @@ const MainSlider = () => {
 
     {
       imageUrl: "/image/cache/catalog/slider/2-1920x750.png", // Keep the image URL for reference or background
-      title: "asdkljfalksdnfkljhklndf",
+      title: "Explore the Sale!!",
       text: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy...",
       buttonText: "Check more product",
       buttonLink: "#",

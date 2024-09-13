@@ -1,9 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 import Head from "next/head";
 import Link from "next/link"; // For routing
-import Slider from "react-slick";
+import Glide from "@glidejs/glide"; // Import Glide
+
+// Import Glide CSS
+import "@glidejs/glide/dist/css/glide.core.min.css";
+import "@glidejs/glide/dist/css/glide.theme.min.css";
+
 import {
   getCartItemsFromLocalStorage,
   addToCart,
@@ -21,8 +26,15 @@ const SolitaireDetails = () => {
   const [quantity, setQuantity] = useState(1);
   const [cartItems, setCartItems] = useState([]);
   const [cartDropdownOpen, setCartDropdownOpen] = useState(false);
+  const [mainImageUrl, setMainImageUrl] = useState(
+    solitaire ? solitaire.Image1 : null
+  ); // State to manage main image URL
+
   const [isOpen, setIsOpen] = useState(false);
 
+  const handleGalleryImageClick = (imageUrl) => {
+    setMainImageUrl(imageUrl);
+  };
   const toggleDrawer = () => {
     setIsOpen(!isOpen);
   };
@@ -35,6 +47,19 @@ const SolitaireDetails = () => {
     window.addEventListener("storage", updateCart);
     return () => window.removeEventListener("storage", updateCart);
   }, []);
+  const galleryRef = useRef(null);
+  useEffect(() => {
+    if (galleryRef.current && solitaire) {
+      // Initialize Glide after the component renders and data is fetched
+      new Glide(galleryRef.current, {
+        type: "carousel",
+        perView: 4, // Number of slides to show per view
+        gap: 10, // Spacing between slides
+        rewind: false, // Prevent looping to the beginning
+        // ... [Add other Glide options as needed] ...
+      }).mount();
+    }
+  }, [solitaire]);
 
   useEffect(() => {
     // Fetch cart items from localStorage when the component mounts
@@ -116,15 +141,15 @@ const SolitaireDetails = () => {
   };
 
   if (isLoading) {
-    return <div style={{ color: "#f2dfcf" }}>Loading...</div>;
+    return <div style={{ color: "#20C997" }}>Loading...</div>;
   }
 
   if (error) {
-    return <div style={{ color: "#f2dfcf" }}>Error: {error}</div>;
+    return <div style={{ color: "#20C997" }}>Error: {error}</div>;
   }
 
   if (!solitaire) {
-    return <div style={{ color: "#f2dfcf" }}>Solitaire not found.</div>;
+    return <div style={{ color: "#20C997" }}>Solitaire not found.</div>;
   }
   const gallerySettings = {
     dots: false,
@@ -228,7 +253,7 @@ const SolitaireDetails = () => {
                           <div className="close-nav">
                             <span
                               className="categories"
-                              style={{ color: "#f2dfcf" }}
+                              style={{ color: "var(--secondary-color)" }}
                             >
                               Categories
                             </span>
@@ -321,7 +346,7 @@ const SolitaireDetails = () => {
                               <div className="close-nav">
                                 <span
                                   className="categories"
-                                  style={{ color: "#f2dfcf" }}
+                                  style={{ color: "#20C997" }}
                                 >
                                   Categories
                                 </span>
@@ -382,14 +407,9 @@ const SolitaireDetails = () => {
               </div>
               <div className="col-md-2 col-sm-2 text-left header-logo">
                 <div id="logo">
-                  <a href="https://opencart.workdo.io/diamond/index.php?route=common/home&language=en-gb">
-                    <img
-                      src="https://opencart.workdo.io/diamond/image/catalog/storlogo/logo.png"
-                      title="diamond"
-                      alt="diamond"
-                      className="img-responsive img-fluid"
-                    />
-                  </a>
+                  <Link href="/">
+                    <h4 style={{ color: "var(--main-color)" }}>HKSURANA</h4>
+                  </Link>
                 </div>
               </div>
               <div className="col-md-5 col-sm-5 megamenu_border">
@@ -646,7 +666,7 @@ const SolitaireDetails = () => {
                               style={{
                                 padding: "1rem",
                                 maxWidth: "300px",
-                                backgroundColor: "#0d1e1c", // Dark background color
+                                backgroundColor: "rgb(33, 37, 41)", // Dark background color
                                 boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
                                 border: "1px solid #dee2e6",
                               }}
@@ -689,7 +709,7 @@ const SolitaireDetails = () => {
                                             <h6
                                               className="mb-0"
                                               style={{
-                                                color: "#f2dfcf",
+                                                color: "#20C997",
                                                 fontFamily: "outfit",
                                               }}
                                             >
@@ -769,19 +789,21 @@ const SolitaireDetails = () => {
                             <div className="col-md-12 col-sm-12 col-xs-12 big-img">
                               {solitaire.Image1 && (
                                 <a
-                                  href={solitaire.Image1}
-                                  title={solitaire.ProductName}
+                                  href={mainImageUrl}
+                                  title={solitaire.SolitaireName}
                                 >
                                   <img
                                     id="img_01"
-                                    src={solitaire.Image1}
-                                    data-zoom-image={solitaire.Image1}
-                                    title={solitaire.ShapeName}
-                                    alt={solitaire.ShapeName}
+                                    src={mainImageUrl}
+                                    data-zoom-image={mainImageUrl}
+                                    title={solitaire.SolitaireName}
+                                    alt={solitaire.SolitaireName}
                                     style={{
                                       top: "50px",
                                       scale: "0.85",
-                                      border: "1px solid #fedfcf",
+                                      // border: "2px solid var(--main-color)",
+                                      boxShadow:
+                                        "4px 4px 4px 4px rgb(0,0,0,0.3)",
                                       borderRadius: "20px",
                                       padding: "5px",
                                     }}
@@ -794,43 +816,94 @@ const SolitaireDetails = () => {
                             <div
                               className="col-md-12 col-sm-12 col-xs-12 mt-3"
                               style={{
-                                alignItems: "center",
+                                display: "flex",
                                 justifyContent: "center",
-                                scale: "0.85",
                               }}
                             >
-                              <div
-                                style={{
-                                  display: "grid",
-                                  width: "80%",
-                                  gridTemplateColumns:
-                                    "repeat(auto-fit, minmax(50px, 1fr))", // Responsive columns
-                                  gap: "10px", // Spacing between images
-                                  justifyContent: "space-evenly", // Center the grid
-                                }}
-                              >
-                                {galleryImages.map((imageUrl, index) => (
-                                  <div key={index}>
-                                    <a
-                                      href={imageUrl}
-                                      title={solitaire.ProductName}
-                                    >
-                                      <img
-                                        src={imageUrl}
-                                        alt={`Gallery Image ${index + 1}`}
-                                        style={{
-                                          width: "75%",
-                                          borderRadius: "10px",
-                                          border: "1px solid #fedfcf",
-                                          padding: "3px",
-
-                                          height: "auto",
-                                          maxWidth: "100px", // Adjust as needed
-                                        }}
-                                      />
-                                    </a>
+                              <div style={{ width: "80%" }} ref={galleryRef}>
+                                {" "}
+                                {/* Attach the ref to the container */}
+                                <div className="glide">
+                                  <div
+                                    className="glide__track"
+                                    data-glide-el="track"
+                                  >
+                                    <ul className="glide__slides">
+                                      {galleryImages.map((imageUrl, index) => (
+                                        <li
+                                          key={index}
+                                          className="glide__slide"
+                                        >
+                                          <a
+                                            href="#"
+                                            title={solitaire.ProductName}
+                                          >
+                                            <img
+                                              src={imageUrl}
+                                              onClick={() =>
+                                                handleGalleryImageClick(
+                                                  imageUrl
+                                                )
+                                              }
+                                              alt={`Gallery Image ${index + 1}`}
+                                              style={{
+                                                width: "100%",
+                                                height: "auto",
+                                                maxWidth: "100px",
+                                                border: "1px solid #ccc",
+                                                padding: "5px",
+                                                borderRadius: "5px",
+                                              }}
+                                            />
+                                          </a>
+                                        </li>
+                                      ))}
+                                    </ul>
                                   </div>
-                                ))}
+
+                                  {/* Navigation Arrows (moved and styled) */}
+                                  <div
+                                    className="glide__arrows"
+                                    data-glide-el="controls"
+                                    style={{
+                                      position: "absolute",
+                                      top: "50%",
+                                      transform: "translateY(-50%)",
+                                      width: "100%",
+                                      display: "flex",
+                                      justifyContent: "space-between",
+                                    }}
+                                  >
+                                    <button
+                                      className="glide__arrow glide__arrow--left"
+                                      data-glide-dir="<"
+                                      style={{
+                                        backgroundColor: "transparent",
+                                        border: "none",
+                                        padding: "10px",
+                                        borderRadius: "50%",
+                                        cursor: "pointer",
+                                      }}
+                                    >
+                                      <i className="fas fa-chevron-left fa-lg text-dark"></i>
+                                      <i className="fas fa-chevron-left fa-lg text-dark"></i>
+                                    </button>
+                                    <button
+                                      className="glide__arrow glide__arrow--right"
+                                      data-glide-dir=">"
+                                      style={{
+                                        backgroundColor: "transparent",
+                                        border: "none",
+                                        padding: "10px",
+                                        borderRadius: "50%",
+                                        cursor: "pointer",
+                                      }}
+                                    >
+                                      <i className="fas fa-chevron-right fa-lg text-dark"></i>
+                                      <i className="fas fa-chevron-right fa-lg text-dark"></i>
+                                    </button>
+                                  </div>
+                                </div>
                               </div>
                             </div>
                           </div>
@@ -1135,7 +1208,7 @@ const SolitaireDetails = () => {
                         <div
                           className="card-header"
                           style={{
-                            color: "#f2dfcf",
+                            color: "#20C997",
                             fontFamily: "outfit",
                             textAlign: "center",
                           }}
@@ -1164,7 +1237,7 @@ const SolitaireDetails = () => {
                         <div
                           className="card-header"
                           style={{
-                            color: "#f2dfcf",
+                            color: "#20C997",
                             fontFamily: "outfit",
                             textAlign: "center",
                           }}

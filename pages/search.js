@@ -369,7 +369,7 @@ const SearchResults = () => {
                           <div className="close-nav">
                             <span
                               className="categories"
-                              style={{ color: "#f2dfcf" }}
+                              style={{ color: "#20C997" }}
                             >
                               Categories
                             </span>
@@ -462,7 +462,7 @@ const SearchResults = () => {
                               <div className="close-nav">
                                 <span
                                   className="categories"
-                                  style={{ color: "#f2dfcf" }}
+                                  style={{ color: "#20C997" }}
                                 >
                                   Categories
                                 </span>
@@ -523,14 +523,9 @@ const SearchResults = () => {
               </div>
               <div className="col-md-2 col-sm-2 text-left header-logo">
                 <div id="logo">
-                  <a href="https://opencart.workdo.io/diamond/index.php?route=common/home&language=en-gb">
-                    <img
-                      src="https://opencart.workdo.io/diamond/image/catalog/storlogo/logo.png"
-                      title="diamond"
-                      alt="diamond"
-                      className="img-responsive img-fluid"
-                    />
-                  </a>
+                  <Link href="/">
+                    <h4 style={{ color: "var(--main-color)" }}>HKSURANA</h4>
+                  </Link>
                 </div>
               </div>
               <div className="col-md-5 col-sm-5 megamenu_border">
@@ -787,7 +782,7 @@ const SearchResults = () => {
                               style={{
                                 padding: "1rem",
                                 maxWidth: "300px",
-                                backgroundColor: "#0d1e1c", // Dark background color
+                                backgroundColor: "rgb(33, 37, 41)", // Dark background color
                                 boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
                                 border: "1px solid #dee2e6",
                               }}
@@ -830,7 +825,7 @@ const SearchResults = () => {
                                             <h6
                                               className="mb-0"
                                               style={{
-                                                color: "#f2dfcf",
+                                                color: "#20C997",
                                                 fontFamily: "outfit",
                                               }}
                                             >
@@ -1035,8 +1030,8 @@ const SearchResults = () => {
               <button
                 onClick={handleMoreClick}
                 style={{
-                  backgroundColor: "#f2dfcf",
-                  color: "#0d1e1c",
+                  backgroundColor: "#20C997",
+                  color: "#f2dfcf",
                   borderRadius: "20px",
                   fontFamily: "Outfit, sans-serif",
                 }}
@@ -1054,8 +1049,8 @@ const SearchResults = () => {
               onClick={() => setShowAllSolitaires(!showAllSolitaires)}
               className="btn btn-secondary btn-block"
               style={{
-                backgroundColor: "#f2dfcf",
-                color: "#0d1e1c",
+                backgroundColor: "#20C997",
+                color: "#f2dfcf",
                 borderRadius: "20px",
                 fontFamily: "Outfit, sans-serif",
               }}

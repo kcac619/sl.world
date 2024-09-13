@@ -519,7 +519,7 @@ const Solitaire = () => {
                           <div className="close-nav">
                             <span
                               className="categories"
-                              style={{ color: "#f2dfcf" }}
+                              style={{ color: "var(--main-color)" }}
                             >
                               Categories
                             </span>
@@ -612,7 +612,7 @@ const Solitaire = () => {
                               <div className="close-nav">
                                 <span
                                   className="categories"
-                                  style={{ color: "#f2dfcf" }}
+                                  style={{ color: "var(--main-color)" }}
                                 >
                                   Categories
                                 </span>
@@ -673,14 +673,9 @@ const Solitaire = () => {
               </div>
               <div className="col-md-2 col-sm-2 text-left header-logo">
                 <div id="logo">
-                  <a href="https://opencart.workdo.io/diamond/index.php?route=common/home&language=en-gb">
-                    <img
-                      src="https://opencart.workdo.io/diamond/image/catalog/storlogo/logo.png"
-                      title="diamond"
-                      alt="diamond"
-                      className="img-responsive img-fluid"
-                    />
-                  </a>
+                  <Link href="/">
+                    <h4 style={{ color: "var(--main-color)" }}>HKSURANA</h4>
+                  </Link>
                 </div>
               </div>
               <div className="col-md-5 col-sm-5 megamenu_border">
@@ -937,7 +932,7 @@ const Solitaire = () => {
                               style={{
                                 padding: "1rem",
                                 maxWidth: "300px",
-                                backgroundColor: "#0d1e1c", // Dark background color
+                                backgroundColor: "rgb(33, 37, 41)", // Dark background color
                                 boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
                                 border: "1px solid #dee2e6",
                               }}
@@ -980,7 +975,7 @@ const Solitaire = () => {
                                             <h6
                                               className="mb-0"
                                               style={{
-                                                color: "#f2dfcf",
+                                                color: "var(--main-color)",
                                                 fontFamily: "outfit",
                                               }}
                                             >
@@ -1092,11 +1087,11 @@ const Solitaire = () => {
         >
           {/* Diamond Shape Section */}
           <Box mb={6}>
-            <Heading as="h2" size="md" color="#F2DFCF" mb={5}>
+            <Heading as="h2" size="md" color="var(--main-color)" mb={5}>
               Shape
             </Heading>
             {loadingShapes ? (
-              <Text color="#f2dfcf">Loading shapes...</Text>
+              <Text color="var(--main-color)">Loading shapes...</Text>
             ) : (
               <SimpleGrid columns={{ base: 4, md: 8, lg: 12 }} spacing={4}>
                 {shapes ? (
@@ -1111,15 +1106,19 @@ const Solitaire = () => {
                     />
                   ))
                 ) : (
-                  <span color="#f2dfcf">error fetching shapes</span>
+                  <span color="var(--main-color)">error fetching shapes</span>
                 )}
               </SimpleGrid>
             )}
           </Box>
 
-          <hr style={{ color: "#f2dfcf", margin: "2px" }} />
+          <hr style={{ color: "var(--main-color)", margin: "2px" }} />
           <hr
-            style={{ color: "#f2dfcf", margin: "2px", marginBottom: "16px" }}
+            style={{
+              color: "var(--main-color)",
+              margin: "2px",
+              marginBottom: "16px",
+            }}
           />
 
           {/* Filters Section - Using Grid for two-column layout */}
@@ -1172,7 +1171,7 @@ const Solitaire = () => {
                   fontWeight="bold"
                   mb={2}
                   // fontFamily="Playfair Display"
-                  color="#f2dfcf"
+                  color="var(--main-color)"
                 >
                   Color
                 </Text>
@@ -1190,7 +1189,7 @@ const Solitaire = () => {
                   fontWeight="bold"
                   mb={2}
                   // fontFamily="Playfair Display"
-                  color="#f2dfcf"
+                  color="var(--main-color)"
                 >
                   Purity
                 </Text>
@@ -1210,7 +1209,7 @@ const Solitaire = () => {
                   fontWeight="bold"
                   mb={2}
                   // fontFamily="Playfair Display"
-                  color="#f2dfcf"
+                  color="var(--main-color)"
                 >
                   Lab
                 </Text>
@@ -1228,7 +1227,7 @@ const Solitaire = () => {
                   fontWeight="bold"
                   mb={2}
                   // fontFamily="Playfair Display"
-                  color="#f2dfcf"
+                  color="var(--main-color)"
                 >
                   Symmerty
                 </Text>
@@ -1246,7 +1245,7 @@ const Solitaire = () => {
                   fontWeight="bold"
                   mb={2}
                   // fontFamily="Playfair Display"
-                  color="#f2dfcf"
+                  color="var(--main-color)"
                 >
                   Location
                 </Text>
@@ -1265,8 +1264,8 @@ const Solitaire = () => {
           </Grid>
 
           <Button
-            backgroundColor="#f2dfcf"
-            color="#0d1e1c"
+            backgroundColor="var(--secondary-color)"
+            color="#f2dfcf"
             size="sm"
             mt={4}
             mb={6}
@@ -1279,16 +1278,16 @@ const Solitaire = () => {
           {/* Search Buttons */}
           <Flex mt={6} justify="flex-end">
             <Button
-              backgroundColor="#f2dfcf"
-              color="#0d1e1c"
+              backgroundColor="var(--secondary-color)"
+              color="#f2dfcf"
               mr={2}
               borderRadius="20px"
             >
               Cancel
             </Button>
             <Button
-              backgroundColor="#f2dfcf"
-              color="#0d1e1c"
+              backgroundColor="var(--secondary-color)"
+              color="#f2dfcf"
               mr={2}
               borderRadius="20px"
               onClick={() => {
@@ -1298,8 +1297,8 @@ const Solitaire = () => {
               Reset
             </Button>
             <Button
-              backgroundColor="#f2dfcf"
-              color="#0d1e1c"
+              backgroundColor="var(--secondary-color)"
+              color="#f2dfcf"
               borderRadius="20px"
               onClick={() => {
                 handleSearch();
@@ -1308,8 +1307,8 @@ const Solitaire = () => {
               Search
             </Button>
             <Button
-              backgroundColor="#f2dfcf"
-              color="#0d1e1c"
+              backgroundColor="var(--secondary-color)"
+              color="#f2dfcf"
               ml={2}
               borderRadius="20px"
               rightIcon={<ChevronDownIcon />}
