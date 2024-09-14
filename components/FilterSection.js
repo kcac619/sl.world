@@ -14,7 +14,7 @@ const FilterSection = ({
         fontWeight="bold"
         mb={{ base: 1, md: 0 }}
         fontFamily="outfit"
-        color="#20C997"
+        color="var(--main-color)"
       >
         {label}
       </Text>
@@ -27,7 +27,7 @@ const FilterSection = ({
             fontWeight={200}
             borderRadius="4px"
             fontFamily="outfit"
-            boxShadow={"0px 3px 10px rgba(255, 255, 255, 0.05)"}
+            boxShadow={"0px 3px 10px rgba(0, 0, 0, 0.15)"}
             minWidth="40px"
             fontSize="xs"
             _hover={{ boxShadow: "inset 0 0 0 1px rgb(242,223,207, 1)" }}
