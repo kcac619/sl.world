@@ -1,4 +1,4 @@
-import "@/styles/globals.css";
+
 import { Provider } from "react-redux";
 import { store } from "../store";
 import { ChakraProvider } from "@chakra-ui/react";

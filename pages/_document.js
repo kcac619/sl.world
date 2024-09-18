@@ -31,53 +31,53 @@ class MyDocument extends Document {
           <meta name="description" content="Product Store" /> */}
 
           <link
-            href="catalog/view/javascript/jquery/swiper/css/slick.css"
+            href="js/jquery/swiper/css/slick.css"
             rel="stylesheet"
           />
           <link
-            href="catalog/view/javascript/jquery/swiper/css/slick-theme.css"
+            href="js/jquery/swiper/css/slick-theme.css"
             rel="stylesheet"
           />
           <link
-            href="catalog/view/javascript/font-awesome/css/font-awesome.min.css"
+            href="js/font-awesome/css/font-awesome.min.css"
             rel="stylesheet"
             type="text/css"
           />
           <script
-            src="catalog/view/javascript/jquery/jquery-3.6.0.min.js"
+            src="js/jquery/jquery-3.6.0.min.js"
             type="text/javascript"
           ></script>
           <link
-            href="catalog/view/stylesheet/bootstrap.css"
+            href="css/bootstrap.css"
             type="text/css"
             rel="stylesheet"
             media="screen"
           />
           <link
-            href="catalog/view/stylesheet/fonts/fontawesome/css/all.min.css"
+            href="css/fonts/fontawesome/css/all.min.css"
             type="text/css"
             rel="stylesheet"
           />
           <link
-            href="catalog/view/stylesheet/stylesheet.css"
+            href="css/stylesheet.css"
             type="text/css"
             rel="stylesheet"
           />
 
           <script
             type="text/javascript"
-            src="catalog/view/javascript/jquery/datetimepicker/moment.min.js"
+            src="js/jquery/datetimepicker/moment.min.js"
           ></script>
           <script
             type="text/javascript"
-            src="catalog/view/javascript/jquery/datetimepicker/moment-with-locales.min.js"
+            src="js/jquery/datetimepicker/moment-with-locales.min.js"
           ></script>
           <script
             type="text/javascript"
-            src="catalog/view/javascript/jquery/datetimepicker/daterangepicker.js"
+            src="js/jquery/datetimepicker/daterangepicker.js"
           ></script>
           <link
-            href="catalog/view/javascript/jquery/datetimepicker/daterangepicker.css"
+            href="js/jquery/datetimepicker/daterangepicker.css"
             rel="stylesheet"
             type="text/css"
           />
@@ -104,11 +104,11 @@ class MyDocument extends Document {
             type="text/javascript"
           ></script> */}
           <script
-            src="catalog/view/javascript/bootstrap/js/bootstrap.bundle.min.js"
+            src="js/bootstrap/js/bootstrap.bundle.min.js"
             type="text/javascript"
           ></script>
           <script
-            src="/catalog/view/javascript/jquery/swiper/js/slick.js"
+            src="/js/jquery//swiper/js/slick.js"
             defer
           ></script>
           {/* <script
