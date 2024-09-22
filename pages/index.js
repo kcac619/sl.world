@@ -17,11 +17,28 @@ import {
   removeFromCart,
   updateCartItemQuantity,
 } from "../utils/cartfns";
+import {
+  Drawer,
+  DrawerBody,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+  Button,
+  useDisclosure,
+} from "@chakra-ui/react";
 
 const Index = () => {
   const [cartItems, setCartItems] = useState([]);
   const [cartDropdownOpen, setCartDropdownOpen] = useState(false); // For dropdown
   // Testimonials
+  const {
+    isOpen: isCartOpen,
+    onOpen: onCartOpen,
+    onClose: onCartClose,
+  } = useDisclosure();
+  const cartBtnRef = React.useRef();
   const [testimonials, setTestimonials] = useState([]);
   const [isLoadingTestimonials, setIsLoadingTestimonials] = useState(true);
   const [errorTestimonials, setErrorTestimonials] = useState(null);
@@ -405,6 +422,11 @@ const Index = () => {
                                     </Link>
                                   </li>
                                   <li className="nav-item">
+                                    <Link href={"/pair"} className="nav-item">
+                                      Pair
+                                    </Link>
+                                  </li>
+                                  <li className="nav-item">
                                     <a
                                       href="https://opencart.workdo.io/diamond/index.php?route=product/category&language=en-gb&path=60"
                                       className="nav-link"
@@ -512,6 +534,20 @@ const Index = () => {
                                           className="nav-item"
                                         >
                                           Solitaire
+                                        </Link>
+                                      </li>
+                                      <li
+                                        className="nav-item"
+                                        style={{
+                                          display: "inline-block",
+                                          marginRight: "30px",
+                                        }}
+                                      >
+                                        <Link
+                                          href={"/pair"}
+                                          className="nav-item"
+                                        >
+                                          Pair
                                         </Link>
                                       </li>
                                       <li
@@ -807,13 +843,17 @@ const Index = () => {
                           </ul>
                           <div className="d-inline-block">
                             <span id="header-cart">
-                              <div id="cart" className="dropdown btn-block">
+                              <div
+                                ref={cartBtnRef} // Use cartBtnRef here
+                                onClick={onCartOpen} // Use onCartOpen
+                                id="cart"
+                                className="dropdown btn-block"
+                              >
+                                {/* Cart Button */}
                                 <button
                                   type="button"
                                   data-bs-toggle="dropdown"
                                   className="btn btn-inverse dropdown-toggle"
-                                  onClick={toggleCartDropdown}
-                                  aria-expanded={cartDropdownOpen}
                                 >
                                   {/* ... [Your existing cart icon and text] ...  */}
                                   <div className="xuser">
@@ -833,111 +873,151 @@ const Index = () => {
                                     <strong>Items</strong>
                                   </span>
                                 </button>
-
-                                {/* Cart Dropdown (Custom Styled) */}
-                                <ul
-                                  className={`dropdown-menu dropdown-menu-right${
-                                    cartDropdownOpen ? " show" : ""
-                                  }`}
-                                  aria-labelledby="cart"
-                                  style={{
-                                    padding: "1rem",
-                                    maxWidth: "300px",
-                                    backgroundColor: "rgb(33, 37, 41)", // Dark background color
-                                    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-                                    border: "1px solid #dee2e6",
-                                  }}
-                                >
-                                  {cartItems.length === 0 ? (
-                                    <li className="text-center">
-                                      Your shopping cart is empty!
-                                    </li>
-                                  ) : (
-                                    <>
-                                      <div
-                                        style={{
-                                          maxHeight: "250px",
-                                          overflowY: "auto",
-                                        }}
-                                      >
-                                        {cartItems.map((item) => (
-                                          <div
-                                            key={item.SolitaireID}
-                                            className="d-flex align-items-center mb-3"
-                                          >
-                                            <Link href={`/${item.SolitaireID}`}>
-                                              <img
-                                                src={item.Image1}
-                                                alt={
-                                                  item.ShapeName +
-                                                  "-" +
-                                                  item.SolitaireID
-                                                }
-                                                style={{
-                                                  width: "50px",
-                                                  height: "50px",
-                                                  objectFit: "cover",
-                                                  marginRight: "10px",
-                                                }}
-                                              />
-                                            </Link>
-                                            <div>
-                                              <Link
-                                                href={`/${item.SolitaireID}`}
-                                              >
-                                                <h6 className="mb-0">
-                                                  {item.ShapeName +
-                                                    "-" +
-                                                    item.SolitaireID}
-                                                </h6>
-                                              </Link>
-                                              <span className="text-muted small">
-                                                Qty: {item.quantity} x $
-                                                {item.Price}
-                                              </span>
-                                            </div>
-                                            <button
-                                              type="button"
-                                              className="btn btn-sm btn-link text-danger ml-auto"
-                                              onClick={() =>
-                                                handleRemoveFromCart(
-                                                  item.SolitaireID
-                                                )
-                                              }
-                                            >
-                                              <i className="fa fa-times"></i>
-                                            </button>
-                                          </div>
-                                        ))}
-                                      </div>
-
-                                      {/* Cart Totals */}
-                                      <div className="text-right">
-                                        <p className="mb-1">
-                                          Subtotal:{" "}
-                                          <span className="font-weight-bold">
-                                            ${subTotal.toFixed(2)}
-                                          </span>
-                                        </p>
-                                        <p className="mb-1">
-                                          Total:{" "}
-                                          <span className="font-weight-bold">
-                                            ${total.toFixed(2)}
-                                          </span>
-                                        </p>
-                                        <Link
-                                          href="/cart"
-                                          className="btn btn-primary btn-block"
-                                        >
-                                          View Cart
-                                        </Link>
-                                      </div>
-                                    </>
-                                  )}
-                                </ul>
                               </div>
                             </span>
                           </div>
+                          {/* Cart Drawer */}
+                          <Drawer
+                            isOpen={isCartOpen}
+                            placement="right"
+                            onClose={onCartClose}
+                            finalFocusRef={cartBtnRef}
+                            size="md" // Adjust drawer size if needed
+                          >
+                            <DrawerOverlay />
+                            <DrawerContent bg="var(--main-color)">
+                              <DrawerCloseButton color="var(--secondary-color)" />
+                              <DrawerHeader
+                                borderBottomWidth="1px"
+                                borderColor="var(--secondary-color)"
+                                color="var(--secondary-color)"
+                                fontSize="lg"
+                                fontWeight="bold"
+                              >
+                                Your Cart
+                              </DrawerHeader>
+
+                              <DrawerBody color="var(--white)" fontSize="md">
+                                {cartItems.length === 0 ? (
+                                  <p className="text-center">
+                                    Your cart is empty.
+                                  </p>
+                                ) : (
+                                  <ul
+                                    style={{
+                                      listStyleType: "none",
+                                      padding: 0,
+                                    }}
+                                  >
+                                    {cartItems.map((item) => (
+                                      <li
+                                        key={item.SolitaireID}
+                                        className="mb-3"
+                                      >
+                                        <div className="d-flex align-items-center">
+                                          <Link href={`/${item.Slug}`}>
+                                            <img
+                                              src={item.Image1}
+                                              alt={item.SolitaireName}
+                                              style={{
+                                                width: "60px",
+                                                height: "60px",
+                                                objectFit: "cover",
+                                                marginRight: "10px",
+                                                borderRadius: "5px",
+                                              }}
+                                            />
+                                          </Link>
+                                          <div className="flex-grow-1">
+                                            {" "}
+                                            {/* Allow item details to take up remaining space */}
+                                            <Link href={`/${item.Slug}`}>
+                                              <h6
+                                                className="mb-1"
+                                                style={{
+                                                  color:
+                                                    "var(--secondary-color)",
+                                                  fontWeight: "bold",
+                                                }}
+                                              >
+                                                {item.SolitaireName}
+                                              </h6>
+                                            </Link>
+                                            <p className="mb-0">
+                                              <span className="font-weight-bold">
+                                                {item.quantity} x{" "}
+                                              </span>
+                                              ${item?.Price?.toFixed(2)}
+                                            </p>
+                                          </div>
+                                          <button
+                                            type="button"
+                                            className="btn btn-sm btn-link text-danger"
+                                            onClick={() =>
+                                              handleRemoveFromCart(
+                                                item.SolitaireID
+                                              )
+                                            }
+                                          >
+                                            <i className="fa fa-times"></i>
+                                          </button>
+                                        </div>
+                                      </li>
+                                    ))}
+                                  </ul>
+                                )}
+                              </DrawerBody>
+
+                              <DrawerFooter
+                                borderTopWidth="1px"
+                                borderColor="var(--secondary-color)"
+                                display="flex"
+                                justifyContent="space-between"
+                                alignItems="center"
+                              >
+                                {cartItems.length > 0 && (
+                                  <div>
+                                    <p
+                                      className="mb-1"
+                                      style={{
+                                        color: "var(--darker-sub-color)",
+                                      }}
+                                    >
+                                      Subtotal:{" "}
+                                      <span
+                                        style={{
+                                          color: "var(--white)",
+                                          fontWeight: "bold",
+                                        }}
+                                      >
+                                        ${subTotal.toFixed(2)}
+                                      </span>
+                                    </p>
+                                    <p
+                                      className="mb-0"
+                                      style={{
+                                        color: "var(--darker-sub-color)",
+                                      }}
+                                    >
+                                      Total:{" "}
+                                      <span
+                                        style={{
+                                          color: "var(--white)",
+                                          fontWeight: "bold",
+                                        }}
+                                      >
+                                        {/* ${total?.toFixed(2)} */}
+                                        {total}
+                                      </span>
+                                    </p>
+                                  </div>
+                                )}
+                                <Link href="/cart" className="btn btn-primary">
+                                  View Cart
+                                </Link>
+                              </DrawerFooter>
+                            </DrawerContent>
+                          </Drawer>
                         </div>
                       </div>
                     </div>
