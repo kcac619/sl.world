@@ -1,11 +1,15 @@
-import React from "react";
 import Slider from "react-slick";
-
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 // Import Slick CSS
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 const MainSlider = () => {
+  const [sliders, setSliders] = useState([]);
+  const [isLoadingSlider, setIsLoadingSlider] = useState(true);
+  const [errorSlider, setErrorSlider] = useState(null);
+
   const settings = {
     customPaging: (i) => <span>{i + 1}</span>,
     fade: true,
@@ -16,7 +20,29 @@ const MainSlider = () => {
     dots: true,
     autoplaySpeed: 3500,
   };
+  useEffect(() => {
+    fetchSliders();
+  }, []);
 
+  const fetchSliders = async () => {
+    setIsLoadingSlider(true);
+    setErrorSlider(null);
+
+    try {
+      const response = await axios.get("/api/sliders");
+      if (response.status === 200) {
+        setSliders(response.data.data);
+      } else {
+        console.error("Error fetching blogs:", response.data.error);
+        setErrorSlider("Error fetching blogs.");
+      }
+    } catch (error) {
+      console.error("Error fetching blogs:", error);
+      setErrorSlider("An error occurred.");
+    } finally {
+      setIsLoadingSlider(false);
+    }
+  };
   const slides = [
     {
       imageUrl: "/image/cache/catalog/slider/1-1920x750.png", // Keep the image URL for reference or background
@@ -40,7 +66,7 @@ const MainSlider = () => {
     <div className="s-panel">
       <div className="imgslider">
         <Slider {...settings}>
-          {slides.map((slide, index) => (
+          {sliders.map((slide, index) => (
             <div key={index} className="sliderel">
               <div className="container">
                 <div className="slidertext">
@@ -51,7 +77,7 @@ const MainSlider = () => {
                       <div className="slider-btn">
                         <a className="btn btn-primary btn-section" href="#">
                           <span>
-                            check more product
+                            {slide.buttonText}
                             <img
                               alt="stor-bg"
                               src="image/catalog/stor-bg.svg"

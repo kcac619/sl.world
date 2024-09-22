@@ -9,9 +9,10 @@ import {
   removeFromCart,
   updateCartItemQuantity,
 } from "../utils/cartfns";
-
+import { useRouter } from 'next/router';
 
 const Header = () => {
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [cartDropdownOpen, setCartDropdownOpen] = useState(false); // For dropdown
   const [cartItems, setCartItems] = useState([]);
@@ -68,7 +69,9 @@ const Header = () => {
     addToCart({ ...solitaire, quantity: 1 });
     setCartItems(getCartItemsFromLocalStorage());
   };
-
+  const handleNavigation = (link) => {
+    router.push(`/${link}`);
+  };
   return (
     <header>
     <div className="top-header hidden-xs" style={{ fontFamily: "outfit" }}>
@@ -298,9 +301,9 @@ const Header = () => {
           </div>
           <div className="col-md-2 col-sm-2 text-left header-logo">
             <div id="logo">
-              <Link href="/">
-                <h4 style={{ color: "var(--main-color)" }}>HKSURANA</h4>
-              </Link>
+            <a  style={{ cursor: 'pointer' }}  onClick={() => handleNavigation('')} >
+            <img  style={{ height: '45px' }}  src="/img/logo-gold.png" title="diamond" alt="diamond" class="img-responsive img-fluid"/>
+            </a>
             </div>
           </div>
           <div className="col-md-5 col-sm-5 megamenu_border">
@@ -323,7 +326,7 @@ const Header = () => {
                             >
                               <span>Search</span>
                               <img
-                                src="image/catalog/search.png"
+                                src="/image/catalog/search.png"
                                 alt="search"
                               />
                             </button>
@@ -378,7 +381,7 @@ const Header = () => {
                                     className="btn btn-primary btn-lg"
                                   >
                                     <img
-                                      src="image/catalog/search.png"
+                                      src="/image/catalog/search.png"
                                       alt="search"
                                     />
                                   </button>
@@ -421,7 +424,7 @@ const Header = () => {
                           data-bs-toggle="dropdown"
                         >
                           <div className="xuser">
-                            <img src="image/catalog/huser.svg" alt="user" />
+                            <img src="/image/catalog/huser.svg" alt="user" />
                             <span>My Profile</span>
                             <i className="fa fa-angle-down enaleng" />
                           </div>
@@ -534,7 +537,7 @@ const Header = () => {
                         >
                           {/* ... [Your existing cart icon and text] ...  */}
                           <div className="xuser">
-                            <img src="image/catalog/hcart.svg" alt="cart" />
+                            <img src="/image/catalog/hcart.svg" alt="cart" />
                           </div>
                           <span className="cartl">
                             <span className="cartt">

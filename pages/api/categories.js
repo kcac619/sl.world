@@ -1,14 +1,13 @@
-// pages/api/products.js
 import { callStoredProcedure } from "./db";
 
 export default async (req, res) => {
   if (req.method === "GET") {
     try {
-      const result = await callStoredProcedure("sp_GetProductsForSliders");
+      const result = await callStoredProcedure("sp_GetCategories");
 
       if (result.status === 1) {
         res.status(200).json({
-          products: result.data,
+          data: result.data,
           totalCount: result.total,
         });
       } else {
@@ -16,9 +15,9 @@ export default async (req, res) => {
       }
     } catch (error) {
       console.error(error);
-      res.status(500).json({ error: "Error fetching products" });
+      res.status(500).json({ error: "Error fetching blogs." });
     }
   } else {
-    res.status(405).end(); // Method Not Allowed
+    res.status(405).end();
   }
 };
