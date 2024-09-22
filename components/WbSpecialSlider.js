@@ -1,7 +1,6 @@
 // components/WbSpecialSlider.js
 import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
-import axios from "axios";
 // Import Slick CSS (you might already have this in _document.js)
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -11,7 +10,8 @@ const WbSpecialSlider = () => {
     dots: false,
     arrows: true,
     infinite: true,
-    autoplay: false,
+    autoplay: true,
+    autoplaySpeed: 2000,
     slidesToShow: 2,
     slidesToScroll: 1,
     rows: 1,
@@ -55,35 +55,100 @@ const WbSpecialSlider = () => {
     ],
   };
 
-  const [products, setProducts] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+  // Commented out fetching logic
+  // const [products, setProducts] = useState([]);
+  // const [isLoading, setIsLoading] = useState(true);
+  // const [error, setError] = useState(null);
 
-  useEffect(() => {
-    fetchProducts();
-    console.log("products", products);
-  }, []);
+  // useEffect(() => {
+  //   fetchProducts();
+  //   console.log("products", products);
+  // }, []);
 
-  const fetchProducts = async () => {
-    setIsLoading(true);
-    setError(null);
+  // const fetchProducts = async () => {
+  //   setIsLoading(true);
+  //   setError(null);
 
-    try {
-      const response = await axios.get("/api/products");
-      console.log("response", response);
-      if (response.status === 200) {
-        setProducts(response.data.products);
-      } else {
-        console.error("Error fetching products:", response.data.error);
-        setError("Error fetching products");
-      }
-    } catch (error) {
-      console.error("Error fetching products:", error);
-      setError("An error occurred");
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  //   try {
+  //     const response = await axios.get("/api/products");
+  //     console.log("response", response);
+  //     if (response.status === 200) {
+  //       setProducts(response.data.products);
+  //     } else {
+  //       console.error("Error fetching products:", response.data.error);
+  //       setError("Error fetching products");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error fetching products:", error);
+  //     setError("An error occurred");
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
+
+  // Static products data
+  const products = [
+    {
+      Image1Url: "/image/cache/catalog/product/9/1-1000x1000.png",
+      Image2Url: "/image/cache/catalog/product/9/2-1000x1000.png",
+      ProductName: "Abigail Moon & Stars Ring",
+      BrandName: "sunglass",
+      PriceNew: "$150.00",
+      PriceOld: "$3.00",
+      DiscountPercentage: "46%",
+      Link: "https://opencart.workdo.io/diamond/index.php?route=product/product&language=en-gb&product_id=29",
+      sizes: ["xl", "xxl", "xxxl"], // Add size options if needed
+      // ... other product properties
+    },
+    {
+      Image1Url: "/image/cache/catalog/product/11/1-1000x1000.png",
+      Image2Url: "/image/cache/catalog/product/11/2-1000x1000.png",
+      ProductName: "Abigail Moon & Stars Ring",
+      BrandName: "sunglass",
+      PriceNew: "$150.00",
+      PriceOld: "$3.00",
+      DiscountPercentage: "46%",
+      Link: "https://opencart.workdo.io/diamond/index.php?route=product/product&language=en-gb&product_id=29",
+      sizes: ["xl", "xxl", "xxxl"], // Add size options if needed
+      // ... other product properties
+    },
+    {
+      Image1Url: "/image/cache/catalog/product/7/1-1000x1000.png",
+      Image2Url: "/image/cache/catalog/product/7/2-1000x1000.png",
+      ProductName: "Abigail Moon & Stars Ring",
+      BrandName: "sunglass",
+      PriceNew: "$150.00",
+      PriceOld: "$3.00",
+      DiscountPercentage: "46%",
+      Link: "https://opencart.workdo.io/diamond/index.php?route=product/product&language=en-gb&product_id=29",
+      sizes: ["xl", "xxl", "xxxl"], // Add size options if needed
+      // ... other product properties
+    },
+    {
+      Image1Url: "/image/cache/catalog/product/8/1-1000x1000.png",
+      Image2Url: "/image/cache/catalog/product/8/2-1000x1000.png",
+      ProductName: "Abigail Moon & Stars Ring",
+      BrandName: "sunglass",
+      PriceNew: "$150.00",
+      PriceOld: "$3.00",
+      DiscountPercentage: "46%",
+      Link: "https://opencart.workdo.io/diamond/index.php?route=product/product&language=en-gb&product_id=29",
+      sizes: ["xl", "xxl", "xxxl"], // Add size options if needed
+      // ... other product properties
+    },
+    {
+      Image1Url: "/image/cache/catalog/product/9/1-1000x1000.png",
+      Image2Url: "/image/cache/catalog/product/9/2-1000x1000.png",
+      ProductName: "Abigail Moon & Stars Ring",
+      BrandName: "sunglass",
+      PriceNew: "$150.00",
+      PriceOld: "$3.00",
+      DiscountPercentage: "46%",
+      Link: "https://opencart.workdo.io/diamond/index.php?route=product/product&language=en-gb&product_id=29",
+      sizes: ["xl", "xxl", "xxxl"], // Add size options if needed
+      // ... other product properties
+    },
+  ];
 
   return (
     <div className="wbspecial">
@@ -145,66 +210,3 @@ const WbSpecialSlider = () => {
 };
 
 export default WbSpecialSlider;
-
-// const products = [
-//   {
-//     imageUrl1: "/image/cache/catalog/product/9/1-1000x1000.png",
-//     imageUrl2: "/image/cache/catalog/product/9/2-1000x1000.png",
-//     name: "Abigail Moon & Stars Ring",
-//     brand: "sunglass",
-//     priceNew: "$150.00",
-//     priceOld: "$3.00",
-//     discount: "46%",
-//     link: "https://opencart.workdo.io/diamond/index.php?route=product/product&language=en-gb&product_id=29",
-//     sizes: ["xl", "xxl", "xxxl"], // Add size options if needed
-//     // ... other product properties
-//   },
-//   {
-//     imageUrl1: "/image/cache/catalog/product/11/1-1000x1000.png",
-//     imageUrl2: "/image/cache/catalog/product/11/2-1000x1000.png",
-//     name: "Abigail Moon & Stars Ring",
-//     brand: "sunglass",
-//     priceNew: "$150.00",
-//     priceOld: "$3.00",
-//     discount: "46%",
-//     link: "https://opencart.workdo.io/diamond/index.php?route=product/product&language=en-gb&product_id=29",
-//     sizes: ["xl", "xxl", "xxxl"], // Add size options if needed
-//     // ... other product properties
-//   },
-//   {
-//     imageUrl1: "/image/cache/catalog/product/7/1-1000x1000.png",
-//     imageUrl2: "/image/cache/catalog/product/7/2-1000x1000.png",
-//     name: "Abigail Moon & Stars Ring",
-//     brand: "sunglass",
-//     priceNew: "$150.00",
-//     priceOld: "$3.00",
-//     discount: "46%",
-//     link: "https://opencart.workdo.io/diamond/index.php?route=product/product&language=en-gb&product_id=29",
-//     sizes: ["xl", "xxl", "xxxl"], // Add size options if needed
-//     // ... other product properties
-//   },
-//   {
-//     imageUrl1: "/image/cache/catalog/product/8/1-1000x1000.png",
-//     imageUrl2: "/image/cache/catalog/product/8/2-1000x1000.png",
-//     name: "Abigail Moon & Stars Ring",
-//     brand: "sunglass",
-//     priceNew: "$150.00",
-//     priceOld: "$3.00",
-//     discount: "46%",
-//     link: "https://opencart.workdo.io/diamond/index.php?route=product/product&language=en-gb&product_id=29",
-//     sizes: ["xl", "xxl", "xxxl"], // Add size options if needed
-//     // ... other product properties
-//   },
-//   {
-//     imageUrl1: "/image/cache/catalog/product/9/1-1000x1000.png",
-//     imageUrl2: "/image/cache/catalog/product/9/2-1000x1000.png",
-//     name: "Abigail Moon & Stars Ring",
-//     brand: "sunglass",
-//     priceNew: "$150.00",
-//     priceOld: "$3.00",
-//     discount: "46%",
-//     link: "https://opencart.workdo.io/diamond/index.php?route=product/product&language=en-gb&product_id=29",
-//     sizes: ["xl", "xxl", "xxxl"], // Add size options if needed
-//     // ... other product properties
-//   },
-// ];

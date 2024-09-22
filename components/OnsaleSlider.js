@@ -10,7 +10,8 @@ const OnsaleSlider = () => {
   const settings = {
     dots: false,
     infinite: true,
-    autoplay: false,
+    autoplay: true,
+    autoplaySpeed: 1000,
     slidesToShow: 2,
     slidesToScroll: 1,
     rows: 1,

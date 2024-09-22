@@ -4,6 +4,7 @@ import Link from "next/link";
 import MainSlider from "@/components/MainSlider";
 import WbSpecialSlider from "@/components/WbSpecialSlider";
 import WdSelectedSlider from "@/components/WdSelectedSlider";
+import WdSelectedSlider2 from "@/components/WdSelectedSlider2";
 import OnsaleSlider from "@/components/OnsaleSlider";
 import WdCategorySlider from "@/components/WdCategorySlider";
 import TestimonialSlider from "@/components/TestimonialSlider";
@@ -477,7 +478,7 @@ const Index = () => {
                                   <div className="close-nav">
                                     <span
                                       className="categories"
-                                      style={{ color: "#20C997" }}
+                                      style={{ color: "var(--main-color)" }}
                                     >
                                       Categories
                                     </span>
@@ -490,8 +491,22 @@ const Index = () => {
                                     </button>
                                   </div>
                                   <div className="navbar-collapse navbar-ex1-collapse">
-                                    <ul className="nav navbar-nav">
-                                      <li className="nav-item">
+                                    <ul
+                                      className="nav navbar-nav"
+                                      style={{
+                                        display: "flex",
+                                        flexDirection: "row",
+                                        listStyleType: "none",
+                                        padding: 0,
+                                      }}
+                                    >
+                                      <li
+                                        className="nav-item"
+                                        style={{
+                                          display: "inline-block",
+                                          marginRight: "30px",
+                                        }}
+                                      >
                                         <Link
                                           href={"/solitaire"}
                                           className="nav-item"
@@ -499,7 +514,13 @@ const Index = () => {
                                           Solitaire
                                         </Link>
                                       </li>
-                                      <li className="nav-item">
+                                      <li
+                                        className="nav-item"
+                                        style={{
+                                          display: "inline-block",
+                                          marginRight: "30px",
+                                        }}
+                                      >
                                         <a
                                           href="https://opencart.workdo.io/diamond/index.php?route=product/category&language=en-gb&path=60"
                                           className="nav-link"
@@ -508,7 +529,13 @@ const Index = () => {
                                           Amethyst
                                         </a>
                                       </li>
-                                      <li className="nav-item">
+                                      <li
+                                        className="nav-item"
+                                        style={{
+                                          display: "inline-block",
+                                          marginRight: "30px",
+                                        }}
+                                      >
                                         <a
                                           href="https://opencart.workdo.io/diamond/index.php?route=product/category&language=en-gb&path=67"
                                           className="nav-link"
@@ -1136,19 +1163,23 @@ const Index = () => {
                   </div>
                 </div>
               </div>
-              <div className="special-section">
+              <div
+                className="special-section"
+                style={{
+                  backgroundColor: "var(--darker-sub-color)",
+                  padding: "20px 0",
+                }}
+              >
                 <div className="container">
                   <div className="row">
                     <div className="col-md-6 col-xs-12">
                       <div className="special_secheading">
                         <h1 className="heading text-left">
-                          <span>Jewellery &amp; Diamonds</span>
+                          <span>Top Picks</span>
                           <p>
-                            Lorem Ipsum is simply dummy text of the printing and
-                            typesetting industry. Lorem Ipsum has been the
-                            industrys standard dummy text ever since the 1500s,
-                            when an unknown printer took a galley of type and
-                            scrambled it to make a type specimen book.
+                            Discover our most popular and exquisite diamond
+                            pieces, hand-selected for their exceptional quality
+                            and brilliance.
                           </p>
                         </h1>
                         <a
@@ -1172,21 +1203,21 @@ const Index = () => {
                   </div>
                 </div>
               </div>
+              {/* Rings Section */}
               <div className="selected_bg">
                 <div className="container">
                   <div className="row">
-                    <div className="select-ctn">
-                      <h4>Jewellery &amp; diamonds</h4>
-                      <a
-                        className="btn btn-primary btn-section"
-                        href="#"
-                        tabIndex={0}
-                      >
-                        <span>
-                          check more product
-                          <img alt="stor-bg" src="image/catalog/stor-bg.svg" />
-                        </span>
-                      </a>
+                    <div className="col-md-12">
+                      <div className="secheading">
+                        <h1 className="heading">
+                          <span>Rings</span>
+                        </h1>
+                        <p>
+                          Explore our stunning collection of diamond rings, from
+                          classic solitaires to intricate designs, perfect for
+                          every occasion.
+                        </p>
+                      </div>
                     </div>
                     <div className="col-xs-12 selected_pro">
                       <WdSelectedSlider />
@@ -1194,67 +1225,48 @@ const Index = () => {
                   </div>
                 </div>
               </div>
-              <div className="left-banner">
+
+              <div
+                className="special-section"
+                style={{
+                  backgroundColor: "var(--darker-sub-color)",
+                  padding: "20px 0",
+                }}
+              >
                 <div className="container">
                   <div className="row">
                     <div className="col-md-6 col-xs-12">
-                      <div className="left-dec">
-                        <div className="left-ctn">
-                          <h3>Jewellery &amp; diamonds</h3>
+                      <div className="special_secheading">
+                        <h1 className="heading text-left">
+                          <span>Sale is Live !!</span>
                           <p>
-                            Lorem Ipsum is simply dummy text of the printing and
-                            typesetting industry. Lorem Ipsum has been the
-                            industry's standard dummy.Lorem Ipsum is simply
-                            dummy text of the printing and typesetting industry.
-                            Lorem Ipsum has been the industry's standard dummy.
+                            Discover our most popular and exquisite diamond
+                            pieces, hand-selected for their exceptional quality
+                            and brilliance.
                           </p>
-                          <a
-                            className="btn btn-primary btn-section"
-                            href="#"
-                            tabIndex={0}
-                          >
-                            <span>
-                              check more product
-                              <img
-                                alt="stor-bg"
-                                src="image/catalog/stor-bg.svg"
-                              />
-                            </span>
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-md-6 col-xs-12">
-                      <div className="beffect">
-                        <a href="#">
-                          <img
-                            src="https://opencart.workdo.io/diamond/image/cache/catalog/left-banner/1-580x465.png"
-                            alt="left-banner"
-                            className="mx-auto img-fluid"
-                          />
+                        </h1>
+                        <a
+                          className="btn btn-primary btn-section"
+                          href="#"
+                          tabIndex={0}
+                        >
+                          <span>
+                            check more product
+                            <img
+                              alt="stor-bg"
+                              src="image/catalog/stor-bg.svg"
+                            />
+                          </span>
                         </a>
                       </div>
                     </div>
-                  </div>
-                </div>
-              </div>
-              <div className="onsale-bg">
-                <div className="container">
-                  <div className="row pro-ctn">
-                    <div className="onsale-ctn">
-                      <h2>Jewellery &amp; Diamonds</h2>
-                      <a className="btn btn-primary sub_btn" href="#">
-                        check more products
-                        <img alt="stor-bg" src="image/catalog/stor-bg.svg" />
-                      </a>
-                    </div>
-                    <div className="onsale_pro col-xs-12">
+                    <div className="col-md-6 col-xs-12">
                       <OnsaleSlider />
                     </div>
                   </div>
                 </div>
               </div>
-              <div className="specialbanner">
+              {/* <div className="specialbanner">
                 <div className="container">
                   <div className="row">
                     <div className="col-md-6 col-xs-12">
@@ -1297,20 +1309,43 @@ const Index = () => {
                     </div>
                   </div>
                 </div>
+              </div> */}
+              {/* Rings Section */}
+              <div className="selected_bg">
+                <div className="container">
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="secheading">
+                        <h1 className="heading">
+                          <span>Necklaces</span>
+                        </h1>
+                        <p>
+                          Explore our stunning collection of diamond rings, from
+                          classic solitaires to intricate designs, perfect for
+                          every occasion.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="col-xs-12 selected_pro">
+                      <WdSelectedSlider2 />
+                    </div>
+                  </div>
+                </div>
               </div>
-
               <div className="category-bg">
                 <div className="container top-category">
                   <div className="row">
                     <div className="col-md-6 col-xs-12">
                       <div className="category_secheading">
-                        <h3>Jewellery &amp; diamonds</h3>
+                        <h3>Explore Our Exquisite Collections</h3>
                         <p>
-                          Lorem Ipsum is simply dummy text of the printing and
-                          typesetting industry. Lorem Ipsum has been the
-                          industry's standard dummy.Lorem Ipsum is simply dummy
-                          text of the printing and typesetting industry. Lorem
-                          Ipsum has been the industry's standard dummy.
+                          Discover our stunning range of jewellery and diamonds,
+                          crafted to perfection. From timeless classics to
+                          contemporary designs, our collections cater to every
+                          style and occasion. Whether you're looking for an
+                          elegant necklace, a dazzling ring, or a sophisticated
+                          bracelet, you'll find the perfect piece to elevate
+                          your look.
                         </p>
                         <a
                           className="btn btn-primary btn-section"
@@ -1318,7 +1353,7 @@ const Index = () => {
                           tabIndex={0}
                         >
                           <span>
-                            check more product
+                            Check More Products
                             <img
                               alt="stor-bg"
                               src="image/catalog/stor-bg.svg"

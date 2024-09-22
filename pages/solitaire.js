@@ -1264,13 +1264,19 @@ const Solitaire = () => {
           </Grid>
 
           <Button
-            backgroundColor="var(--secondary-color)"
-            color="#f2dfcf"
+            backgroundColor="black"
+            color="var(--sub-color)"
             size="sm"
             mt={4}
             mb={6}
             borderRadius="20px"
             onClick={handleSearch}
+            sx={{
+              "&:hover": {
+                backgroundColor: "var(--sub-color)",
+                color: "black",
+              },
+            }}
           >
             Show Advance Filters
           </Button>
@@ -1278,41 +1284,65 @@ const Solitaire = () => {
           {/* Search Buttons */}
           <Flex mt={6} justify="flex-end">
             <Button
-              backgroundColor="var(--secondary-color)"
-              color="#f2dfcf"
+              backgroundColor="black"
+              color="var(--sub-color)"
               mr={2}
               borderRadius="20px"
+              sx={{
+                "&:hover": {
+                  backgroundColor: "var(--sub-color)",
+                  color: "black",
+                },
+              }}
             >
               Cancel
             </Button>
             <Button
-              backgroundColor="var(--secondary-color)"
-              color="#f2dfcf"
+              backgroundColor="black"
+              color="var(--sub-color)"
               mr={2}
               borderRadius="20px"
               onClick={() => {
                 dispatch(resetFilters()); // Reset filters in Redux store
               }}
+              sx={{
+                "&:hover": {
+                  backgroundColor: "var(--sub-color)",
+                  color: "black",
+                },
+              }}
             >
               Reset
             </Button>
             <Button
-              backgroundColor="var(--secondary-color)"
-              color="#f2dfcf"
+              backgroundColor="black"
+              color="var(--sub-color)"
               borderRadius="20px"
               onClick={() => {
                 handleSearch();
+              }}
+              sx={{
+                "&:hover": {
+                  backgroundColor: "var(--sub-color)",
+                  color: "black",
+                },
               }}
             >
               Search
             </Button>
             <Button
-              backgroundColor="var(--secondary-color)"
-              color="#f2dfcf"
+              backgroundColor="black"
+              color="var(--sub-color)"
               ml={2}
               borderRadius="20px"
               rightIcon={<ChevronDownIcon />}
               onClick={handleSearch} // Redirect on "Save Search"
+              sx={{
+                "&:hover": {
+                  backgroundColor: "var(--sub-color)",
+                  color: "black",
+                },
+              }}
             >
               Save Search
             </Button>

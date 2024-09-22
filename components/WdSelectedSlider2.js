@@ -10,8 +10,7 @@ const WdSelectedSlider = () => {
   const settings = {
     dots: false,
     infinite: true,
-    autoplay: true,
-    autoplaySpeed: 1700,
+    autoplay: false,
     slidesToShow: 4,
     slidesToScroll: 1,
     rows: 1,
@@ -53,8 +52,10 @@ const WdSelectedSlider = () => {
   // Replace this with your actual product data
   const products = [
     {
-      imageUrl1: "/image/cache/catalog/product/1/1-1000x1000.png",
-      imageUrl2: "/image/cache/catalog/product/1/2-1000x1000.png",
+      imageUrl1:
+        "https://img.freepik.com/free-photo/precious-necklace-decorated-with-gemstones-lights-isolated_181624-28431.jpg",
+      imageUrl2:
+        "https://img.freepik.com/free-photo/precious-necklace-decorated-with-gemstones-lights-isolated_181624-28431.jpg",
       name: "Abigail Moon & Stars Ring",
       brand: "shoes", // Assuming brand is the manufacturer name
       price: "$1.00",
@@ -62,8 +63,10 @@ const WdSelectedSlider = () => {
       // ... other product properties
     },
     {
-      imageUrl1: "/image/cache/catalog/product/2/1-1000x1000.png",
-      imageUrl2: "/image/cache/catalog/product/2/2-1000x1000.png",
+      imageUrl1:
+        "https://img.freepik.com/free-photo/beautiful-luxury-necklace-jewelry-stand-neck_1339-7953.jpg",
+      imageUrl2:
+        "https://img.freepik.com/free-photo/beautiful-luxury-necklace-jewelry-stand-neck_1339-7953.jpg",
       name: "Abigail Moon & Stars Ring",
       brand: "shoes", // Assuming brand is the manufacturer name
       price: "$1.00",
@@ -71,8 +74,10 @@ const WdSelectedSlider = () => {
       // ... other product properties
     },
     {
-      imageUrl1: "/image/cache/catalog/product/3/1-1000x1000.png",
-      imageUrl2: "/image/cache/catalog/product/3/2-1000x1000.png",
+      imageUrl1:
+        "https://img.freepik.com/free-photo/precious-necklace-decorated-with-gemstones-lights-isolated_181624-28431.jpg",
+      imageUrl2:
+        "https://img.freepik.com/free-photo/precious-necklace-decorated-with-gemstones-lights-isolated_181624-28431.jpg",
       name: "Abigail Moon & Stars Ring",
       brand: "shoes", // Assuming brand is the manufacturer name
       price: "$1.00",
@@ -80,8 +85,10 @@ const WdSelectedSlider = () => {
       // ... other product properties
     },
     {
-      imageUrl1: "/image/cache/catalog/product/4/1-1000x1000.png",
-      imageUrl2: "/image/cache/catalog/product/4/2-1000x1000.png",
+      imageUrl1:
+        "https://img.freepik.com/free-photo/beautiful-luxury-necklace-jewelry-stand-neck_1339-7953.jpg",
+      imageUrl2:
+        "https://img.freepik.com/free-photo/beautiful-luxury-necklace-jewelry-stand-neck_1339-7953.jpg",
       name: "Abigail Moon & Stars Ring",
       brand: "shoes", // Assuming brand is the manufacturer name
       price: "$1.00",
@@ -89,8 +96,10 @@ const WdSelectedSlider = () => {
       // ... other product properties
     },
     {
-      imageUrl1: "/image/cache/catalog/product/5/1-1000x1000.png",
-      imageUrl2: "/image/cache/catalog/product/5/2-1000x1000.png",
+      imageUrl1:
+        "https://img.freepik.com/free-photo/precious-necklace-decorated-with-gemstones-lights-isolated_181624-28431.jpg",
+      imageUrl2:
+        "https://img.freepik.com/free-photo/precious-necklace-decorated-with-gemstones-lights-isolated_181624-28431.jpg",
       name: "Abigail Moon & Stars Ring",
       brand: "shoes", // Assuming brand is the manufacturer name
       price: "$1.00",
@@ -98,8 +107,10 @@ const WdSelectedSlider = () => {
       // ... other product properties
     },
     {
-      imageUrl1: "/image/cache/catalog/product/6/1-1000x1000.png",
-      imageUrl2: "/image/cache/catalog/product/6/2-1000x1000.png",
+      imageUrl1:
+        "https://img.freepik.com/free-photo/beautiful-luxury-necklace-jewelry-stand-neck_1339-7953.jpg",
+      imageUrl2:
+        "https://img.freepik.com/free-photo/beautiful-luxury-necklace-jewelry-stand-neck_1339-7953.jpg",
       name: "Abigail Moon & Stars Ring",
       brand: "shoes", // Assuming brand is the manufacturer name
       price: "$1.00",
@@ -107,7 +118,6 @@ const WdSelectedSlider = () => {
       // ... other product properties
     },
   ];
-
   return (
     <div className="wdselected" style={{ display: "block" }}>
       <Slider {...settings}>
@@ -118,24 +128,26 @@ const WdSelectedSlider = () => {
               <div className="product-thumb">
                 <div className="product-bg">
                   <div className="image">
-                    <a href={product.link}>
-                      <div className="second-image">
-                        <img
-                          src={product.imageUrl1}
-                          title="Product"
-                          alt="Product"
-                          className="img-fluid"
-                        />
-                      </div>
-                      <div className="second-image">
-                        <img
-                          src={product.imageUrl2}
-                          title="Product"
-                          alt="Product"
-                          className="img-fluid"
-                        />
-                      </div>
-                    </a>
+                    <div className="image-container">
+                      <a href={product.link}>
+                        <div className="second-image">
+                          <img
+                            src={product.imageUrl1}
+                            title="Product"
+                            alt="Product"
+                            className="img-fluid"
+                          />
+                        </div>
+                        <div className="second-image">
+                          <img
+                            src={product.imageUrl2}
+                            title="Product"
+                            alt="Product"
+                            className="img-fluid"
+                          />
+                        </div>
+                      </a>
+                    </div>
                   </div>
                   {/* ... [Your product details, removing PHP and data-oc attributes] ... */}
                 </div>
