@@ -1039,7 +1039,7 @@ const Solitaire = () => {
         </div>
       </header>
 
-      <Flex ref={sidebarContainerRef} mt={0}>
+      <Flex ref={sidebarContainerRef} mt={0}    backgroundColor={"#F2DFCF"}>
         {/* Drawer (Mobile) */}
         {/* <Drawer
           isOpen={isOpen}
