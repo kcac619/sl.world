@@ -1,10 +1,12 @@
 
 import Link from "next/link";
 import OfferBannerSlider from "@/components/OfferBannerSlider";
-
+import { useRouter } from "next/router";
 const Footer = () => {
- 
-
+  const router = useRouter();
+  const handleNavigation = (link) => {
+    router.push(`${link}`);
+  };
   return (
     <footer>
           <div className="footer-top">
@@ -130,13 +132,13 @@ const Footer = () => {
                         </a>
                       </li>
                       <li>
-                        <a href="https://opencart.workdo.io/diamond/index.php?route=information/information&language=en-gb&information_id=2">
+                        <a style={{ cursor: "pointer" }}   onClick={() => handleNavigation("/terms-conditions")}>
                           Terms &amp; Conditions
                         </a>
                       </li>
                       <li>
-                        <a href="https://opencart.workdo.io/diamond/index.php?route=information/information&language=en-gb&information_id=4">
-                          Delivery Information
+                        <a style={{ cursor: "pointer" }}   onClick={() => handleNavigation("/shipping-policy")}>
+                        Shipping Policy
                         </a>
                       </li>
                       <li>
@@ -144,14 +146,10 @@ const Footer = () => {
                           About Us
                         </a>
                       </li>
+                     
                       <li>
-                        <a href="https://opencart.workdo.io/diamond/index.php?route=information/information&language=en-gb&information_id=3">
-                          Privacy Policy
-                        </a>
-                      </li>
-                      <li>
-                        <a href="https://opencart.workdo.io/diamond/index.php?route=product/manufacturer&language=en-gb">
-                          Brands
+                        <a style={{ cursor: "pointer" }}   onClick={() => handleNavigation("/privacy-policy")}>
+                        Privacy Policy
                         </a>
                       </li>
                     </ul>
@@ -195,7 +193,7 @@ const Footer = () => {
                         </a>
                       </li>
                       <li>
-                        <a href="https://opencart.workdo.io/diamond/index.php?route=information/contact&language=en-gb">
+                        <a style={{ cursor: "pointer" }}   onClick={() => handleNavigation("/contact-us")}>
                           Contact Us
                         </a>
                       </li>
