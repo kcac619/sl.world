@@ -5,8 +5,7 @@ import { useSelector } from "react-redux";
 import { Skeleton, SkeletonCircle, SkeletonText } from "@chakra-ui/react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import Link from "next/link";
-import Header from "../components/Header"
-
+import Header from "../components/Header";
 
 const SearchResults = () => {
   const router = useRouter();
@@ -21,9 +20,6 @@ const SearchResults = () => {
   const [isFetching, setIsFetching] = useState(false);
   const [isNearBottom, setIsNearBottom] = useState(false);
   const solitairesPerPage = 15;
-
-
- 
 
   const fetchSolitaires = async (pageNumber = currentPage) => {
     // if (isFetching) return;
@@ -239,7 +235,7 @@ const SearchResults = () => {
   // console.log(" matched  solitaires", matchedSolitaires);
   return (
     <div style={{ width: "100vw" }}>
-      <Header/>
+      <Header />
       <div
         className="container-fluid mt-5"
         style={{
@@ -251,14 +247,13 @@ const SearchResults = () => {
         }}
       >
         <h1
-          className="mb-4 text-black"
-         
+          className="mb-4 text-white"
+          style={{ textAlign: "center", color: "var(--main-color) !important" }}
         >
           Search Results
         </h1>
         {isLoading && <p className="text-center text-white">Loading...</p>}
         {error && <p className="text-center text-danger">{error}</p>}
-
         <div className="row" style={{ overflowY: "auto" }}>
           {/* Skeleton While Loading */}
           {showLoading && (
@@ -284,7 +279,14 @@ const SearchResults = () => {
                   className="col-6 col-sm-6 col-md-3 col-lg-3 mb-4"
                 >
                   <div className="product-block cless">
-                    <div className="blogshadow blog-thumbnail">
+                    <div
+                      className="blogshadow blog-thumbnail"
+                      style={{
+                        border: "0px", // Remove the border
+                        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)", // Add a subtle box-shadow
+                        borderRadius: "20px", // Maintain the border-radius for a smooth look
+                      }}
+                    >
                       <div className="blog-left">
                         <div
                           className="workdo-blog-image"
@@ -372,7 +374,6 @@ const SearchResults = () => {
             )}
         </div>
         {/* "No Results" Message */}
-
         {!showLoading && solitaires.length === 0 && (
           <div className="col-md-12">
             <p className="alert alert-warning">NO MATCHING SOLITAIRE FOUND</p>
@@ -385,12 +386,18 @@ const SearchResults = () => {
               <button
                 onClick={handleMoreClick}
                 style={{
-                  backgroundColor: "#20C997",
-                  color: "#f2dfcf",
+                  backgroundColor: "black",
+                  color: "var(--sub-color)",
                   borderRadius: "20px",
                   fontFamily: "Outfit, sans-serif",
                 }}
                 className="btn btn-secondary"
+                sx={{
+                  "&:hover": {
+                    backgroundColor: "var(--sub-color)",
+                    color: "black",
+                  },
+                }}
               >
                 More <ChevronDownIcon />
               </button>
@@ -404,10 +411,16 @@ const SearchResults = () => {
               onClick={() => setShowAllSolitaires(!showAllSolitaires)}
               className="btn btn-secondary btn-block"
               style={{
-                backgroundColor: "#20C997",
-                color: "#f2dfcf",
+                backgroundColor: "black",
+                color: "var(--sub-color)",
                 borderRadius: "20px",
                 fontFamily: "Outfit, sans-serif",
+              }}
+              sx={{
+                "&:hover": {
+                  backgroundColor: "var(--sub-color)",
+                  color: "black",
+                },
               }}
             >
               {showAllSolitaires
@@ -415,7 +428,7 @@ const SearchResults = () => {
                 : "View All Solitaires"}
             </button>
           </div>
-        </div>
+        </div>{" "}
       </div>
     </div>
   );

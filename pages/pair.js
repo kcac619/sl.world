@@ -1,71 +1,99 @@
-// pages/index.js
-import { useState, useEffect, useRef } from "react";
-import { useRouter } from "next/router";
-import { useSession, signIn, signOut } from "next-auth/react";
-import { useDispatch, useSelector } from "react-redux";
-import { setFilter, resetFilters } from "../filterSlice";
-import {
-  Box,
-  Flex,
-  Heading,
-  Button,
-  SimpleGrid,
-  useDisclosure,
-  Drawer,
-  DrawerBody,
-  DrawerOverlay,
-  DrawerContent,
-  DrawerCloseButton,
-  DrawerHeader,
-  useBreakpointValue,
-  Text,
-  Grid,
-  GridItem,
-} from "@chakra-ui/react";
-import { ChevronDownIcon, HamburgerIcon } from "@chakra-ui/icons";
-import Image from "next/image";
-import vercel from "../public/next.svg";
+import React, { useState, useEffect, useRef } from "react";
+import Head from "next/head";
 import Link from "next/link";
-// Components
-import Sidebar from "../components/Sidebar";
-import DiamondShape from "../components/DiamondShape";
-import FilterSection from "../components/FilterSection";
+import Glide from "@glidejs/glide"; // Import Glide
+
+// Import Glide CSS
+import "@glidejs/glide/dist/css/glide.core.min.css";
+import "@glidejs/glide/dist/css/glide.theme.min.css";
+
 import {
   getCartItemsFromLocalStorage,
   addToCart,
   removeFromCart,
   updateCartItemQuantity,
 } from "../utils/cartfns";
-import SearchBar from "@/components/SearchBar";
+import { Skeleton } from "@chakra-ui/react";
 
-import axios from "axios";
-
-const Solitaire = () => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  // const { isOpen, onOpen, onClose } = useDisclosure();
-  const router = useRouter();
-  const { data: session } = useSession();
-  const dispatch = useDispatch();
-  const filtersFromRedux = useSelector((state) => state.filters); // Get filters from Redux store
-  const [shapes, setShapes] = useState([]);
-  const [loadingShapes, setLoadingShapes] = useState(true);
-  const [carats, setCarats] = useState([]);
-  const [colors, setColors] = useState([]);
-  const [flours, setFlours] = useState([]);
-  const [purities, setPurities] = useState([]);
-  const [cuts, setCuts] = useState([]);
-  const [labs, setLabs] = useState([]);
-  const [polishs, setPolishs] = useState([]);
-  const [symmetries, setSymmetries] = useState([]);
-  const [locations, setLocations] = useState([]);
-  const [totalCount, setTotalCount] = useState(0); // New state for total count
-  const [cartItems, setCartItems] = useState([]);
-  const [cartDropdownOpen, setCartDropdownOpen] = useState(false); // For dropdown
+const Pair = () => {
   const [isOpen, setIsOpen] = useState(false);
-
   const toggleDrawer = () => {
     setIsOpen(!isOpen);
   };
+  const [solitaires, setSolitaires] = useState([
+    // Dummy data for two solitaires
+    {
+      SolitaireID: 1,
+      SolitaireName: "Radiant-13",
+      Slug: "radiant-13",
+      ShapeName: "Radiant",
+      Carat: 2.5,
+      ColorName: "E",
+      FluorName: "None",
+      PurityName: "VS1",
+      CutName: "Excellent",
+      LabName: "GIA",
+      PolishName: "Excellent",
+      SymmetryName: "Very Good",
+      LocationName: "New York",
+      CertificateNumber: "123456789",
+      UniqueCode: "RAD1234",
+      Image1:
+        "https://opencart.workdo.io/diamond/image/cache/catalog/product/1/1-1000x1000.png",
+      Image2:
+        "https://opencart.workdo.io/diamond/image/cache/catalog/product/1/2-1000x1000.png",
+      Image3:
+        "https://opencart.workdo.io/diamond/image/cache/catalog/product/2/1-1000x1000.png", // Add a third image
+      Image4: null,
+      Image5: null,
+      PDFKey: "dummy.pdf",
+      VideoKey: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      IsActive: true,
+      Price: 9999.99, // Add a price
+      BrandName: "Example Brand", // Add a brand name
+    },
+    {
+      SolitaireID: 2,
+      SolitaireName: "Emerald-8",
+      Slug: "emerald-8",
+      ShapeName: "Emerald",
+      Carat: 1.8,
+      ColorName: "D",
+      FluorName: "Faint",
+      PurityName: "VVS2",
+      CutName: "Very Good",
+      LabName: "IGI",
+      PolishName: "Good",
+      SymmetryName: "Excellent",
+      LocationName: "London",
+      CertificateNumber: "987654321",
+      UniqueCode: "EME5678",
+      Image1:
+        "https://opencart.workdo.io/diamond/image/cache/catalog/product/11/1-1000x1000.png",
+      Image2:
+        "https://opencart.workdo.io/diamond/image/cache/catalog/product/11/2-1000x1000.png",
+      Image3:
+        "https://opencart.workdo.io/diamond/image/cache/catalog/product/12/1-1000x1000.png", // Add a third image
+      Image4: null,
+      Image5: null,
+      PDFKey: "dummy.pdf",
+      VideoKey: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      IsActive: true,
+      Price: 6800.5, // Add a price
+      BrandName: "Another Brand",
+    },
+  ]);
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [quantities, setQuantities] = useState([1, 1]); // Quantities for each solitaire
+  const [cartItems, setCartItems] = useState([]);
+  const [cartDropdownOpen, setCartDropdownOpen] = useState(false);
+  const [mainImageUrls, setMainImageUrls] = useState([null, null]);
+  const [showSkeletons, setShowSkeletons] = useState([false, false]);
+
+  const galleryRefs = [useRef(null), useRef(null)];
+
   useEffect(() => {
     const updateCart = () => {
       setCartItems(getCartItemsFromLocalStorage());
@@ -85,366 +113,95 @@ const Solitaire = () => {
     setCartItems(getCartItemsFromLocalStorage());
   };
 
+  const handleSubmit = () => {
+    console.log("submitted");
+  };
   // Toggle the cart dropdown
   const toggleCartDropdown = () => {
     setCartDropdownOpen(!cartDropdownOpen);
   };
+
+  // Initialize Glide for each solitaire
+  useEffect(() => {
+    solitaires.forEach((solitaire, index) => {
+      if (galleryRefs[index].current) {
+        new Glide(galleryRefs[index].current, {
+          type: "carousel",
+          perView: 4,
+          gap: 10,
+          rewind: false,
+        }).mount();
+      }
+    });
+  }, [solitaires]);
+
+  // Set main image URLs when solitaires data changes
+  useEffect(() => {
+    setMainImageUrls(solitaires.map((solitaire) => solitaire.Image1));
+  }, [solitaires]);
+
+  const handleGalleryImageClick = (solitaireIndex, imageUrl) => {
+    const newSkeletons = [...showSkeletons];
+    newSkeletons[solitaireIndex] = true;
+    setShowSkeletons(newSkeletons);
+
+    setTimeout(() => {
+      const newImageUrls = [...mainImageUrls];
+      newImageUrls[solitaireIndex] = imageUrl;
+      setMainImageUrls(newImageUrls);
+
+      newSkeletons[solitaireIndex] = false;
+      setShowSkeletons(newSkeletons);
+    }, 300);
+  };
+
+  // Handle quantity changes
+  const handleQuantityChange = (solitaireIndex, newQuantity) => {
+    const newQuantities = [...quantities];
+    newQuantities[solitaireIndex] = parseInt(newQuantity) || 1;
+    setQuantities(newQuantities);
+  };
+
+  const increaseQuantity = (solitaireIndex) => {
+    const newQuantities = [...quantities];
+    newQuantities[solitaireIndex]++;
+    setQuantities(newQuantities);
+  };
+
+  const decreaseQuantity = (solitaireIndex) => {
+    const newQuantities = [...quantities];
+    if (newQuantities[solitaireIndex] > 1) {
+      newQuantities[solitaireIndex]--;
+    }
+    setQuantities(newQuantities);
+  };
+  const areSolitairesInCart = solitaires.map((solitaire) =>
+    cartItems.some((item) => item.SolitaireID === solitaire.SolitaireID)
+  );
+  const handleAddToCart = (solitaireIndex) => {
+    const solitaireToAdd = {
+      ...solitaires[solitaireIndex],
+      quantity: quantities[solitaireIndex],
+    };
+    addToCart(solitaireToAdd);
+    setCartItems(getCartItemsFromLocalStorage());
+  };
+
   // Calculate subtotal and total
   const subTotal = cartItems.reduce(
     (total, item) => total + item.Price * item.quantity,
     0
   );
-  const total = subTotal;
-
-  const sidebarWidth = useBreakpointValue({
-    base: "60px",
-    md: isSidebarOpen ? "200px" : "60px",
-  });
-
-  const sidebarContainerRef = useRef(null);
-
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
-  };
-
-  useEffect(() => {
-    setSelectedFilters(filtersFromRedux);
-  }, [filtersFromRedux]);
-
-  useEffect(() => {
-    fetchAllFilterData();
-  }, []);
-
-  const fetchAllFilterData = async () => {
-    setLoadingShapes(true);
-    // setError(null); // Reset error state
-
-    try {
-      const response = await axios.get("/api/solitaire");
-      // console.log("fetch all filter data response:", response);
-      if (response.status === 200) {
-        setShapes(response.data.shapes);
-        setCarats(response.data.carats);
-        setColors(response.data.colors);
-        setFlours(response.data.flours);
-        setPurities(response.data.purities);
-        setCuts(response.data.cuts);
-        setLabs(response.data.labs);
-        setPolishs(response.data.polishs);
-        setSymmetries(response.data.symmetries);
-        setLocations(response.data.locations);
-        setTotalCount(response.data.totalCount);
-      } else {
-        console.error("Error fetching filter data:", response.data.error);
-        // setError("Error fetching filter data.");
-      }
-    } catch (error) {
-      console.error("Error fetching all filter data:", error);
-      // setError("An error occurred. Please try again.");
-    } finally {
-      setLoadingShapes(false);
-    }
-  };
-
-  // useEffect(() => {
-  //   if (sidebarWidth !== "60px") {
-  //     onClose();
-  //   }
-  // }, [sidebarWidth, onClose]);
-
-  const [selectedFilters, setSelectedFilters] = useState({
-    carat: [],
-    fluor: [],
-    cut: [],
-    polish: [],
-    color: [],
-    clarity: [],
-    lab: [],
-    symm: [],
-    location: [],
-    shape: [], // Make sure 'shape' is in your selectedFilters
-  });
-
-  const filters = {
-    // Define the filters object
-    carat: selectedFilters.carat,
-    fluor: selectedFilters.fluor,
-    cut: selectedFilters.cut,
-    polish: selectedFilters.polish,
-    color: selectedFilters.color,
-    clarity: selectedFilters.clarity,
-    lab: selectedFilters.lab,
-    symm: selectedFilters.symm,
-    location: selectedFilters.location,
-    shape: selectedFilters.shape,
-  };
-
-  const handleFilterChange = (filterType, value) => {
-    setSelectedFilters((prevFilters) => {
-      const filterValues = prevFilters[filterType] || [];
-
-      const isValueSelected = filterValues.includes(value);
-
-      const updatedFilterValues = isValueSelected
-        ? filterValues.filter((val) => val !== value)
-        : [...filterValues, value];
-
-      return {
-        ...prevFilters,
-        [filterType]: updatedFilterValues,
-      };
-    });
-  };
-  useEffect(() => {
-    console.log("Selected Filters:", selectedFilters);
-  }, [selectedFilters]);
-
-  const handleSearch = () => {
-    console.log("Search Filters:", selectedFilters);
-
-    // Helper function to get the name from an ID
-    const getNameFromId = (filterType, id) => {
-      switch (filterType) {
-        case "carat":
-          return carats.find((c) => c.CaratID === id)?.HighLimit; // Return the high limit of the carat range
-        case "fluor":
-          return flours.find((f) => f.FluorID === id)?.FluorName;
-        case "cut":
-          return cuts.find((c) => c.CutID === id)?.CutName;
-        case "polish":
-          return polishs.find((p) => p.PolishID === id)?.PolishName;
-        case "color":
-          return colors.find((c) => c.ColorID === id)?.ColorName;
-        case "clarity":
-          return purities.find((p) => p.PurityID === id)?.PurityName;
-        case "lab":
-          return labs.find((l) => l.LabID === id)?.LabName;
-        case "symm":
-          return symmetries.find((s) => s.SymmetryID === id)?.SymmetryName;
-        case "location":
-          return locations.find((l) => l.LocationID === id)?.LocationName;
-        case "shape":
-          return shapes.find((s) => s.ShapeID === id)?.ShapeName;
-        default:
-          return null;
-      }
-    };
-
-    // Dispatch filter names to Redux
-    dispatch(
-      setFilter({
-        filterType: "carat",
-        values: selectedFilters.carat.map((id) => getNameFromId("carat", id)),
-      })
-    );
-    dispatch(
-      setFilter({
-        filterType: "fluor",
-        values: selectedFilters.fluor.map((id) => getNameFromId("fluor", id)),
-      })
-    );
-    dispatch(
-      setFilter({
-        filterType: "cut",
-        values: selectedFilters.cut.map((id) => getNameFromId("cut", id)),
-      })
-    );
-    dispatch(
-      setFilter({
-        filterType: "polish",
-        values: selectedFilters.polish.map((id) => getNameFromId("polish", id)),
-      })
-    );
-    dispatch(
-      setFilter({
-        filterType: "color",
-        values: selectedFilters.color.map((id) => getNameFromId("color", id)),
-      })
-    );
-    dispatch(
-      setFilter({
-        filterType: "clarity",
-        values: selectedFilters.clarity.map((id) =>
-          getNameFromId("clarity", id)
-        ),
-      })
-    );
-    dispatch(
-      setFilter({
-        filterType: "lab",
-        values: selectedFilters.lab.map((id) => getNameFromId("lab", id)),
-      })
-    );
-    dispatch(
-      setFilter({
-        filterType: "symm",
-        values: selectedFilters.symm.map((id) => getNameFromId("symm", id)),
-      })
-    );
-    dispatch(
-      setFilter({
-        filterType: "location",
-        values: selectedFilters.location.map((id) =>
-          getNameFromId("location", id)
-        ),
-      })
-    );
-    dispatch(
-      setFilter({
-        filterType: "shape",
-        values: selectedFilters.shape.map((id) => getNameFromId("shape", id)),
-      })
-    );
-    // Add your search logic here
-    // if (session) {
-    //   // Authenticated user - redirect to the "search results" page
-    //   router.push({
-    //     pathname: "/search", // Or your desired results page
-    //     query: filters, // Pass filters in the query string
-    //   });
-    // } else {
-    //   // Unauthenticated user - redirect to login with callback URL
-    //   router.push({
-    //     pathname: "/auth/login",
-    //     query: { callbackUrl: router.asPath }, // Pass current URL as callback
-    //   });
-    // }
-    router.push({
-      pathname: "/search", // Or your desired results page
-      // query: filters, // Pass filters in the query string
-    });
-  };
-
-  const handleNavigation = () => {
-    if (session) {
-      if (session.user.role === "admin") {
-        router.push("/admin/dashboard");
-      } else {
-        router.push("/user/dashboard");
-      }
-    } else {
-      router.push("/auth/login");
-    }
-  };
+  const total = subTotal; // For now, total is the same as subtotal
 
   return (
-    <Box backgroundColor={"transparent"}>
-      {/* Header */}
-      {/* <Flex
-        backgroundColor="blue.700"
-        p={2}
-        align="center"
-        position={"-webkit-sticky"}
-        top={0}
-        right={0}
-        ml={{ base: 0, md: isSidebarOpen ? "205px" : "50px" }}
-        transition="margin-left 0.3s, width 0s"
-        overflowX={"hidden"}
-        width={{
-          base: "100%",
-          md: isSidebarOpen ? "calc(100% - 205px)" : "calc(100% - 50px)",
-        }}
-        zIndex={100}
-        // width="100%"
-        justifyContent="space-between" // Add justifyContent
-      >
-        <Flex align="center">
-          {" "}
-          {/* Wrap HamburgerIcon and Image in a Flex */}
-      {/* <HamburgerIcon
-            display={{ base: "block", md: "none" }}
-            onClick={onOpen}
-            color={"white"}
-          />
-          <Image
-            src={vercel}
-            alt="Logo"
-            width={100}
-            height={50}
-            style={{ marginLeft: "20px", marginRight: "20px" }}
-          />
-          <SearchBar />
-        </Flex> */}
-      {/* {session ? (
-          <Button colorScheme={"blackAlpha"} onClick={() => signOut()}>
-            Logout
-          </Button>
-        ) : (
-          <Button
-            // mr={50}
-            colorScheme="whiteAlpha"
-            onClick={() => {
-              dispatch(
-                setFilter({
-                  filterType: "carat",
-                  values: selectedFilters.carat,
-                })
-              );
-              dispatch(
-                setFilter({
-                  filterType: "fluor",
-                  values: selectedFilters.fluor,
-                })
-              );
-              dispatch(
-                setFilter({
-                  filterType: "length",
-                  values: selectedFilters.length,
-                })
-              );
-              dispatch(
-                setFilter({
-                  filterType: "polish",
-                  values: selectedFilters.polish,
-                })
-              );
-              dispatch(
-                setFilter({
-                  filterType: "color",
-                  values: selectedFilters.color,
-                })
-              );
-              dispatch(
-                setFilter({
-                  filterType: "clarity",
-                  values: selectedFilters.clarity,
-                })
-              );
-              dispatch(
-                setFilter({
-                  filterType: "lab",
-                  values: selectedFilters.lab,
-                })
-              );
-              dispatch(
-                setFilter({
-                  filterType: "symm",
-                  values: selectedFilters.symm,
-                })
-              );
-              dispatch(
-                setFilter({
-                  filterType: "location",
-                  values: selectedFilters.location,
-                })
-              );
-              dispatch(
-                setFilter({
-                  filterType: "shape",
-                  values: selectedFilters.shape,
-                })
-              );
+    <div>
+      <Head>
+        <title>Pair - Diamond Store</title>
+        {/* ... [Add other meta tags] ... */}
+      </Head>
 
-              router.push({
-                pathname: "/auth/login",
-                query: { callbackUrl: router.asPath },
-              });
-            }}
-          >
-            Login
-          </Button>
-        )}
-      </Flex>  */}
+      {/* Header */}
       <header>
         <div className="top-header hidden-xs" style={{ fontFamily: "outfit" }}>
           <div className="container">
@@ -1039,318 +796,487 @@ const Solitaire = () => {
         </div>
       </header>
 
-      <Flex ref={sidebarContainerRef} mt={0}    backgroundColor={"#F2DFCF"}>
-        {/* Drawer (Mobile) */}
-        {/* <Drawer
-          isOpen={isOpen}
-          placement="left"
-          onClose={onClose}
-          size="xs"
-          // display={{ base: "block", md: "none", lg: "none" }}
-        >
-          <DrawerOverlay />
-          <DrawerContent>
-            <DrawerCloseButton />
-            <DrawerHeader>Menu</DrawerHeader>
-            <DrawerBody>
-              <Sidebar isOpen={isOpen} onClose={onClose} />
-            </DrawerBody>
-          </DrawerContent>
-        </Drawer> */}
-
-        {/* Sidebar (Desktop) */}
-        {/* <Sidebar
-          isOpen={isSidebarOpen}
-          onClose={toggleSidebar}
-          onOpen={onOpen}
-          top={0}
-          width={sidebarWidth}
-          display={{ base: "none", md: "block" }}
-        /> */}
-
-        {/* Main Content Area */}
-        <Box
-          flex="1"
-          // transform={{
-          //   base: "scale(0.9)",
-          //   md: "scale(0.9)",
-          //   lg: "scale(0.9)",
-          // }}
-          m={5}
-          p={4}
-          borderRadius={"20px"}
-          backgroundColor={"transparent"}
-          ml={{ base: 0, md: isSidebarOpen ? "205px" : "50px" }}
-          overflowX="hidden"
-          transition="margin-left 0.3s"
-          fontFamily="outfit"
-        >
-          {/* Diamond Shape Section */}
-          <Box mb={6}>
-            <Heading as="h2" size="md" color="var(--main-color)" mb={5}>
-              Shape
-            </Heading>
-            {loadingShapes ? (
-              <Text color="var(--main-color)">Loading shapes...</Text>
-            ) : (
-              <SimpleGrid columns={{ base: 4, md: 8, lg: 12 }} spacing={4}>
-                {shapes ? (
-                  shapes.map((shape) => (
-                    <DiamondShape
-                      key={shape.ShapeID}
-                      shape={shape}
-                      isSelected={selectedFilters.shape.includes(shape.ShapeID)}
-                      onClick={() => {
-                        handleFilterChange("shape", shape.ShapeID); // Use handleFilterChange
-                      }}
-                    />
-                  ))
-                ) : (
-                  <span color="var(--main-color)">error fetching shapes</span>
-                )}
-              </SimpleGrid>
-            )}
-          </Box>
-
-          <hr style={{ color: "var(--main-color)", margin: "2px" }} />
-          <hr
-            style={{
-              color: "var(--main-color)",
-              margin: "2px",
-              marginBottom: "16px",
-            }}
-          />
-
-          {/* Filters Section - Using Grid for two-column layout */}
-          <Grid templateColumns={{ base: "1fr", md: "1fr 1fr" }} gap={6}>
-            {/* Column 1 */}
-            <GridItem>
-              <FilterSection
-                label="Carat"
-                options={carats.map((carat) => ({
-                  label: `${carat.LowLimit} - ${carat.HighLimit}`,
-                  value: carat.CaratID,
-                }))}
-                selectedValues={selectedFilters.carat}
-                onFilterChange={(value) => handleFilterChange("carat", value)}
-              />
-              <FilterSection
-                label="Fluor."
-                options={flours.map((fluor) => ({
-                  label: fluor.FluorName,
-                  value: fluor.FluorID,
-                }))}
-                selectedValues={selectedFilters.fluor}
-                onFilterChange={(value) => handleFilterChange("fluor", value)}
-              />
-              <FilterSection
-                label="Cut"
-                options={cuts.map((cut) => ({
-                  label: cut.CutName,
-                  value: cut.CutID,
-                }))}
-                selectedValues={selectedFilters.cut}
-                onFilterChange={(value) => handleFilterChange("cut", value)}
-              />
-              <FilterSection
-                label="Polish"
-                options={polishs.map((polish) => ({
-                  // Assuming 'polishs' is the correct state variable
-                  label: polish.PolishName,
-                  value: polish.PolishID,
-                }))}
-                selectedValues={selectedFilters.polish}
-                onFilterChange={(value) => handleFilterChange("polish", value)}
-              />
-            </GridItem>
-
-            {/* Column 2 */}
-            <GridItem>
-              <Box mb={4}>
-                <Text
-                  fontWeight="bold"
-                  mb={2}
-                  // fontFamily="Playfair Display"
-                  color="var(--main-color)"
-                >
-                  Color
-                </Text>
-                <FilterSection
-                  options={colors.map((color) => ({
-                    label: color.ColorName,
-                    value: color.ColorID,
-                  }))}
-                  selectedValues={selectedFilters.color}
-                  onFilterChange={(value) => handleFilterChange("color", value)}
-                />
-              </Box>
-              <Box mb={4}>
-                <Text
-                  fontWeight="bold"
-                  mb={2}
-                  // fontFamily="Playfair Display"
-                  color="var(--main-color)"
-                >
-                  Purity
-                </Text>
-                <FilterSection
-                  options={purities.map((purity) => ({
-                    label: purity.PurityName,
-                    value: purity.PurityID,
-                  }))}
-                  selectedValues={selectedFilters.clarity}
-                  onFilterChange={(value) =>
-                    handleFilterChange("clarity", value)
-                  }
-                />
-              </Box>
-              <Box mb={4}>
-                <Text
-                  fontWeight="bold"
-                  mb={2}
-                  // fontFamily="Playfair Display"
-                  color="var(--main-color)"
-                >
-                  Lab
-                </Text>
-                <FilterSection
-                  options={labs.map((lab) => ({
-                    label: lab.LabName,
-                    value: lab.LabID,
-                  }))}
-                  selectedValues={selectedFilters.lab}
-                  onFilterChange={(value) => handleFilterChange("lab", value)}
-                />
-              </Box>
-              <Box mb={4}>
-                <Text
-                  fontWeight="bold"
-                  mb={2}
-                  // fontFamily="Playfair Display"
-                  color="var(--main-color)"
-                >
-                  Symmerty
-                </Text>
-                <FilterSection
-                  options={symmetries.map((symm) => ({
-                    label: symm.SymmetryName,
-                    value: symm.SymmetryID,
-                  }))}
-                  selectedValues={selectedFilters.symm}
-                  onFilterChange={(value) => handleFilterChange("symm", value)}
-                />
-              </Box>
-              <Box mb={4}>
-                <Text
-                  fontWeight="bold"
-                  mb={2}
-                  // fontFamily="Playfair Display"
-                  color="var(--main-color)"
-                >
-                  Location
-                </Text>
-                <FilterSection
-                  options={locations.map((location) => ({
-                    label: location.LocationName,
-                    value: location.LocationID,
-                  }))}
-                  selectedValues={selectedFilters.location}
-                  onFilterChange={(value) =>
-                    handleFilterChange("location", value)
-                  }
-                />
-              </Box>
-            </GridItem>
-          </Grid>
-
-          <Button
-            backgroundColor="black"
-            color="var(--sub-color)"
-            size="sm"
-            mt={4}
-            mb={6}
-            borderRadius="20px"
-            onClick={handleSearch}
-            sx={{
-              "&:hover": {
-                backgroundColor: "var(--sub-color)",
-                color: "black",
-              },
-            }}
+      {/* Main Content */}
+      <main>
+        <div className="container mt-5">
+          <div
+            className="row mt-2 mb-3"
+            style={{ alignItems: "center", textAlign: "center" }}
           >
-            Show Advance Filters
-          </Button>
+            <h1> Demo Pair Details</h1>
+          </div>
+          <div className="row">
+            {/* Solitaire 1 */}
+            {solitaires.map((solitaire, solitaireIndex) => (
+              <div
+                key={solitaire.SolitaireID}
+                className={`col-lg-6 col-md-12 ${
+                  solitaires.length === 1 ? "col-sm-12" : "col-sm-6" // Adjust column classes based on number of solitaires
+                } mb-4`}
+              >
+                <div className="productbg p-bg">
+                  <div className="container">
+                    <div className="row">
+                      <div
+                        className={`col-lg-5 col-md-6 col-xs-12 zoom-left sticky t-50 ${
+                          solitaires.length > 1 ? "order-lg-1 order-md-2" : ""
+                        }`}
+                      >
+                        {/* Main Image */}
+                        <div className="pro-bg">
+                          <div className="image magnific-popup row">
+                            <div className="col-md-12 col-sm-12 col-xs-12 big-img">
+                              {mainImageUrls[solitaireIndex] ? (
+                                <a
+                                  href={mainImageUrls[solitaireIndex]}
+                                  title={solitaire.SolitaireName}
+                                >
+                                  {/* Skeleton Overlay */}
+                                  {showSkeletons[solitaireIndex] && (
+                                    <Skeleton
+                                      startColor="brown.300"
+                                      endColor="gray.500"
+                                      className="img-thumbnail img-fluid"
+                                      height="100%"
+                                      minWidth={"350px"}
+                                      minHeight={"350px"}
+                                      opacity={100}
+                                      zIndex="5"
+                                    />
+                                  )}
 
-          {/* Search Buttons */}
-          <Flex mt={6} justify="flex-end">
-            <Button
-              backgroundColor="black"
-              color="var(--sub-color)"
-              mr={2}
-              borderRadius="20px"
-              sx={{
-                "&:hover": {
-                  backgroundColor: "var(--sub-color)",
-                  color: "black",
-                },
-              }}
-            >
-              Cancel
-            </Button>
-            <Button
-              backgroundColor="black"
-              color="var(--sub-color)"
-              mr={2}
-              borderRadius="20px"
-              onClick={() => {
-                dispatch(resetFilters()); // Reset filters in Redux store
-              }}
-              sx={{
-                "&:hover": {
-                  backgroundColor: "var(--sub-color)",
-                  color: "black",
-                },
-              }}
-            >
-              Reset
-            </Button>
-            <Button
-              backgroundColor="black"
-              color="var(--sub-color)"
-              borderRadius="20px"
-              onClick={() => {
-                handleSearch();
-              }}
-              sx={{
-                "&:hover": {
-                  backgroundColor: "var(--sub-color)",
-                  color: "black",
-                },
-              }}
-            >
-              Search
-            </Button>
-            <Button
-              backgroundColor="black"
-              color="var(--sub-color)"
-              ml={2}
-              borderRadius="20px"
-              rightIcon={<ChevronDownIcon />}
-              onClick={handleSearch} // Redirect on "Save Search"
-              sx={{
-                "&:hover": {
-                  backgroundColor: "var(--sub-color)",
-                  color: "black",
-                },
-              }}
-            >
-              Save Search
-            </Button>
-          </Flex>
-        </Box>
-      </Flex>
-    </Box>
+                                  <img
+                                    id={`img_01_${solitaireIndex}`} // Unique ID
+                                    src={mainImageUrls[solitaireIndex]}
+                                    data-zoom-image={
+                                      mainImageUrls[solitaireIndex]
+                                    }
+                                    title={solitaire.SolitaireName}
+                                    alt={solitaire.SolitaireName}
+                                    className="img-thumbnail img-fluid"
+                                    style={{
+                                      width: "100%",
+                                      height: "auto",
+                                      maxWidth: "400px",
+                                      display: "block",
+                                      boxShadow:
+                                        "4px 4px 4px 4px rgb(0,0,0,0.3)",
+                                      borderRadius: "20px",
+                                      zIndex: "1",
+                                    }}
+                                  />
+                                </a>
+                              ) : (
+                                <div>Loading image...</div>
+                              )}
+                            </div>
+
+                            {/* Gallery Images */}
+                            <div
+                              className="col-md-12 col-sm-12 col-xs-12 mt-3"
+                              style={{
+                                display: "flex",
+                                justifyContent: "center",
+                              }}
+                            >
+                              <div
+                                style={{ width: "100%" }}
+                                ref={galleryRefs[solitaireIndex]}
+                              >
+                                <div className="glide">
+                                  <div
+                                    className="glide__track"
+                                    data-glide-el="track"
+                                  >
+                                    <ul className="glide__slides">
+                                      {[
+                                        solitaire.Image1,
+                                        solitaire.Image2,
+                                        solitaire.Image3,
+                                        solitaire.Image4,
+                                        solitaire.Image5,
+                                      ]
+                                        .filter(Boolean)
+                                        .map((imageUrl, index) => (
+                                          <li
+                                            key={index}
+                                            className="glide__slide"
+                                          >
+                                            <a
+                                              href="#"
+                                              title={solitaire.SolitaireName}
+                                            >
+                                              <img
+                                                src={imageUrl}
+                                                onClick={() =>
+                                                  handleGalleryImageClick(
+                                                    solitaireIndex,
+                                                    imageUrl
+                                                  )
+                                                }
+                                                alt={`Gallery Image ${
+                                                  index + 1
+                                                }`}
+                                                style={{
+                                                  width: "100%",
+                                                  height: "auto",
+                                                  maxWidth: "100px",
+                                                  border: "1px solid #ccc",
+                                                  padding: "5px",
+                                                  borderRadius: "5px",
+                                                }}
+                                              />
+                                            </a>
+                                          </li>
+                                        ))}
+                                    </ul>
+                                  </div>
+                                  {/* Navigation Arrows (moved and styled) */}
+                                  <div
+                                    className="glide__arrows"
+                                    data-glide-el="controls"
+                                    style={{
+                                      position: "absolute",
+                                      top: "50%",
+                                      transform: "translateY(-50%)",
+                                      width: "100%",
+                                      display: "flex",
+                                      justifyContent: "space-between",
+                                    }}
+                                  >
+                                    <button
+                                      className="glide__arrow glide__arrow--left"
+                                      data-glide-dir="<"
+                                      style={{
+                                        backgroundColor: "rgb(0,0,0,0.2)",
+                                        border: "none",
+                                        padding: "10px",
+                                        borderRadius: "50%",
+                                        cursor: "pointer",
+                                      }}
+                                    >
+                                      <i className="fas fa-chevron-left fa-lg text-dark"></i>
+                                    </button>
+                                    <button
+                                      className="glide__arrow glide__arrow--right"
+                                      data-glide-dir=">"
+                                      style={{
+                                        backgroundColor: "rgb(0,0,0,0.2)",
+                                        border: "none",
+                                        padding: "10px",
+                                        borderRadius: "40%",
+                                        cursor: "pointer",
+                                      }}
+                                    >
+                                      <i className="fas fa-chevron-right fa-lg text-dark"></i>
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Product Details */}
+                      <div
+                        className={`col-lg-7 col-md-6 col-xs-12 pro-content t-50 ${
+                          solitaires.length > 1 ? "order-lg-2 order-md-1" : ""
+                        }`}
+                      >
+                        {/* ... [Your pro-content JSX, using solitaire data] ... */}
+
+                        <h1>{solitaire.SolitaireName}</h1>
+                        {/* ... [Your products-specific and product JSX] ... */}
+                        <div
+                          className="products-specific"
+                          style={{ fontFamily: "outfit" }}
+                        >
+                          <ul className="list-unstyled">
+                            <li className="d-flex align-items-center">
+                              {/* Use flexbox for alignment */}
+                              <i className="fas fa-gem mr-2" />      
+                              {/* Icon column - adjust icon class */}
+                              <span className="text-decor">Shape:</span>{" "}
+                              {solitaire.ShapeName}
+                            </li>
+                            <li className="d-flex align-items-center">
+                              <i className="fas fa-balance-scale-left mr-2" />{" "}
+                                  
+                              {/* Adjust icon class */}
+                              <span className="text-decor">Carat:</span>{" "}
+                              {solitaire.Carat}
+                            </li>
+                            <li className="d-flex align-items-center">
+                              <i className="fas fa-palette mr-2" />      
+                              {/* Adjust icon class */}
+                              <span className="text-decor">Color:</span>{" "}
+                              {solitaire.ColorName}
+                            </li>
+                            <li className="d-flex align-items-center">
+                              <i className="fas fa-search-plus mr-2" />      
+                              {/* Adjust icon class */}
+                              <span className="text-decor">Clarity:</span>{" "}
+                              {solitaire.PurityName}
+                            </li>
+                            <li className="d-flex align-items-center">
+                              <i className="fas fa-map-marker-alt mr-2" />      
+                              {/* Adjust icon class */}
+                              <span className="text-decor">Location:</span>{" "}
+                              {solitaire.LocationName}
+                            </li>
+                          </ul>
+
+                          <ul className="list-unstyled">
+                            <li className="d-flex align-items-center">
+                              <i className="fas fa-cut mr-2" />      
+                              {/* Adjust icon class */}
+                              <span className="text-decor">Cut:</span>{" "}
+                              {solitaire.CutName}
+                            </li>
+                            <li className="d-flex align-items-center">
+                              <i className="fas fa-flask mr-2" />      
+                              {/* Adjust icon class */}
+                              <span className="text-decor">Lab:</span>{" "}
+                              {solitaire.LabName}
+                            </li>
+                            <li className="d-flex align-items-center">
+                              <i className="fas fa-magic mr-2" />      
+                              {/* Adjust icon class */}
+                              <span className="text-decor">Polish:</span>{" "}
+                              {solitaire.PolishName}
+                            </li>
+                            <li className="d-flex align-items-center">
+                              <i className="fas fa-arrows-alt-h mr-2" />      
+                              {/* Adjust icon class */}
+                              <span className="text-decor">Symmetry:</span>{" "}
+                              {solitaire.SymmetryName}
+                            </li>
+                          </ul>
+                        </div>
+
+                        {/* Product Form (replace OpenCart logic)  */}
+                        <div id="product" className="clearfix">
+                          <form id="form-product" onSubmit={handleSubmit}>
+                            {/* ... [Your web_option JSX] ... */}
+
+                            {/* Quantity Input */}
+                            <div className="pro-qut">
+                              <label
+                                htmlFor="input-quantity"
+                                className="form-label text-decorop"
+                              >
+                                Qty
+                              </label>
+                              <div className="op-box qty-plus-minus">
+                                <button
+                                  type="button"
+                                  className="form-control pull-left btn-number btnminus"
+                                  disabled={quantities[solitaireIndex] === 1}
+                                  onClick={() =>
+                                    decreaseQuantity(solitaireIndex)
+                                  }
+                                >
+                                  <span className="fa fa-minus"></span>
+                                </button>
+                                <input
+                                  id={`input-quantity-${solitaireIndex}`}
+                                  type="text"
+                                  name="quantity"
+                                  value={quantities[solitaireIndex]}
+                                  size="2"
+                                  className="form-control input-number pull-left"
+                                  onChange={(e) =>
+                                    handleQuantityChange(
+                                      solitaireIndex,
+                                      e.target.value
+                                    )
+                                  }
+                                />
+                                <button
+                                  type="button"
+                                  className="form-control pull-left btn-number btnplus"
+                                  onClick={() =>
+                                    increaseQuantity(solitaireIndex)
+                                  }
+                                >
+                                  <span className="fa fa-plus"></span>
+                                </button>
+                                <div
+                                  id={`error-quantity-${solitaireIndex}`}
+                                  className="form-text"
+                                ></div>
+                              </div>
+                            </div>
+
+                            {/* Price */}
+                            <div className="pro-price">
+                              <ul className="list-unstyled">
+                                <li className="text-decor-bold">
+                                  <h2>
+                                    <span
+                                      className="price-new"
+                                      style={{
+                                        fontFamily: "outfit",
+                                        fontWeight: "200",
+                                      }}
+                                    >
+                                      $999{solitaire.Price}
+                                    </span>
+                                  </h2>
+                                </li>
+                              </ul>
+                            </div>
+
+                            {/* Add to Cart Button */}
+                            <div className="qty-flex">
+                              {areSolitairesInCart[solitaireIndex] ? ( // Check if this solitaire is in the cart
+                                <div
+                                  style={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                  }}
+                                >
+                                  <button
+                                    className="btn btn-primary btn-lg btn-block text-success"
+                                    style={{
+                                      marginRight: "10px",
+                                      display: "flex",
+                                      alignItems: "center",
+                                      scale: "0.7",
+                                    }}
+                                    disabled
+                                  >
+                                    Already in cart!
+                                  </button>
+                                  <Link
+                                    href="/cart"
+                                    className="btn btn-primary btn-lg btn-block"
+                                    style={{
+                                      display: "flex",
+                                      alignItems: "center",
+                                      scale: "0.7",
+                                    }}
+                                  >
+                                    Open Cart
+                                    <img
+                                      alt="stor-bg"
+                                      src="image/catalog/stor-bg.svg"
+                                      style={{ marginLeft: "5px" }}
+                                    />
+                                  </Link>
+                                </div>
+                              ) : (
+                                <button
+                                  onClick={() =>
+                                    handleAddToCart(solitaireIndex)
+                                  }
+                                  className="btn btn-primary btn-lg btn-block"
+                                >
+                                  Add to Cart
+                                  <img
+                                    alt="stor-bg"
+                                    src="image/catalog/stor-bg.svg"
+                                  />
+                                </button>
+                              )}
+
+                              <input
+                                type="hidden"
+                                name="product_id"
+                                value={solitaire.SolitaireID}
+                              />
+                            </div>
+                          </form>
+                        </div>
+                        {/* ... [Replace AddToAny section as needed] ... */}
+                        {/*  PDF and Video Panels (Dummy Data) */}
+                      </div>
+                    </div>
+                    <div className="row mt-4">
+                      <div className="row">
+                        {/* PDF Panel */}
+                        <div className="col-md-12">
+                          <div className="card">
+                            <div
+                              className="card-header"
+                              style={{
+                                color: "var(--main-color)",
+                                fontFamily: "outfit",
+                                textAlign: "center",
+                              }}
+                            >
+                              Product Certificate (PDF)
+                            </div>
+                            <div className="card-body embed-responsive embed-responsive-4by3">
+                              <iframe
+                                src="/pdf/dummy.pdf"
+                                title="Product Certificate"
+                                className="embed-responsive-item"
+                              ></iframe>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Video Panel */}
+                        <div className="col-md-12">
+                          <div
+                            className="card"
+                            style={{
+                              alignItems: "center",
+                              justifyContent: "center",
+                            }}
+                          >
+                            <div
+                              className="card-header"
+                              style={{
+                                color: "var(--main-color)",
+                                fontFamily: "outfit",
+                                textAlign: "center",
+                              }}
+                            >
+                              Product Video
+                            </div>
+                            <div
+                              className="card-body embed-responsive embed-responsive-16by9"
+                              style={{
+                                width: "100%",
+                                height: "100%",
+                                minHeight: "300px",
+                                alignItems: "center",
+                                justifyContent: "center",
+                              }}
+                            >
+                              <iframe
+                                src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                                title="Product Video"
+                                allowFullScreen
+                                className="embed-responsive-item"
+                                style={{
+                                  width: "100%",
+                                  height: "100%",
+                                  minHeight: "250px",
+                                }}
+                              ></iframe>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* ... [Your product-reviews and pro-banner JSX - remove jQuery/inline scripts] ...  */}
+              </div>
+            ))}
+          </div>
+        </div>
+      </main>
+
+      {/* ... [Your footer JSX - replace jQuery/inline scripts] ... */}
+    </div>
   );
 };
 
-export default Solitaire;
+export default Pair;
