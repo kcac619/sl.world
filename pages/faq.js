@@ -52,7 +52,7 @@ const Faq = () => {
   return (
     <div>
       <>
-        <Header />
+      
         <div className="contact-top-bg pb-30">
           <div className="container">
             <Breadcrumb name={"Faq"} />
@@ -83,7 +83,7 @@ const Faq = () => {
             </div>
           </div>
         </div>
-        <Footer />
+      
       </>
     </div>
   );

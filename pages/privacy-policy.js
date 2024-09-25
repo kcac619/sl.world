@@ -46,7 +46,7 @@ const TermsConditions = () => {
   return (
     <div>
       <>
-        <Header />
+       
         <div className="contact-top-bg pb-30">
           <div className="container">
             <Breadcrumb name={"Privacy Policy"} />
@@ -65,7 +65,7 @@ const TermsConditions = () => {
             </div>
           </div>
         </div>
-        <Footer/>
+        
       </>
     </div>
   );
