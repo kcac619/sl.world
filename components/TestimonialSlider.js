@@ -16,7 +16,8 @@ const TestimonialSlider = ({
   const settings = {
     dots: false,
     infinite: true,
-    autoplay: false,
+    autoplay: true,
+    autoplaySpeed: 1700,
     arrows: true,
     rows: 1,
     slidesToShow: 2,
