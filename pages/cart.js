@@ -6,8 +6,15 @@ import {
   removeFromCart,
   updateCartItemQuantity,
 } from "../utils/cartfns";
+import jwt_decode from "jwt-decode";
 
 const CartPage = () => {
+  useEffect(() => {
+    // Check if the code is running in the browser
+    if (typeof window !== "undefined") {
+      console.log("Running in the browser and logging jwt_decode", jwt_decode);
+    }
+  }, []);
   const [cartItems, setCartItems] = useState([]);
   const [country, setCountry] = useState("");
   const [region, setRegion] = useState("");

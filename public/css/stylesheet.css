@@ -1,5 +1,10 @@
 :root {
   --main-color: #F2DFCF;
+  /* global.css */
+
+  --chakra-colors-chakra-body-text: #F2DFCF !important;
+  /* Change this to your desired color */
+
   --sub-color: #0d1e1c;
   --black: #000;
   --white: #FFF;
@@ -5773,11 +5778,12 @@ footer hr {
   border-radius: 50px;
   text-transform: capitalize;
   max-width: 200px;
+  min-width: 60px;
   height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0;
+  padding: 10px;
   font-size: 14px;
   font-weight: 600;
 }

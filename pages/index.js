@@ -473,7 +473,7 @@ const Index = () => {
                 </div>
               </div>
               {/* Rings Section */}
-              <div className="selected_bg">
+              {/* <div className="selected_bg">
                 <div className="container">
                   <div className="row">
                     <div className="col-md-12">
@@ -493,7 +493,7 @@ const Index = () => {
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> */}
               <div className="category-bg">
                 <div className="container top-category">
                   <div className="row">

@@ -66,7 +66,7 @@ const MainSlider = () => {
     <div className="s-panel">
       <div className="imgslider">
         <Slider {...settings}>
-          {sliders.map((slide, index) => (
+          {sliders?.map((slide, index) => (
             <div key={index} className="sliderel">
               <div className="container">
                 <div className="slidertext">

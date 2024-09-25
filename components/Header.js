@@ -24,6 +24,7 @@ import { useRouter } from "next/router";
 
 const Header = () => {
   const router = useRouter();
+  const cartBtnRef = useRef(null); // Create a ref for the cart button
   const [isOpen, setIsOpen] = useState(false);
   const {
     isOpen: isCartOpen,
@@ -195,15 +196,6 @@ const Header = () => {
                                 Amethyst
                               </a>
                             </li>
-                            <li className="nav-item">
-                              <a
-                                href="https://opencart.workdo.io/diamond/index.php?route=product/category&language=en-gb&path=67"
-                                className="nav-link"
-                              >
-                                {/*<img src="" alt="Blue Sapphire" title="Blue Sapphire"> */}{" "}
-                                Blue Sapphire
-                              </a>
-                            </li>
                           </ul>
                         </div>
                       </div>
@@ -211,7 +203,7 @@ const Header = () => {
                   </nav>
                   <div
                     className="w3-overlay w3-animate-opacity"
-                    onclick={toggleDrawer}
+                    onClick={toggleDrawer}
                     style={{
                       cursor: "pointer",
                       display: isOpen ? "block" : "none",
@@ -314,22 +306,9 @@ const Header = () => {
                                     marginRight: "30px",
                                   }}
                                 >
-                                  <a
-                                    href="https://opencart.workdo.io/diamond/index.php?route=product/category&language=en-gb&path=60"
-                                    className="nav-link"
-                                  >
-                                    {/*<img src="https://opencart.workdo.io/diamond/image/cache/catalog/menu-icon/meat-fish-14x14.png" alt="Amethyst" title="Amethyst"> */}{" "}
-                                    Amethyst
-                                  </a>
-                                </li>
-                                <li className="nav-item">
-                                  <a
-                                    href="https://opencart.workdo.io/diamond/index.php?route=product/category&language=en-gb&path=67"
-                                    className="nav-link"
-                                  >
-                                    {/*<img src="" alt="Blue Sapphire" title="Blue Sapphire"> */}{" "}
-                                    Blue Sapphire
-                                  </a>
+                                  <Link href={"/account"} className="nav-item">
+                                    Account
+                                  </Link>
                                 </li>
                               </ul>
                             </div>
@@ -338,7 +317,7 @@ const Header = () => {
                       </nav>
                       <div
                         className="w3-overlay w3-animate-opacity"
-                        onclick={toggleDrawer}
+                        onClick={toggleDrawer}
                         style={{
                           cursor: "pointer",
                           // display: isOpen ? "block" : "none",
@@ -627,21 +606,26 @@ const Header = () => {
                       size="md" // Adjust drawer size if needed
                     >
                       <DrawerOverlay />
-                      <DrawerContent bg="var(--main-color)">
-                        <DrawerCloseButton color="var(--secondary-color)" />
+                      <DrawerContent bg="var(--sub-color)">
+                        <DrawerCloseButton color="var(--main-color)" />
                         <DrawerHeader
                           borderBottomWidth="1px"
-                          borderColor="var(--secondary-color)"
-                          color="var(--secondary-color)"
+                          borderColor="var(--main-color)"
+                          color="var(--main-color)"
                           fontSize="lg"
                           fontWeight="bold"
                         >
                           Your Cart
                         </DrawerHeader>
 
-                        <DrawerBody color="var(--white)" fontSize="md">
+                        <DrawerBody color="var(--main-color)" fontSize="md">
                           {cartItems.length === 0 ? (
-                            <p className="text-center">Your cart is empty.</p>
+                            <p
+                              className="text-center"
+                              style={{ color: "var(--sub-color)" }}
+                            >
+                              Your cart is empty.
+                            </p>
                           ) : (
                             <ul
                               style={{
@@ -704,9 +688,10 @@ const Header = () => {
 
                         <DrawerFooter
                           borderTopWidth="1px"
-                          borderColor="var(--secondary-color)"
+                          borderColor="var(--main-color)"
                           display="flex"
                           justifyContent="space-between"
+                          bg={"var(--sub-color)"}
                           alignItems="center"
                         >
                           {cartItems.length > 0 && (
