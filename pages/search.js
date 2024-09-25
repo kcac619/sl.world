@@ -235,7 +235,7 @@ const SearchResults = () => {
   // console.log(" matched  solitaires", matchedSolitaires);
   return (
     <div style={{ width: "100vw" }}>
-     
+      <Header />
       <div
         className="container-fluid mt-5"
         style={{

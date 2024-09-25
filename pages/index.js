@@ -213,7 +213,6 @@ const Index = () => {
                   <div className="row">
                     <div className="select-ctn">
                       <h4>Jewellery &amp; diamonds</h4>
-                    
                     </div>
                     <div className="col-xs-12 selected_pro">
                       <WdSelectedSlider />
