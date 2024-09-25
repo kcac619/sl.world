@@ -3,7 +3,7 @@ import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-
+import Breadcrumb from "../components/Breadcrumb"
 const ProductCategory = ({ categories, activeLink }) => {
   const router = useRouter();
   console.log(activeLink);
@@ -56,42 +56,7 @@ const ProductCategory = ({ categories, activeLink }) => {
     <div id="product-category">
       <div className="category-page">
         <div className="container">
-          <div className="">
-            {/* Breadcrumb */}
-            <div className="d-flex justify-content-between align-items-center back-page">
-              <div className="">
-                <div className="back-to-home">
-                  <a href="">
-                    <img src="/img/back-to-home.svg" alt="Back to home" />{" "}
-                    &nbsp; <span> Back to category</span>
-                  </a>
-                </div>
-              </div>
-              <div className="">
-                <ul className="breadcrumb ">
-                  <li className="breadcrumb-item">
-                    <a href="https://opencart.workdo.io/diamond/index.php?route=common/home&amp;language=en-gb">
-                      <i className="fas fa-home"></i>
-                    </a>
-                  </li>
-                  <li className="breadcrumb-item">
-                    <a href="https://opencart.workdo.io/diamond/index.php?route=product/category&amp;language=en-gb&amp;path=67">
-                      {activeCategory.name}
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            {/* Breadcrumb end */}
-            <div className="cate-top">
-              <h2 className="cat-title"> {activeCategory.name}</h2>
-              <div class="cat-desc row">
-                <div class="col-sm-12">
-                  <p> {activeCategory.description}</p>
-                </div>
-              </div>
-            </div>
-          </div>
+         <Breadcrumb name={activeCategory.name}  description={activeCategory.description}/>
         </div>
       </div>
       <div className="pb-30">
@@ -117,7 +82,7 @@ const ProductCategory = ({ categories, activeLink }) => {
             <div id="content" className="col colright">
             <div className="row panel-default workdo_blog_page rless">
       {products.map((post) => (
-        <div key={post.id} className="panel panel-default col-lg-4"   onClick={() => handleNavigation("/product/"+post.link)}>
+        <div key={post.id} className="panel panel-default col-lg-4"  style={{ cursor: "pointer" }}   onClick={() => handleNavigation("/product/"+post.link)}>
           <div className="panel-body blog-thumbnail">
             <div className="wbblogimg">
               <div className="workdo-blog-image">
@@ -146,7 +111,7 @@ const ProductCategory = ({ categories, activeLink }) => {
               
               <div className="blog-bottom">
                 <div className="read-more">
-                  <a href={post.link} className="btn btn-primary"><span
+                  <a href={post.link} className="btn btn-primary"  style={{ maxWidth: "100%" }}><span
                                 >Add to Cart<img
                                   alt="stor-bg"
                                   src="/img/stor-bg.svg"

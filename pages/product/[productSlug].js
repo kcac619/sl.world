@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import Header from "../../components/Header";
@@ -6,34 +6,86 @@ import Footer from "../../components/Footer";
 import ProductCategory from "../../components/ProductCategory";
 import { useRouter } from "next/router";
 import axios from "axios";
+import Glide from "@glidejs/glide"; // Import Glide
 
+// Import Glide CSS
+import "@glidejs/glide/dist/css/glide.core.min.css";
+import "@glidejs/glide/dist/css/glide.theme.min.css";
+import { Skeleton } from "@chakra-ui/react";
 const Product = () => {
-  const [categories, setCategories] = useState([]);
+  const router = useRouter();
+  const {productSlug} = router.query;
+  const galleryRef = useRef(null);
+  const [showSkeleton, setShowSkeleton] = useState(false);
+
+
+  const handleGalleryImageClick = (imageUrl) => {
+    setShowSkeleton(true); // Show Skeleton before image change
+    setTimeout(() => {
+      setMainImageUrl(imageUrl);
+      setShowSkeleton(false); // Hide Skeleton after image loads
+    }, 300); // Adjust delay as needed
+  };
+  const [mainImageUrl, setMainImageUrl] = useState("https://opencart.workdo.io/diamond/image/cache/catalog/product/9/5-1000x1000.png"); 
   const [isLoadingSlider, setIsLoadingSlider] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [errorSlider, setErrorSlider] = useState(null);
+  const [product, setProduct] = useState({});
   const { query } = useRouter();
+  const solitaire={}
   console.log("query", query);
   useEffect(() => {
-    fetchSliders();
+    //fetchSliders();
   }, []);
+  useEffect(() => {
+    if (galleryRef.current && solitaire) {
+      // Initialize Glide after the component renders and data is fetched
+      new Glide(galleryRef.current, {
+        type: "carousel",
+        perView: 4, // Number of slides to show per view
+        gap: 10, // Spacing between slides
+        rewind: false, // Prevent looping to the beginning
+        // ... [Add other Glide options as needed] ...
+      }).mount();
+    }
+  }, [solitaire]);
+  const galleryImages = [
+    "https://opencart.workdo.io/diamond/image/cache/catalog/product/9/1-1000x1000.png",
+    "https://opencart.workdo.io/diamond/image/cache/catalog/product/9/2-1000x1000.png",
+    "https://opencart.workdo.io/diamond/image/cache/catalog/product/9/3-1000x1000.png",
+    "https://opencart.workdo.io/diamond/image/cache/catalog/product/9/1-1000x1000.png",
+    "https://opencart.workdo.io/diamond/image/cache/catalog/product/9/2-1000x1000.png",
+    "https://opencart.workdo.io/diamond/image/cache/catalog/product/9/3-1000x1000.png",
+    "https://opencart.workdo.io/diamond/image/cache/catalog/product/9/5-1000x1000.png"
+  ];
+  useEffect(() => {
+    fetchProducts();
+  }, [productSlug]);
 
-  const fetchSliders = async () => {
-    setIsLoadingSlider(true);
-    setErrorSlider(null);
+  const fetchProducts = async () => {
+    setIsLoading(true);
+    setError(null);
 
     try {
-      const response = await axios.get("/api/categories");
+      const response = await axios.get(
+        "/api/product/products-details?product=" + productSlug
+      );
+      console.log("response", response);
       if (response.status === 200) {
-        setCategories(response.data.data);
+        if(response.data.products.length>0){
+          setProduct(response.data.products[0]);
+        }
+       
       } else {
-        console.error("Error fetching blogs:", response.data.error);
-        setErrorSlider("Error fetching blogs.");
+        console.error("Error fetching products:", response.data.error);
+        setError("Error fetching products");
       }
     } catch (error) {
-      console.error("Error fetching blogs:", error);
-      setErrorSlider("An error occurred.");
+      console.error("Error fetching products:", error);
+      setError("An error occurred");
     } finally {
-      setIsLoadingSlider(false);
+      setIsLoading(false);
     }
   };
 
@@ -41,7 +93,8 @@ const Product = () => {
     <div>
       <>
         <div className="">
-          <div id="product-info">
+        <Header/>
+          <div id="product-info" className="mb-4">
             <div className="">
               <div id="content" className="col">
                 <div className="productbg p-bg">
@@ -49,98 +102,158 @@ const Product = () => {
                     <div className="row">
                       {/* Breadcrumb */}
                       {/* Breadcrumb end */}
+                     
                       <div className="col-lg-5 col-md-6 col-xs-12 zoom-left sticky t-50">
                         <div className="pro-bg">
                           <div className="image magnific-popup row">
                             <div className="col-md-12 col-sm-12 col-xs-12 big-img">
-                              <a
-                                href="https://opencart.workdo.io/diamond/image/cache/catalog/product/11/1-1000x1000.png"
-                                title="Crystal Gym &amp; Fitness Glove"
-                              >
-                                <img
-                                  id="img_01"
-                                  src="images/1-1000x1000.png"
-                                  data-zoom-image="https://opencart.workdo.io/diamond/image/cache/catalog/product/11/1-1000x1000.png"
-                                  title="Crystal Gym &amp; Fitness Glove"
-                                  alt="Crystal Gym &amp; Fitness Glove"
-                                  className="img-thumbnail img-fluid"
-                                />
-                              </a>
+                              {/* Main Image (Dynamically Updated) */}
+                              {mainImageUrl && ( // Only render image when URL is available
+                                <a
+                                  href={mainImageUrl}
+                                  title={solitaire.ProductName}
+                                >
+                                  {/* Skeleton Overlay */}
+                                  {showSkeleton ? (
+                                    <Skeleton
+                                      startColor="brown.300"
+                                      endColor="gray.500"
+                                      className="img-thumbnail img-fluid"
+                                      height="100%"
+                                      minWidth={"350px"}
+                                      minHeight={"350px"}
+                                      opacity={100}
+                                      zIndex="5" // Ensure Skeleton is on top
+                                    />
+                                  ) : (
+                                    <img
+                                      id="img_01"
+                                      src={mainImageUrl}
+                                      data-zoom-image={mainImageUrl}
+                                      title={solitaire.ProductName}
+                                      alt={solitaire.ProductName}
+                                      className="img-thumbnail img-fluid"
+                                      style={{
+                                        width: "100%",
+                                        height: "auto",
+                                        maxWidth: "400px", // Set a maximum width for the image
+                                        display: "block", // Make sure the image is a block element
+                                        boxShadow:
+                                          "4px 4px 4px 4px rgb(0,0,0,0.3)",
+                                        borderRadius: "20px",
+                                        zIndex: "1",
+                                      }}
+                                    />
+                                  )}
+                                </a>
+                              )}
                             </div>
-                            <div className="col-md-12 col-sm-12 col-xs-12 gal-img">
-                              <div id="gal1" className="gallery_img">
-                                <a
-                                  href="https://opencart.workdo.io/diamond/image/cache/catalog/product/11/1-1000x1000.png"
-                                  className="elevatezoom-gallery img-fluid"
-                                  title="Crystal Gym &amp; Fitness Glove"
-                                  data-update=""
-                                  data-image="https://opencart.workdo.io/diamond/image/cache/catalog/product/11/1-1000x1000.png"
-                                  data-zoom-image="https://opencart.workdo.io/diamond/image/cache/catalog/product/11/1-1000x1000.png"
-                                >
-                                  <img
-                                    src="images/1-1000x1000.png"
-                                    data-zoom-image="https://opencart.workdo.io/diamond/image/cache/catalog/product/11/1-1000x1000.png"
-                                    id="img_01"
-                                    title="Crystal Gym &amp; Fitness Glove"
-                                    alt="Crystal Gym &amp; Fitness Glove"
-                                    className="img-thumbnail"
-                                  />
-                                </a>
-                                &nbsp;
-                                <a
-                                  href="https://opencart.workdo.io/diamond/image/cache/catalog/product/11/2-1000x1000.png"
-                                  title="Crystal Gym &amp; Fitness Glove"
-                                  data-image="https://opencart.workdo.io/diamond/image/cache/catalog/product/11/2-1000x1000.png"
-                                  data-zoom-image="https://opencart.workdo.io/diamond/image/cache/catalog/product/11/2-1000x1000.png"
-                                >
-                                  <img
-                                    src="images/2-1000x1000.png"
-                                    title="Crystal Gym &amp; Fitness Glove"
-                                    alt="Crystal Gym &amp; Fitness Glove"
-                                    className="img-thumbnail elevatezoom-gallery img-fluid"
-                                  />
-                                </a>
-                                &nbsp;
-                                <a
-                                  href="https://opencart.workdo.io/diamond/image/cache/catalog/product/11/3-1000x1000.png"
-                                  title="Crystal Gym &amp; Fitness Glove"
-                                  data-image="https://opencart.workdo.io/diamond/image/cache/catalog/product/11/3-1000x1000.png"
-                                  data-zoom-image="https://opencart.workdo.io/diamond/image/cache/catalog/product/11/3-1000x1000.png"
-                                >
-                                  <img
-                                    src="images/3-1000x1000.png"
-                                    title="Crystal Gym &amp; Fitness Glove"
-                                    alt="Crystal Gym &amp; Fitness Glove"
-                                    className="img-thumbnail elevatezoom-gallery img-fluid"
-                                  />
-                                </a>
-                                &nbsp;
-                                <a
-                                  href="https://opencart.workdo.io/diamond/image/cache/catalog/product/11/4-1000x1000.png"
-                                  title="Crystal Gym &amp; Fitness Glove"
-                                  data-image="https://opencart.workdo.io/diamond/image/cache/catalog/product/11/4-1000x1000.png"
-                                  data-zoom-image="https://opencart.workdo.io/diamond/image/cache/catalog/product/11/4-1000x1000.png"
-                                >
-                                  <img
-                                    src="images/4-1000x1000.png"
-                                    title="Crystal Gym &amp; Fitness Glove"
-                                    alt="Crystal Gym &amp; Fitness Glove"
-                                    className="img-thumbnail elevatezoom-gallery img-fluid"
-                                  />
-                                </a>
-                                &nbsp;
+                            {/*  Smaller Gallery Images (using CSS Grid)  */}
+                            <div
+                              className="col-md-12 col-sm-12 col-xs-12 mt-3"
+                              style={{
+                                display: "flex",
+                                justifyContent: "center",
+                              }}
+                            >
+                              <div style={{ width: "100%" }} ref={galleryRef}>
+                                {" "}
+                                {/* Attach the ref to the container */}
+                                <div className="glide">
+                                  <div
+                                    className="glide__track"
+                                    data-glide-el="track"
+                                  >
+                                    <ul className="glide__slides">
+                                      {galleryImages.map((imageUrl, index) => (
+                                        <li
+                                          key={index}
+                                          className="glide__slide"
+                                        >
+                                          <a
+                                            href="#"
+                                            title={solitaire.ProductName}
+                                          >
+                                            <img
+                                              src={imageUrl}
+                                              onClick={() =>
+                                                handleGalleryImageClick(
+                                                  imageUrl
+                                                )
+                                              }
+                                              alt={`Gallery Image ${index + 1}`}
+                                              style={{
+                                                width: "100%",
+                                                height: "auto",
+                                                maxWidth: "100px",
+                                                border: "1px solid #ccc",
+                                                padding: "5px",
+                                                borderRadius: "5px",
+                                              }}
+                                            />
+                                          </a>
+                                        </li>
+                                      ))}
+                                    </ul>
+                                  </div>
+
+                                  {/* Navigation Arrows (moved and styled) */}
+                                  <div
+                                    className="glide__arrows"
+                                    data-glide-el="controls"
+                                    style={{
+                                      position: "absolute",
+                                      top: "50%",
+                                      transform: "translateY(-50%)",
+                                      width: "100%",
+
+                                      display: "flex",
+                                      justifyContent: "space-between",
+                                    }}
+                                  >
+                                    <button
+                                      className="glide__arrow glide__arrow--left"
+                                      data-glide-dir="<"
+                                      style={{
+                                        backgroundColor: "rgb(0,0,0,0.2)",
+                                        border: "none",
+                                        padding: "10px",
+                                        borderRadius: "50%",
+                                        cursor: "pointer",
+                                      }}
+                                    >
+                                      <i className="fas fa-chevron-left fa-lg text-dark"></i>
+                                      <i className="fas fa-chevron-left fa-lg text-dark"></i>
+                                    </button>
+                                    <button
+                                      className="glide__arrow glide__arrow--right"
+                                      data-glide-dir=">"
+                                      style={{
+                                        backgroundColor: "rgb(0,0,0,0.2)",
+                                        border: "none",
+                                        padding: "10px",
+                                        borderRadius: "40%",
+                                        cursor: "pointer",
+                                      }}
+                                    >
+                                      <i className="fas fa-chevron-right fa-lg text-dark"></i>
+                                      <i className="fas fa-chevron-right fa-lg text-dark"></i>
+                                    </button>
+                                  </div>
+                                </div>
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
+                      
                       <div className="col-lg-7 col-md-6 col-xs-12 pro-content t-50">
                         <div className="d-flex justify-content-between align-items-center back-page">
                           <div className="">
                             <div className="back-to-home">
                               <a href="">
                                 <img
-                                  src="images/back-to-home.svg"
+                                  src="/img/back-to-home.svg"
                                   alt="Back to home"
                                 />
                                 &nbsp; <span> Back to category</span>
@@ -215,7 +328,7 @@ const Product = () => {
                               className="product-name"
                               href="https://opencart.workdo.io/diamond/index.php?route=product/manufacturer|info&amp;language=en-gb&amp;manufacturer_id=9"
                             >
-                              cloths
+                              {product.category}
                             </a>
                             <form
                               method="post"
@@ -230,7 +343,7 @@ const Product = () => {
                                 title="Add to Wish List"
                                 onClick={() => wishlist.add("30")}
                               >
-                                <img src="images/wishlist.svg" alt="wishlist" />
+                                <img src="/img/wishlist.svg" alt="wishlist" />
                               </button>
                               <button
                                 type="submit"
@@ -251,7 +364,7 @@ const Product = () => {
                               />
                             </form>
                           </div>
-                          <h1>Crystal Gym &amp; Fitness Glove</h1>
+                          <h1>  {product.Title}</h1>
                           <div className="products-specific">
                             <span className="products-details">
                               Products Details:
@@ -371,7 +484,7 @@ const Product = () => {
                                 <ul className="list-unstyled">
                                   <li className="text-decor-bold">
                                     <h2>
-                                      <span className="price-new">$100.00</span>
+                                      <span className="price-new"> ₹ {product.Price}</span>
                                     </h2>
                                   </li>
                                 </ul>
@@ -383,7 +496,7 @@ const Product = () => {
                                   className="btn btn-primary btn-lg btn-block"
                                 >
                                   Add to Cart
-                                  <img alt="stor-bg" src="images/stor-bg.svg" />
+                                  <img alt="stor-bg" src="/img/stor-bg.svg" />
                                 </button>
                                 <input
                                   type="hidden"
@@ -437,14 +550,7 @@ const Product = () => {
                           <div className="row">
                             <div className="col-md-6 col-xs-12 tab-dec">
                               <p>
-                                Lorem Ipsum is simply dummy text of the printing
-                                and typesetting industry. Lorem Ipsum has been
-                                the industry's standard dummy.Lorem Ipsum is
-                                simply dummy text of the printing and
-                                typesetting industry. Lorem Ipsum is simply
-                                dummy text of the printing and typesetting
-                                industry. Lorem Ipsum has been the industry's
-                                standard
+                              {product.Description}
                               </p>
                             </div>
                             <div className="col-md-6 col-xs-12 dec-testi">
@@ -636,7 +742,7 @@ const Product = () => {
                       <a href="#"
                         >check more products<img
                           alt="stor-bg"
-                          src="images/stor-bg.svg"
+                          src="/img/stor-bg.svg"
                       /></a>
                     </div>
                   </div>
@@ -646,6 +752,7 @@ const Product = () => {
           </div>
             </div>
           </div>
+          <Footer/>
         </div>
       </>
     </div>

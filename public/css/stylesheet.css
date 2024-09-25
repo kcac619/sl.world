@@ -5772,7 +5772,7 @@ footer hr {
   position: relative;
   border-radius: 50px;
   text-transform: capitalize;
-
+  max-width: 200px;
   height: 40px;
   display: flex;
   align-items: center;
@@ -13073,4 +13073,23 @@ footer .newsletter .container {
   #common-success #content h1 {
     font-size: 28px;
   }
+}
+
+/* styles.css */
+.accordion__button {
+  background-color: var(--main-color) !important;
+  /* Change this to your desired color */
+  color: var(--black) !important;
+  /* Optional: Change text color */
+  border: none;
+  /* Optional: Remove border */
+  padding: 10px;
+  /* Optional: Add padding */
+  cursor: pointer;
+  /* Optional: Change cursor to pointer */
+}
+
+.accordion__button:hover {
+  background-color: #0056b3;
+  /* Optional: Change color on hover */
 }
