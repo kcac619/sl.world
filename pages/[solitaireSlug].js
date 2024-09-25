@@ -202,9 +202,6 @@ const SolitaireDetails = () => {
         {/* ... [Add other meta tags] ... */}
       </Head>
 
-      {/* Header */}
-      <Header />
-
       {/* Main Content */}
       <main>
         <div className="">
@@ -729,8 +726,6 @@ const SolitaireDetails = () => {
 
         {/* ... [Your related products slider JSX - use Products table or adapt from Solitaires] ... */}
       </main>
-
-      {/* ... [Your footer JSX - replace jQuery/inline scripts] ... */}
     </div>
   );
 };

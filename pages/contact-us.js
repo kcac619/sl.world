@@ -46,7 +46,7 @@ const Contact = () => {
   return (
     <div>
       <>
-        <Header />
+      
         <div className="contact-top-bg pb-30">
           <div className="container">
             <Breadcrumb name={"Contact Us"} />
@@ -151,7 +151,7 @@ const Contact = () => {
         </div>
       </div>
     </div>
-        <Footer/>
+      
       </>
     </div>
   );
