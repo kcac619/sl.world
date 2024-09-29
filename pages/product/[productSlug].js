@@ -1,17 +1,23 @@
+"use client";
 import React, { useState, useEffect, useRef } from "react";
 import Head from "next/head";
 import Link from "next/link";
-import Header from "../../components/Header";
-import Footer from "../../components/Footer";
 import ProductCategory from "../../components/ProductCategory";
 import { useRouter } from "next/router";
 import axios from "axios";
-import Glide from "@glidejs/glide"; // Import Glide
+import Glide from "@glidejs/glide";
 
 // Import Glide CSS
 import "@glidejs/glide/dist/css/glide.core.min.css";
 import "@glidejs/glide/dist/css/glide.theme.min.css";
 import { Skeleton } from "@chakra-ui/react";
+import {
+  getCartItemsFromLocalStorage,
+  addToCart,
+  removeFromCart,
+  updateCartItemQuantity,
+} from "../../utils/cartfns";
+
 const Product = () => {
   const router = useRouter();
   const { productSlug } = router.query;
@@ -32,6 +38,8 @@ const Product = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [errorSlider, setErrorSlider] = useState(null);
+  const [cartItems, setCartItems] = useState([]);
+  const [quantity, setQuantity] = useState(1);
   const [product, setProduct] = useState({});
   const { query } = useRouter();
   const solitaire = {};
@@ -39,18 +47,26 @@ const Product = () => {
   useEffect(() => {
     //fetchSliders();
   }, []);
+
   useEffect(() => {
-    if (galleryRef.current && solitaire) {
-      // Initialize Glide after the component renders and data is fetched
+    if (galleryRef.current) {
       new Glide(galleryRef.current, {
         type: "carousel",
-        perView: 4, // Number of slides to show per view
-        gap: 10, // Spacing between slides
-        rewind: false, // Prevent looping to the beginning
-        // ... [Add other Glide options as needed] ...
+        perView: 4,
+        gap: 10,
+        rewind: false,
       }).mount();
+      const slides = galleryRef.current.querySelectorAll(".glide__slide");
+      slides.forEach((slide) => {
+        slide.addEventListener("click", (event) => {
+          event.preventDefault();
+          const imageUrl = slide.querySelector("img").src;
+          handleGalleryImageClick(imageUrl);
+        });
+      });
     }
-  }, [solitaire]);
+  }, []);
+
   const galleryImages = [
     "https://opencart.workdo.io/diamond/image/cache/catalog/product/9/1-1000x1000.png",
     "https://opencart.workdo.io/diamond/image/cache/catalog/product/9/2-1000x1000.png",
@@ -60,6 +76,7 @@ const Product = () => {
     "https://opencart.workdo.io/diamond/image/cache/catalog/product/9/3-1000x1000.png",
     "https://opencart.workdo.io/diamond/image/cache/catalog/product/9/5-1000x1000.png",
   ];
+
   useEffect(() => {
     fetchProducts();
   }, [productSlug]);
@@ -86,6 +103,48 @@ const Product = () => {
       setError("An error occurred");
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    // Update cartItems state whenever local storage changes
+    const updateCart = () => {
+      setCartItems(getCartItemsFromLocalStorage());
+    };
+
+    window.addEventListener("storage", updateCart);
+    return () => window.removeEventListener("storage", updateCart);
+  }, []);
+
+  useEffect(() => {
+    // Fetch cart items from localStorage when the component mounts
+    setCartItems(getCartItemsFromLocalStorage());
+  }, []);
+
+  // Check if this product is already in the cart
+  const isInCart = cartItems.some((item) => item.link === product.link);
+  console.log("isInCart", isInCart);
+  console.log("cartItems", cartItems);
+  console.log("product", product);
+
+  const handleAddToCart = () => {
+    console.log("quantity", quantity);
+    addToCart({ ...product, quantity: quantity });
+    setCartItems(getCartItemsFromLocalStorage());
+  };
+
+  // Quantity handling
+  const handleQuantityChange = (event) => {
+    setQuantity(parseInt(event.target.value) || 1);
+  };
+
+  const increaseQuantity = () => {
+    setQuantity(quantity + 1);
+  };
+
+  const decreaseQuantity = () => {
+    if (quantity > 1) {
+      setQuantity(quantity - 1);
     }
   };
 
@@ -401,45 +460,13 @@ const Product = () => {
                             </ul>
                           </div>
                           <div id="product" className="clearfix">
-                            <form id="form-product">
-                              <div className="web_option">
-                                <div className="mb-3 required">
-                                  <label className="form-label">Size</label>
-                                  <div
-                                    id="input-option-361"
-                                    className="custom-radio"
-                                  >
-                                    <div className="form-check">
-                                      <label className="color-option">
-                                        <input
-                                          type="radio"
-                                          name="option[361]"
-                                          value="347"
-                                          id="input-option-value-347"
-                                          className="form-check-input"
-                                        />
-                                        <span> m </span>
-                                      </label>
-                                    </div>
-                                    <div className="form-check">
-                                      <label className="color-option">
-                                        <input
-                                          type="radio"
-                                          name="option[361]"
-                                          value="348"
-                                          id="input-option-value-348"
-                                          className="form-check-input"
-                                        />
-                                        <span> l </span>
-                                      </label>
-                                    </div>
-                                  </div>
-                                  <div
-                                    id="error-option-361"
-                                    className="invalid-feedback"
-                                  ></div>
-                                </div>
-                              </div>
+                            <form
+                              id="form-product"
+                              onSubmit={(e) => e.preventDefault()}
+                            >
+                              {/* ... [Your web_option JSX if needed] ... */}
+
+                              {/* Quantity Input (for the product) */}
                               <div className="pro-qut">
                                 <label
                                   htmlFor="input-quantity"
@@ -451,25 +478,24 @@ const Product = () => {
                                   <button
                                     type="button"
                                     className="form-control pull-left btn-number btnminus"
-                                    disabled="disabled"
-                                    data-type="minus"
-                                    data-field="quantity"
+                                    disabled={quantity === 1}
+                                    onClick={decreaseQuantity}
                                   >
                                     <span className="fa fa-minus"></span>
                                   </button>
                                   <input
-                                    id="input-quantity"
+                                    id="input-quantity-product"
                                     type="text"
                                     name="quantity"
-                                    value="1"
+                                    value={quantity}
                                     size="2"
                                     className="form-control input-number pull-left"
+                                    onChange={handleQuantityChange}
                                   />
                                   <button
                                     type="button"
                                     className="form-control pull-left btn-number btnplus"
-                                    data-type="plus"
-                                    data-field="quantity"
+                                    onClick={increaseQuantity}
                                   >
                                     <span className="fa fa-plus"></span>
                                   </button>
@@ -479,27 +505,61 @@ const Product = () => {
                                   ></div>
                                 </div>
                               </div>
-                              <div className="pro-price">
-                                <ul className="list-unstyled">
-                                  <li className="text-decor-bold">
-                                    <h2>
-                                      <span className="price-new">
-                                        {" "}
-                                        ₹ {product.Price}
-                                      </span>
-                                    </h2>
-                                  </li>
-                                </ul>
-                              </div>
+
+                              {/* ... [Your existing pro-price JSX] ... */}
+
+                              {/* Add to Cart Button and Message */}
                               <div className="qty-flex">
-                                <button
-                                  type="submit"
-                                  id="button-cart"
-                                  className="btn btn-primary btn-lg btn-block"
-                                >
-                                  Add to Cart
-                                  <img alt="stor-bg" src="/img/stor-bg.svg" />
-                                </button>
+                                {isInCart ? (
+                                  <div
+                                    style={{
+                                      display: "flex",
+                                      alignItems: "center",
+                                      justifyContent: "center",
+                                    }}
+                                  >
+                                    <button
+                                      className="btn btn-primary btn-lg btn-block text-success"
+                                      style={{
+                                        marginRight: "10px",
+                                        display: "flex",
+                                        alignItems: "center",
+                                        scale: "0.7",
+                                      }}
+                                      disabled
+                                    >
+                                      Already in cart!
+                                    </button>
+                                    <Link
+                                      href="/cart"
+                                      className="btn btn-primary btn-lg btn-block"
+                                      style={{
+                                        display: "flex",
+                                        alignItems: "center",
+                                        scale: "0.7",
+                                      }}
+                                    >
+                                      Open Cart
+                                      <img
+                                        alt="stor-bg"
+                                        src="image/catalog/stor-bg.svg"
+                                        style={{ marginLeft: "5px" }}
+                                      />
+                                    </Link>
+                                  </div>
+                                ) : (
+                                  <button
+                                    onClick={handleAddToCart}
+                                    className="btn btn-primary btn-lg btn-block"
+                                  >
+                                    Add to Cart
+                                    <img
+                                      alt="stor-bg"
+                                      src="image/catalog/stor-bg.svg"
+                                    />
+                                  </button>
+                                )}
+
                                 <input
                                   type="hidden"
                                   name="product_id"
@@ -507,9 +567,6 @@ const Product = () => {
                                 />
                               </div>
                             </form>
-                            {/* AddToAny BEGIN */}
-                            <script async src="js/page.js"></script>
-                            {/* AddToAny END */}
                           </div>
                         </div>
                       </div>
@@ -755,7 +812,6 @@ const Product = () => {
               </div>
             </div>
           </div>
-          <Footer />
         </div>
       </>
     </div>

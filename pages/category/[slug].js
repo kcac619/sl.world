@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Head from "next/head";
 import Link from "next/link";
-import Header from "../../components/Header";
-import Footer from "../../components/Footer";
+
 import ProductCategory from "../../components/ProductCategory";
 import { useRouter } from "next/router";
 import axios from "axios";
@@ -229,6 +228,7 @@ const CategoryProduct = () => {
             </svg>
           </div>
           <div id="alert" />
+
           <main></main>
         </div>
         <div id="common-home" className="container-fluid">

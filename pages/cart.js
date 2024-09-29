@@ -133,7 +133,7 @@ const CartPage = () => {
                         </thead>
                         <tbody>
                           {cartItems.map((item) => (
-                            <tr key={item.SolitaireID}>
+                            <tr key={item.id}>
                               <td
                                 className=""
                                 style={{
@@ -143,7 +143,11 @@ const CartPage = () => {
                                 }}
                               >
                                 <Link
-                                  href={`/${item.SolitaireID}`}
+                                  href={
+                                    item.Slug
+                                      ? `/${item.Slug}`
+                                      : `/${item.SolitaireID}`
+                                  }
                                   style={{
                                     alignContent: "center",
                                     justifyContent: "center",
@@ -151,23 +155,35 @@ const CartPage = () => {
                                   }}
                                 >
                                   <img
-                                    src={item.Image1}
-                                    alt={item.ProductName}
-                                    title={item.ProductName}
+                                    src={item.Image1 || item.image}
+                                    alt={item.SolitaireName || item.Title}
+                                    title={item.SolitaireName || item.Title}
                                     className="img-thumbnail"
                                     style={{ height: "100px", width: "auto" }}
                                   />
                                 </Link>
                               </td>
                               <td className="text-start text-wrap">
-                                <Link href={`/${item.SolitaireID}`}>
-                                  {item.ShapeName + "-" + item.SolitaireID}
+                                <Link
+                                  href={
+                                    item.Slug
+                                      ? `/${item.Slug}`
+                                      : `/${item.SolitaireID}`
+                                  }
+                                >
+                                  {item.SolitaireName
+                                    ? `${item.ShapeName}-${item.SolitaireID}`
+                                    : item.Title}
                                 </Link>
                                 <br />
-                                <small> - Size: {item.SizeOptions} </small>
-                                {/* ... [Add other details if needed] ... */}
+                                {/* Conditionally render size if available */}
+                                {item.SizeOptions && (
+                                  <small> - Size: {item.SizeOptions} </small>
+                                )}
                               </td>
-                              <td className="text-start">{item.UniqueCode}</td>
+                              <td className="text-start">
+                                {item.UniqueCode || ""}
+                              </td>
                               <td className="text-start">
                                 <div className="input-group cartpsp">
                                   <input
@@ -179,7 +195,7 @@ const CartPage = () => {
                                     min="1"
                                     onChange={(e) =>
                                       handleQuantityChange(
-                                        item.SolitaireID,
+                                        item.id, // Use generic 'id'
                                         parseInt(e.target.value) || 1
                                       )
                                     }
@@ -191,7 +207,7 @@ const CartPage = () => {
                                     className="btn btn-danger"
                                     onClick={() =>
                                       handleQuantityChange(
-                                        item.SolitaireID,
+                                        item.id,
                                         item.quantity
                                       )
                                     }
@@ -204,16 +220,17 @@ const CartPage = () => {
                                     title="Remove"
                                     className="btn btn-danger"
                                     onClick={() =>
-                                      handleRemoveFromCart(item.SolitaireID)
+                                      handleRemoveFromCart(item.id)
                                     }
                                   >
                                     <i className="fa-solid fa-circle-xmark"></i>
                                   </button>
                                 </div>
                               </td>
-                              <td className="text-end">${item.Price}</td>
+                              <td className="text-end">${item.Price || 0}</td>
                               <td className="text-end">
-                                ${item.Price * item.quantity}
+                                INR{""}
+                                {((item.Price || 0) * item.quantity).toFixed(2)}
                               </td>
                             </tr>
                           ))}
