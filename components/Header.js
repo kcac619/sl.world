@@ -35,6 +35,7 @@ const Header = () => {
   const toggleDrawer = () => {
     setIsOpen(!isOpen);
   };
+  const cartBtnRef = useRef(null);
   const toggleCartDropdown = () => {
     setCartDropdownOpen(!cartDropdownOpen);
   };

@@ -96,12 +96,12 @@ const ProductCategory = ({ categories, activeLink }) => {
                   {post.comments} Comment
                 </span>
                 <span className="write-comment">
-                  <a href={post.link}>
+                  <a  style={{ cursor: "pointer" }}   onClick={() => handleNavigation("/product/"+post.link)}>
                     <i className="fa fa-comment"></i>Leave Comments
                   </a>
                 </span>
               </div>
-              <h4><a href={post.link}>{post.Title}</a></h4>
+              <h4><a  style={{ cursor: "pointer" }}   onClick={() => handleNavigation("/product/"+post.link)}>{post.Title}</a></h4>
               <div className="blog-desc">
                 <p>{post.description}</p>
               </div>
@@ -111,7 +111,7 @@ const ProductCategory = ({ categories, activeLink }) => {
               
               <div className="blog-bottom">
                 <div className="read-more">
-                  <a href={post.link} className="btn btn-primary"  style={{ maxWidth: "100%" }}><span
+                  <a  style={{ cursor: "pointer" }}   onClick={() => handleNavigation("/product/"+post.link)} className="btn btn-primary" ><span
                                 >Add to Cart<img
                                   alt="stor-bg"
                                   src="/img/stor-bg.svg"

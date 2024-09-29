@@ -1,8 +1,7 @@
 import React, { useState, useEffect,useRef } from "react";
 import Head from "next/head";
 import Link from "next/link";
-import Header from "../../components/Header";
-import Footer from "../../components/Footer";
+
 import ProductCategory from "../../components/ProductCategory";
 import { useRouter } from "next/router";
 import axios from "axios";
@@ -93,7 +92,7 @@ const Product = () => {
     <div>
       <>
         <div className="">
-        <Header/>
+       
           <div id="product-info" className="mb-4">
             <div className="">
               <div id="content" className="col">
@@ -752,7 +751,7 @@ const Product = () => {
           </div>
             </div>
           </div>
-          <Footer/>
+        
         </div>
       </>
     </div>
