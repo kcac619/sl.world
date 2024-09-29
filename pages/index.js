@@ -119,7 +119,6 @@ const Index = () => {
   return (
     <div>
       <>
-      
         <div id="common-home" className="container-fluid">
           <div className="row">
             <div id="content" className="col">
@@ -195,7 +194,7 @@ const Index = () => {
                       </div>
                     </div>
                     <div className="col-md-6 col-xs-12">
-                    <div className="beffect">
+                      <div className="beffect">
                         <a href="#">
                           <img
                             src="https://opencart.workdo.io/diamond/image/cache/catalog/left-banner/1-580x465.png"
@@ -220,8 +219,7 @@ const Index = () => {
                   </div>
                 </div>
               </div>
-             
-             
+
               <div className="specialbanner">
                 <div className="container">
                   <div className="row">
@@ -266,7 +264,28 @@ const Index = () => {
                   </div>
                 </div>
               </div>
-
+              {/* Rings Section */}
+              {/* <div className="selected_bg">
+                <div className="container">
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="secheading">
+                        <h1 className="heading">
+                          <span>Necklaces</span>
+                        </h1>
+                        <p>
+                          Explore our stunning collection of diamond rings, from
+                          classic solitaires to intricate designs, perfect for
+                          every occasion.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="col-xs-12 selected_pro">
+                      <WdSelectedSlider2 />
+                    </div>
+                  </div>
+                </div>
+              </div> */}
               <div className="category-bg">
                 <div className="container top-category">
                   <div className="row">
@@ -344,7 +363,7 @@ const Index = () => {
             </div>
           </div>
         </div>
-       
+
         <a
           href=""
           id="scroll"

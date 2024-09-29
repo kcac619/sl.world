@@ -16,6 +16,7 @@ import {
   updateCartItemQuantity,
 } from "../utils/cartfns";
 import { Skeleton } from "@chakra-ui/react";
+import Header from "@/components/Header";
 
 const SolitaireDetails = () => {
   const router = useRouter();
@@ -200,8 +201,6 @@ const SolitaireDetails = () => {
         <title>{solitaire.SolitaireName}</title>
         {/* ... [Add other meta tags] ... */}
       </Head>
-
-  
 
       {/* Main Content */}
       <main>
@@ -727,8 +726,6 @@ const SolitaireDetails = () => {
 
         {/* ... [Your related products slider JSX - use Products table or adapt from Solitaires] ... */}
       </main>
-
-     
     </div>
   );
 };

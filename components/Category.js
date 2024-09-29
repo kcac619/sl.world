@@ -2,19 +2,21 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Slider from "react-slick";
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 // Import Slick CSS (if not already imported in _document.js)
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 const Category = () => {
   const router = useRouter();
-  const [categories, setCategories] = useState([{
-    imageUrl:
-      "https://opencart.workdo.io/diamond/image/cache/catalog/category/1-270x335.jpg",
-    name: "bracelet",
-    link: "https://opencart.workdo.io/diamond/index.php?route=product/category&path=57",
-  }]);
+  const [categories, setCategories] = useState([
+    {
+      imageUrl:
+        "https://opencart.workdo.io/diamond/image/cache/catalog/category/1-270x335.jpg",
+      name: "bracelet",
+      link: "https://opencart.workdo.io/diamond/index.php?route=product/category&path=57",
+    },
+  ]);
   const [isLoadingSlider, setIsLoadingSlider] = useState(true);
   const [errorSlider, setErrorSlider] = useState(null);
   const settings = {
@@ -68,7 +70,6 @@ const Category = () => {
     try {
       const response = await axios.get("/api/categories");
       if (response.status === 200) {
-        
         setCategories(response.data.data);
       } else {
         console.error("Error fetching blogs:", response.data.error);
@@ -94,10 +95,14 @@ const Category = () => {
           <div className="col-md-12 col-xs-12">
             <div className="wdcategory">
               <Slider {...settings}>
-                {categories.map((category, index) => (
+                {categories?.map((category, index) => (
                   <div key={index} className="wd-item-layout">
                     <div className="wd-item-img">
-                      <a  style={{ cursor: 'pointer' }}  onClick={() => handleNavigation(category.link)} key={index}>
+                      <a
+                        style={{ cursor: "pointer" }}
+                        onClick={() => handleNavigation(category.link)}
+                        key={index}
+                      >
                         <img
                           src={category.imageUrl}
                           alt={category.name}
@@ -109,10 +114,21 @@ const Category = () => {
                     <h4 className="wd-item-title">
                       <div className="catbr">
                         <p>categories</p>
-                        <a  style={{ cursor: 'pointer' }}  onClick={() => handleNavigation(category.link)} key={index} >{category.name}</a>
+                        <a
+                          style={{ cursor: "pointer" }}
+                          onClick={() => handleNavigation(category.link)}
+                          key={index}
+                        >
+                          {category.name}
+                        </a>
                       </div>
                       <div className="wd-item-caption">
-                        <a  onClick={() => handleNavigation(category.link)} key={index}   style={{ cursor: 'pointer' }} className="btn btn-primary">
+                        <a
+                          onClick={() => handleNavigation(category.link)}
+                          key={index}
+                          style={{ cursor: "pointer" }}
+                          className="btn btn-primary"
+                        >
                           <span>Go to categories</span>
                           <img alt="stor-bg" src="/image/catalog/stor-bg.svg" />
                         </a>

@@ -17,6 +17,8 @@ const nextConfig = {
     MY_AWS_BUCKET_REGION: process.env.MY_AWS_BUCKET_REGION,
     MY_AWS_ACCESS_KEY: process.env.MY_AWS_ACCESS_KEY,
     MY_AWS_SECRET_ACCESS_KEY: process.env.MY_AWS_SECRET_ACCESS_KEY,
+    NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
+    JWT_SECRET: process.env.JWT_SECRET,
   },
 };
 

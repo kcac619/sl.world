@@ -1,22 +1,28 @@
-import React, { useState, useEffect,useRef } from "react";
+"use client";
+import React, { useState, useEffect, useRef } from "react";
 import Head from "next/head";
 import Link from "next/link";
-
 import ProductCategory from "../../components/ProductCategory";
 import { useRouter } from "next/router";
 import axios from "axios";
-import Glide from "@glidejs/glide"; // Import Glide
+import Glide from "@glidejs/glide";
 
 // Import Glide CSS
 import "@glidejs/glide/dist/css/glide.core.min.css";
 import "@glidejs/glide/dist/css/glide.theme.min.css";
 import { Skeleton } from "@chakra-ui/react";
+import {
+  getCartItemsFromLocalStorage,
+  addToCart,
+  removeFromCart,
+  updateCartItemQuantity,
+} from "../../utils/cartfns";
+
 const Product = () => {
   const router = useRouter();
-  const {productSlug} = router.query;
+  const { productSlug } = router.query;
   const galleryRef = useRef(null);
   const [showSkeleton, setShowSkeleton] = useState(false);
-
 
   const handleGalleryImageClick = (imageUrl) => {
     setShowSkeleton(true); // Show Skeleton before image change
@@ -25,30 +31,42 @@ const Product = () => {
       setShowSkeleton(false); // Hide Skeleton after image loads
     }, 300); // Adjust delay as needed
   };
-  const [mainImageUrl, setMainImageUrl] = useState("https://opencart.workdo.io/diamond/image/cache/catalog/product/9/5-1000x1000.png"); 
+  const [mainImageUrl, setMainImageUrl] = useState(
+    "https://opencart.workdo.io/diamond/image/cache/catalog/product/9/5-1000x1000.png"
+  );
   const [isLoadingSlider, setIsLoadingSlider] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [errorSlider, setErrorSlider] = useState(null);
+  const [cartItems, setCartItems] = useState([]);
+  const [quantity, setQuantity] = useState(1);
   const [product, setProduct] = useState({});
   const { query } = useRouter();
-  const solitaire={}
+  const solitaire = {};
   console.log("query", query);
   useEffect(() => {
     //fetchSliders();
   }, []);
+
   useEffect(() => {
-    if (galleryRef.current && solitaire) {
-      // Initialize Glide after the component renders and data is fetched
+    if (galleryRef.current) {
       new Glide(galleryRef.current, {
         type: "carousel",
-        perView: 4, // Number of slides to show per view
-        gap: 10, // Spacing between slides
-        rewind: false, // Prevent looping to the beginning
-        // ... [Add other Glide options as needed] ...
+        perView: 4,
+        gap: 10,
+        rewind: false,
       }).mount();
+      const slides = galleryRef.current.querySelectorAll(".glide__slide");
+      slides.forEach((slide) => {
+        slide.addEventListener("click", (event) => {
+          event.preventDefault();
+          const imageUrl = slide.querySelector("img").src;
+          handleGalleryImageClick(imageUrl);
+        });
+      });
     }
-  }, [solitaire]);
+  }, []);
+
   const galleryImages = [
     "https://opencart.workdo.io/diamond/image/cache/catalog/product/9/1-1000x1000.png",
     "https://opencart.workdo.io/diamond/image/cache/catalog/product/9/2-1000x1000.png",
@@ -56,8 +74,9 @@ const Product = () => {
     "https://opencart.workdo.io/diamond/image/cache/catalog/product/9/1-1000x1000.png",
     "https://opencart.workdo.io/diamond/image/cache/catalog/product/9/2-1000x1000.png",
     "https://opencart.workdo.io/diamond/image/cache/catalog/product/9/3-1000x1000.png",
-    "https://opencart.workdo.io/diamond/image/cache/catalog/product/9/5-1000x1000.png"
+    "https://opencart.workdo.io/diamond/image/cache/catalog/product/9/5-1000x1000.png",
   ];
+
   useEffect(() => {
     fetchProducts();
   }, [productSlug]);
@@ -72,10 +91,9 @@ const Product = () => {
       );
       console.log("response", response);
       if (response.status === 200) {
-        if(response.data.products.length>0){
+        if (response.data.products.length > 0) {
           setProduct(response.data.products[0]);
         }
-       
       } else {
         console.error("Error fetching products:", response.data.error);
         setError("Error fetching products");
@@ -88,11 +106,52 @@ const Product = () => {
     }
   };
 
+  useEffect(() => {
+    // Update cartItems state whenever local storage changes
+    const updateCart = () => {
+      setCartItems(getCartItemsFromLocalStorage());
+    };
+
+    window.addEventListener("storage", updateCart);
+    return () => window.removeEventListener("storage", updateCart);
+  }, []);
+
+  useEffect(() => {
+    // Fetch cart items from localStorage when the component mounts
+    setCartItems(getCartItemsFromLocalStorage());
+  }, []);
+
+  // Check if this product is already in the cart
+  const isInCart = cartItems.some((item) => item.link === product.link);
+  console.log("isInCart", isInCart);
+  console.log("cartItems", cartItems);
+  console.log("product", product);
+
+  const handleAddToCart = () => {
+    console.log("quantity", quantity);
+    addToCart({ ...product, quantity: quantity });
+    setCartItems(getCartItemsFromLocalStorage());
+  };
+
+  // Quantity handling
+  const handleQuantityChange = (event) => {
+    setQuantity(parseInt(event.target.value) || 1);
+  };
+
+  const increaseQuantity = () => {
+    setQuantity(quantity + 1);
+  };
+
+  const decreaseQuantity = () => {
+    if (quantity > 1) {
+      setQuantity(quantity - 1);
+    }
+  };
+
   return (
     <div>
       <>
         <div className="">
-       
           <div id="product-info" className="mb-4">
             <div className="">
               <div id="content" className="col">
@@ -101,7 +160,7 @@ const Product = () => {
                     <div className="row">
                       {/* Breadcrumb */}
                       {/* Breadcrumb end */}
-                     
+
                       <div className="col-lg-5 col-md-6 col-xs-12 zoom-left sticky t-50">
                         <div className="pro-bg">
                           <div className="image magnific-popup row">
@@ -245,7 +304,7 @@ const Product = () => {
                           </div>
                         </div>
                       </div>
-                      
+
                       <div className="col-lg-7 col-md-6 col-xs-12 pro-content t-50">
                         <div className="d-flex justify-content-between align-items-center back-page">
                           <div className="">
@@ -363,7 +422,7 @@ const Product = () => {
                               />
                             </form>
                           </div>
-                          <h1>  {product.Title}</h1>
+                          <h1> {product.Title}</h1>
                           <div className="products-specific">
                             <span className="products-details">
                               Products Details:
@@ -401,45 +460,13 @@ const Product = () => {
                             </ul>
                           </div>
                           <div id="product" className="clearfix">
-                            <form id="form-product">
-                              <div className="web_option">
-                                <div className="mb-3 required">
-                                  <label className="form-label">Size</label>
-                                  <div
-                                    id="input-option-361"
-                                    className="custom-radio"
-                                  >
-                                    <div className="form-check">
-                                      <label className="color-option">
-                                        <input
-                                          type="radio"
-                                          name="option[361]"
-                                          value="347"
-                                          id="input-option-value-347"
-                                          className="form-check-input"
-                                        />
-                                        <span> m </span>
-                                      </label>
-                                    </div>
-                                    <div className="form-check">
-                                      <label className="color-option">
-                                        <input
-                                          type="radio"
-                                          name="option[361]"
-                                          value="348"
-                                          id="input-option-value-348"
-                                          className="form-check-input"
-                                        />
-                                        <span> l </span>
-                                      </label>
-                                    </div>
-                                  </div>
-                                  <div
-                                    id="error-option-361"
-                                    className="invalid-feedback"
-                                  ></div>
-                                </div>
-                              </div>
+                            <form
+                              id="form-product"
+                              onSubmit={(e) => e.preventDefault()}
+                            >
+                              {/* ... [Your web_option JSX if needed] ... */}
+
+                              {/* Quantity Input (for the product) */}
                               <div className="pro-qut">
                                 <label
                                   htmlFor="input-quantity"
@@ -451,25 +478,24 @@ const Product = () => {
                                   <button
                                     type="button"
                                     className="form-control pull-left btn-number btnminus"
-                                    disabled="disabled"
-                                    data-type="minus"
-                                    data-field="quantity"
+                                    disabled={quantity === 1}
+                                    onClick={decreaseQuantity}
                                   >
                                     <span className="fa fa-minus"></span>
                                   </button>
                                   <input
-                                    id="input-quantity"
+                                    id="input-quantity-product"
                                     type="text"
                                     name="quantity"
-                                    value="1"
+                                    value={quantity}
                                     size="2"
                                     className="form-control input-number pull-left"
+                                    onChange={handleQuantityChange}
                                   />
                                   <button
                                     type="button"
                                     className="form-control pull-left btn-number btnplus"
-                                    data-type="plus"
-                                    data-field="quantity"
+                                    onClick={increaseQuantity}
                                   >
                                     <span className="fa fa-plus"></span>
                                   </button>
@@ -479,24 +505,61 @@ const Product = () => {
                                   ></div>
                                 </div>
                               </div>
-                              <div className="pro-price">
-                                <ul className="list-unstyled">
-                                  <li className="text-decor-bold">
-                                    <h2>
-                                      <span className="price-new"> ₹ {product.Price}</span>
-                                    </h2>
-                                  </li>
-                                </ul>
-                              </div>
+
+                              {/* ... [Your existing pro-price JSX] ... */}
+
+                              {/* Add to Cart Button and Message */}
                               <div className="qty-flex">
-                                <button
-                                  type="submit"
-                                  id="button-cart"
-                                  className="btn btn-primary btn-lg btn-block"
-                                >
-                                  Add to Cart
-                                  <img alt="stor-bg" src="/img/stor-bg.svg" />
-                                </button>
+                                {isInCart ? (
+                                  <div
+                                    style={{
+                                      display: "flex",
+                                      alignItems: "center",
+                                      justifyContent: "center",
+                                    }}
+                                  >
+                                    <button
+                                      className="btn btn-primary btn-lg btn-block text-success"
+                                      style={{
+                                        marginRight: "10px",
+                                        display: "flex",
+                                        alignItems: "center",
+                                        scale: "0.7",
+                                      }}
+                                      disabled
+                                    >
+                                      Already in cart!
+                                    </button>
+                                    <Link
+                                      href="/cart"
+                                      className="btn btn-primary btn-lg btn-block"
+                                      style={{
+                                        display: "flex",
+                                        alignItems: "center",
+                                        scale: "0.7",
+                                      }}
+                                    >
+                                      Open Cart
+                                      <img
+                                        alt="stor-bg"
+                                        src="image/catalog/stor-bg.svg"
+                                        style={{ marginLeft: "5px" }}
+                                      />
+                                    </Link>
+                                  </div>
+                                ) : (
+                                  <button
+                                    onClick={handleAddToCart}
+                                    className="btn btn-primary btn-lg btn-block"
+                                  >
+                                    Add to Cart
+                                    <img
+                                      alt="stor-bg"
+                                      src="image/catalog/stor-bg.svg"
+                                    />
+                                  </button>
+                                )}
+
                                 <input
                                   type="hidden"
                                   name="product_id"
@@ -504,9 +567,6 @@ const Product = () => {
                                 />
                               </div>
                             </form>
-                            {/* AddToAny BEGIN */}
-                            <script async src="js/page.js"></script>
-                            {/* AddToAny END */}
                           </div>
                         </div>
                       </div>
@@ -548,9 +608,7 @@ const Product = () => {
                         >
                           <div className="row">
                             <div className="col-md-6 col-xs-12 tab-dec">
-                              <p>
-                              {product.Description}
-                              </p>
+                              <p>{product.Description}</p>
                             </div>
                             <div className="col-md-6 col-xs-12 dec-testi">
                               <div className="item">
@@ -648,68 +706,72 @@ const Product = () => {
                                   >
                                     <i className="fa fa-star fa-stack-1x"></i>
                                     <i className="fa fa-star-o fa-stack-1x"></i>
-                                  </label> <label
-                                class="fa fa-stack pull-right"
-                                for="rating-4"
-                              >
-                                <i class="fa fa-star fa-stack-1x"></i>
-                                <i class="fa fa-star-o fa-stack-1x"></i>
-                              </label>
-                              <input
-                                id="rating-3"
-                                type="radio"
-                                name="rating"
-                                value="3"
-                              />
-                              <label
-                                class="fa fa-stack pull-right"
-                                for="rating-3"
-                              >
-                                <i class="fa fa-star fa-stack-1x"></i>
-                                <i class="fa fa-star-o fa-stack-1x"></i>
-                              </label>
-                              <input
-                                id="rating-2"
-                                type="radio"
-                                name="rating"
-                                value="2"
-                              />
-                              <label
-                                class="fa fa-stack pull-right"
-                                for="rating-2"
-                              >
-                                <i class="fa fa-star fa-stack-1x"></i>
-                                <i class="fa fa-star-o fa-stack-1x"></i>
-                              </label>
-                              <input
-                                id="rating-1"
-                                type="radio"
-                                name="rating"
-                                value="1"
-                              />
-                              <label
-                                class="fa fa-stack pull-right"
-                                for="rating-1"
-                              >
-                                <i class="fa fa-star fa-stack-1x"></i>
-                                <i class="fa fa-star-o fa-stack-1x"></i>
-                              </label>
+                                  </label>{" "}
+                                  <label
+                                    class="fa fa-stack pull-right"
+                                    for="rating-4"
+                                  >
+                                    <i class="fa fa-star fa-stack-1x"></i>
+                                    <i class="fa fa-star-o fa-stack-1x"></i>
+                                  </label>
+                                  <input
+                                    id="rating-3"
+                                    type="radio"
+                                    name="rating"
+                                    value="3"
+                                  />
+                                  <label
+                                    class="fa fa-stack pull-right"
+                                    for="rating-3"
+                                  >
+                                    <i class="fa fa-star fa-stack-1x"></i>
+                                    <i class="fa fa-star-o fa-stack-1x"></i>
+                                  </label>
+                                  <input
+                                    id="rating-2"
+                                    type="radio"
+                                    name="rating"
+                                    value="2"
+                                  />
+                                  <label
+                                    class="fa fa-stack pull-right"
+                                    for="rating-2"
+                                  >
+                                    <i class="fa fa-star fa-stack-1x"></i>
+                                    <i class="fa fa-star-o fa-stack-1x"></i>
+                                  </label>
+                                  <input
+                                    id="rating-1"
+                                    type="radio"
+                                    name="rating"
+                                    value="1"
+                                  />
+                                  <label
+                                    class="fa fa-stack pull-right"
+                                    for="rating-1"
+                                  >
+                                    <i class="fa fa-star fa-stack-1x"></i>
+                                    <i class="fa fa-star-o fa-stack-1x"></i>
+                                  </label>
+                                </div>
+                              </div>
+                              <div
+                                id="error-rating"
+                                class="invalid-feedback"
+                              ></div>
                             </div>
-                          </div>
-                          <div id="error-rating" class="invalid-feedback"></div>
-                        </div>
 
-                        <div class="d-inline-block pt-2 pd-2 w-100">
-                          <div class="float-end">
-                            <button
-                              type="submit"
-                              id="button-review"
-                              class="btn btn-primary"
-                            >
-                              Continue
-                            </button>
-                          </div>
-                        </div>
+                            <div class="d-inline-block pt-2 pd-2 w-100">
+                              <div class="float-end">
+                                <button
+                                  type="submit"
+                                  id="button-review"
+                                  class="btn btn-primary"
+                                >
+                                  Continue
+                                </button>
+                              </div>
+                            </div>
                           </form>
                         </div>
                       </div>
@@ -718,40 +780,38 @@ const Product = () => {
                 </div>
               </div>
               <div class="pro-banner">
-            <div class="container">
-              <div class="row custom-banner">
-                <div class="col-md-6 col-xs-12 custom-img">
-                  <img
-                    src="images/product-banner.png"
-                    alt="product-banner"
-                    class="img-fluid"
-                  />
-                </div>
-                <div class="col-md-6 col-xs-12 custom-ctn offerdesc">
-                  <div class="part-1">
-                    <h1>Jewellery &amp; Diamonds</h1>
-                    <p>
-                      Lorem Ipsum is simply dummy text of the printing and
-                      typesetting industry. Lorem Ipsum has been the industry's
-                      standard dummy text ever since the 1500s, when an unknown
-                      printer took a galley of type and scrambled it to make a
-                      type specimen book.
-                    </p>
-                    <div class="sub-select-scent">
-                      <a href="#"
-                        >check more products<img
-                          alt="stor-bg"
-                          src="/img/stor-bg.svg"
-                      /></a>
+                <div class="container">
+                  <div class="row custom-banner">
+                    <div class="col-md-6 col-xs-12 custom-img">
+                      <img
+                        src="images/product-banner.png"
+                        alt="product-banner"
+                        class="img-fluid"
+                      />
+                    </div>
+                    <div class="col-md-6 col-xs-12 custom-ctn offerdesc">
+                      <div class="part-1">
+                        <h1>Jewellery &amp; Diamonds</h1>
+                        <p>
+                          Lorem Ipsum is simply dummy text of the printing and
+                          typesetting industry. Lorem Ipsum has been the
+                          industry's standard dummy text ever since the 1500s,
+                          when an unknown printer took a galley of type and
+                          scrambled it to make a type specimen book.
+                        </p>
+                        <div class="sub-select-scent">
+                          <a href="#">
+                            check more products
+                            <img alt="stor-bg" src="/img/stor-bg.svg" />
+                          </a>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-            </div>
-          </div>
-        
         </div>
       </>
     </div>

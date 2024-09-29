@@ -1,7 +1,7 @@
 // pages/index.js
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
-import { useSession, signIn, signOut } from "next-auth/react";
+// import { useSession, signIn, signOut } from "next-auth/react";
 import { useDispatch, useSelector } from "react-redux";
 import { setFilter, resetFilters } from "../filterSlice";
 import {
@@ -39,12 +39,13 @@ import {
 import SearchBar from "@/components/SearchBar";
 
 import axios from "axios";
+import Header from "@/components/Header";
 
 const Solitaire = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   // const { isOpen, onOpen, onClose } = useDisclosure();
   const router = useRouter();
-  const { data: session } = useSession();
+  // const { data: session } = useSession();
   const dispatch = useDispatch();
   const filtersFromRedux = useSelector((state) => state.filters); // Get filters from Redux store
   const [shapes, setShapes] = useState([]);
@@ -328,17 +329,164 @@ const Solitaire = () => {
   };
 
   return (
-    <Box backgroundColor={"transparent"}>
-   
-      <Flex ref={sidebarContainerRef} mt={0}    backgroundColor={"#F2DFCF"}>
-    
+    <Box
+      backgroundColor={"transparent"}
+      backgroundImage="url('/img/cream-bg.jpg')"
+    >
+      {/* Header */}
+      {/* <Flex
+        backgroundColor="blue.700"
+        p={2}
+        align="center"
+        position={"-webkit-sticky"}
+        top={0}
+        right={0}
+        ml={{ base: 0, md: isSidebarOpen ? "205px" : "50px" }}
+        transition="margin-left 0.3s, width 0s"
+        overflowX={"hidden"}
+        width={{
+          base: "100%",
+          md: isSidebarOpen ? "calc(100% - 205px)" : "calc(100% - 50px)",
+        }}
+        zIndex={100}
+        // width="100%"
+        justifyContent="space-between" // Add justifyContent
+      >
+        <Flex align="center">
+          {" "}
+          {/* Wrap HamburgerIcon and Image in a Flex */}
+      {/* <HamburgerIcon
+            display={{ base: "block", md: "none" }}
+            onClick={onOpen}
+            color={"white"}
+          />
+          <Image
+            src={vercel}
+            alt="Logo"
+            width={100}
+            height={50}
+            style={{ marginLeft: "20px", marginRight: "20px" }}
+          />
+          <SearchBar />
+        </Flex> */}
+      {/* {session ? (
+          <Button colorScheme={"blackAlpha"} onClick={() => signOut()}>
+            Logout
+          </Button>
+        ) : (
+          <Button
+            // mr={50}
+            colorScheme="whiteAlpha"
+            onClick={() => {
+              dispatch(
+                setFilter({
+                  filterType: "carat",
+                  values: selectedFilters.carat,
+                })
+              );
+              dispatch(
+                setFilter({
+                  filterType: "fluor",
+                  values: selectedFilters.fluor,
+                })
+              );
+              dispatch(
+                setFilter({
+                  filterType: "length",
+                  values: selectedFilters.length,
+                })
+              );
+              dispatch(
+                setFilter({
+                  filterType: "polish",
+                  values: selectedFilters.polish,
+                })
+              );
+              dispatch(
+                setFilter({
+                  filterType: "color",
+                  values: selectedFilters.color,
+                })
+              );
+              dispatch(
+                setFilter({
+                  filterType: "clarity",
+                  values: selectedFilters.clarity,
+                })
+              );
+              dispatch(
+                setFilter({
+                  filterType: "lab",
+                  values: selectedFilters.lab,
+                })
+              );
+              dispatch(
+                setFilter({
+                  filterType: "symm",
+                  values: selectedFilters.symm,
+                })
+              );
+              dispatch(
+                setFilter({
+                  filterType: "location",
+                  values: selectedFilters.location,
+                })
+              );
+              dispatch(
+                setFilter({
+                  filterType: "shape",
+                  values: selectedFilters.shape,
+                })
+              );
+
+              router.push({
+                pathname: "/auth/login",
+                query: { callbackUrl: router.asPath },
+              });
+            }}
+          >
+            Login
+          </Button>
+        )}
+      </Flex>  */}
+
+      <Flex
+        ref={sidebarContainerRef}
+        mt={0}
+        backgroundColor={"var(--main-color)"}
+        opacity={0.9}
+      >
+        {/* Drawer (Mobile) */}
+        {/* <Drawer
+          isOpen={isOpen}
+          placement="left"
+          onClose={onClose}
+          size="xs"
+          // display={{ base: "block", md: "none", lg: "none" }}
+        >
+          <DrawerOverlay />
+          <DrawerContent>
+            <DrawerCloseButton />
+            <DrawerHeader>Menu</DrawerHeader>
+            <DrawerBody>
+              <Sidebar isOpen={isOpen} onClose={onClose} />
+            </DrawerBody>
+          </DrawerContent>
+        </Drawer> */}
+
+        {/* Sidebar (Desktop) */}
+        {/* <Sidebar
+          isOpen={isSidebarOpen}
+          onClose={toggleSidebar}
+          onOpen={onOpen}
+          top={0}
+          width={sidebarWidth}
+          display={{ base: "none", md: "block" }}
+        /> */}
+
+        {/* Main Content Area */}
         <Box
           flex="1"
-          // transform={{
-          //   base: "scale(0.9)",
-          //   md: "scale(0.9)",
-          //   lg: "scale(0.9)",
-          // }}
           m={5}
           p={4}
           borderRadius={"20px"}
@@ -347,6 +495,9 @@ const Solitaire = () => {
           overflowX="hidden"
           transition="margin-left 0.3s"
           fontFamily="outfit"
+          backgroundSize="cover"
+          backgroundPosition="center"
+          backgroundRepeat="no-repeat"
         >
           {/* Diamond Shape Section */}
           <Box mb={6}>
@@ -356,7 +507,7 @@ const Solitaire = () => {
             {loadingShapes ? (
               <Text color="var(--main-color)">Loading shapes...</Text>
             ) : (
-              <SimpleGrid columns={{ base: 4, md: 8, lg: 12 }} spacing={4}>
+              <SimpleGrid columns={{ base: 4, md: 8, lg: 10 }} spacing={6}>
                 {shapes ? (
                   shapes.map((shape) => (
                     <DiamondShape
@@ -375,10 +526,10 @@ const Solitaire = () => {
             )}
           </Box>
 
-          <hr style={{ color: "var(--main-color)", margin: "2px" }} />
+          <hr style={{ color: "var(--sub-color)", margin: "2px" }} />
           <hr
             style={{
-              color: "var(--main-color)",
+              color: "var(--sub-color)",
               margin: "2px",
               marginBottom: "16px",
             }}
@@ -434,7 +585,7 @@ const Solitaire = () => {
                   fontWeight="bold"
                   mb={2}
                   // fontFamily="Playfair Display"
-                  color="var(--main-color)"
+                  color="var(--sub-color)"
                 >
                   Color
                 </Text>
@@ -452,7 +603,7 @@ const Solitaire = () => {
                   fontWeight="bold"
                   mb={2}
                   // fontFamily="Playfair Display"
-                  color="var(--main-color)"
+                  color="var(--sub-color)"
                 >
                   Purity
                 </Text>
@@ -472,7 +623,7 @@ const Solitaire = () => {
                   fontWeight="bold"
                   mb={2}
                   // fontFamily="Playfair Display"
-                  color="var(--main-color)"
+                  color="var(--sub-color)"
                 >
                   Lab
                 </Text>
@@ -490,7 +641,7 @@ const Solitaire = () => {
                   fontWeight="bold"
                   mb={2}
                   // fontFamily="Playfair Display"
-                  color="var(--main-color)"
+                  color="var(--sub-color)"
                 >
                   Symmerty
                 </Text>
@@ -508,7 +659,7 @@ const Solitaire = () => {
                   fontWeight="bold"
                   mb={2}
                   // fontFamily="Playfair Display"
-                  color="var(--main-color)"
+                  color="var(--sub-color)"
                 >
                   Location
                 </Text>
@@ -528,7 +679,7 @@ const Solitaire = () => {
 
           <Button
             backgroundColor="black"
-            color="var(--sub-color)"
+            color="var(--main-color)"
             size="sm"
             mt={4}
             mb={6}
@@ -536,8 +687,9 @@ const Solitaire = () => {
             onClick={handleSearch}
             sx={{
               "&:hover": {
-                backgroundColor: "var(--sub-color)",
+                backgroundColor: "var(--main-color)",
                 color: "black",
+                border: "1px solid var(--sub-color)",
               },
             }}
           >
@@ -548,13 +700,14 @@ const Solitaire = () => {
           <Flex mt={6} justify="flex-end">
             <Button
               backgroundColor="black"
-              color="var(--sub-color)"
+              color="var(--main-color)"
               mr={2}
               borderRadius="20px"
               sx={{
                 "&:hover": {
-                  backgroundColor: "var(--sub-color)",
+                  backgroundColor: "var(--main-color)",
                   color: "black",
+                  border: "1px solid var(--sub-color)",
                 },
               }}
             >
@@ -562,7 +715,7 @@ const Solitaire = () => {
             </Button>
             <Button
               backgroundColor="black"
-              color="var(--sub-color)"
+              color="var(--main-color)"
               mr={2}
               borderRadius="20px"
               onClick={() => {
@@ -570,8 +723,9 @@ const Solitaire = () => {
               }}
               sx={{
                 "&:hover": {
-                  backgroundColor: "var(--sub-color)",
+                  backgroundColor: "var(--main-color)",
                   color: "black",
+                  border: "1px solid var(--sub-color)",
                 },
               }}
             >
@@ -579,15 +733,16 @@ const Solitaire = () => {
             </Button>
             <Button
               backgroundColor="black"
-              color="var(--sub-color)"
+              color="var(--main-color)"
               borderRadius="20px"
               onClick={() => {
                 handleSearch();
               }}
               sx={{
                 "&:hover": {
-                  backgroundColor: "var(--sub-color)",
+                  backgroundColor: "var(--main-color)",
                   color: "black",
+                  border: "1px solid var(--sub-color)",
                 },
               }}
             >
@@ -595,15 +750,16 @@ const Solitaire = () => {
             </Button>
             <Button
               backgroundColor="black"
-              color="var(--sub-color)"
+              color="var(--main-color)"
               ml={2}
               borderRadius="20px"
               rightIcon={<ChevronDownIcon />}
               onClick={handleSearch} // Redirect on "Save Search"
               sx={{
                 "&:hover": {
-                  backgroundColor: "var(--sub-color)",
+                  backgroundColor: "var(--main-color)",
                   color: "black",
+                  border: "1px solid var(--sub-color)",
                 },
               }}
             >
