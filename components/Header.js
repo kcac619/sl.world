@@ -3,6 +3,7 @@ import { InputGroup, InputLeftElement, Input } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
 import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
+
 import {
   Drawer,
   DrawerBody,
@@ -23,6 +24,12 @@ import {
 import { useRouter } from "next/router";
 
 const Header = () => {
+  useEffect(() => {
+    // Ensure Bootstrap JS is loaded
+    if (typeof window !== 'undefined') {
+      import('bootstrap/dist/js/bootstrap.bundle.min.js');
+    }
+  }, []);
   const router = useRouter();
   const cartBtnRef = useRef(null); // Create a ref for the cart button
   const [isOpen, setIsOpen] = useState(false);

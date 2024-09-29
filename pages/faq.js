@@ -64,20 +64,37 @@ const Faq = () => {
               <div className="row">
                 <div id="content" className="col">
                   <h1>FAQ</h1>
-                  <Accordion preExpanded={faqs.map((_, index) => index.toString())}>
-                    {faqs.map((item, sectionIndex) => (
-                      <AccordionItem key={sectionIndex} uuid={sectionIndex.toString()}>
-                        <AccordionItemHeading>
-                          <AccordionItemButton>
+                  <div className="row">
+                  {faqs.map((item, sectionIndex) => (
+                    <div className="col-md-4 col-xs-12" key={sectionIndex}>
+                      <div className="accordion-item">
+                        <h2 className="accordion-header" id={`heading${sectionIndex}`}>
+                          <button
+                            aria-controls={`collapse${sectionIndex}`}
+                            aria-expanded="false"
+                            className="accordion-button collapsed"
+                            data-bs-target={`#collapse${sectionIndex}`}
+                            data-bs-toggle="collapse"
+                            type="button"
+                          >
                             {item.title}
-                          </AccordionItemButton>
-                        </AccordionItemHeading>
-                        <AccordionItemPanel>
-                          <p>{item.title}</p>
-                        </AccordionItemPanel>
-                      </AccordionItem>
-                    ))}
-                  </Accordion>
+                          </button>
+                        </h2>
+                        <div
+                          aria-labelledby={`heading${sectionIndex}`}
+                          className="accordion-collapse collapse"
+                          data-bs-parent="#faqone"
+                          id={`collapse${sectionIndex}`}
+                        >
+                          <div className="accordion-body">
+                          
+                            <div  dangerouslySetInnerHTML={{ __html: item.description }}></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
                 </div>
               </div>
             </div>
