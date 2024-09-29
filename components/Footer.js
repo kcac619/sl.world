@@ -15,7 +15,7 @@ const Footer = () => {
               <div className="container">
                 <div className="row">
                   <div className="offer_ctn heading">
-                    <span>Subscribe our channel</span>
+                    <span className="mt-4">Subscribe our channel</span>
                   </div>
                   <OfferBannerSlider />
                 </div>

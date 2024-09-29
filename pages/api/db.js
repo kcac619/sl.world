@@ -49,6 +49,8 @@ async function callStoredProcedure(
         request.output(outputParam, sql.VarChar(200));
       } else if (outputParam === "TotalCount") {
         request.output(outputParam, sql.Int);
+      } else if (outputParam === "OrderID") {
+        request.output(outputParam, sql.Int);
       } else {
         // Default to sql.NVarChar if type is not specified
         request.output(outputParam, sql.NVarChar);
@@ -72,6 +74,7 @@ async function callStoredProcedure(
       total: outputParams.includes("TotalCount")
         ? output.TotalCount
         : undefined,
+      OrderID: outputParams.includes("OrderID") ? output.OrderID : undefined,
       data: result.recordset,
       ...output,
     };

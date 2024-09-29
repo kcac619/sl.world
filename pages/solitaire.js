@@ -329,7 +329,10 @@ const Solitaire = () => {
   };
 
   return (
-    <Box backgroundColor={"transparent"}>
+    <Box
+      backgroundColor={"transparent"}
+      backgroundImage="url('/img/cream-bg.jpg')"
+    >
       {/* Header */}
       {/* <Flex
         backgroundColor="blue.700"
@@ -446,9 +449,13 @@ const Solitaire = () => {
           </Button>
         )}
       </Flex>  */}
-      <Header />
 
-      <Flex ref={sidebarContainerRef} mt={0} backgroundColor={"#F2DFCF"}>
+      <Flex
+        ref={sidebarContainerRef}
+        mt={0}
+        backgroundColor={"var(--main-color)"}
+        opacity={0.9}
+      >
         {/* Drawer (Mobile) */}
         {/* <Drawer
           isOpen={isOpen}
@@ -480,11 +487,6 @@ const Solitaire = () => {
         {/* Main Content Area */}
         <Box
           flex="1"
-          // transform={{
-          //   base: "scale(0.9)",
-          //   md: "scale(0.9)",
-          //   lg: "scale(0.9)",
-          // }}
           m={5}
           p={4}
           borderRadius={"20px"}
@@ -493,6 +495,9 @@ const Solitaire = () => {
           overflowX="hidden"
           transition="margin-left 0.3s"
           fontFamily="outfit"
+          backgroundSize="cover"
+          backgroundPosition="center"
+          backgroundRepeat="no-repeat"
         >
           {/* Diamond Shape Section */}
           <Box mb={6}>
@@ -502,7 +507,7 @@ const Solitaire = () => {
             {loadingShapes ? (
               <Text color="var(--main-color)">Loading shapes...</Text>
             ) : (
-              <SimpleGrid columns={{ base: 4, md: 8, lg: 12 }} spacing={4}>
+              <SimpleGrid columns={{ base: 4, md: 8, lg: 10 }} spacing={6}>
                 {shapes ? (
                   shapes.map((shape) => (
                     <DiamondShape
@@ -521,10 +526,10 @@ const Solitaire = () => {
             )}
           </Box>
 
-          <hr style={{ color: "var(--main-color)", margin: "2px" }} />
+          <hr style={{ color: "var(--sub-color)", margin: "2px" }} />
           <hr
             style={{
-              color: "var(--main-color)",
+              color: "var(--sub-color)",
               margin: "2px",
               marginBottom: "16px",
             }}
@@ -580,7 +585,7 @@ const Solitaire = () => {
                   fontWeight="bold"
                   mb={2}
                   // fontFamily="Playfair Display"
-                  color="var(--main-color)"
+                  color="var(--sub-color)"
                 >
                   Color
                 </Text>
@@ -598,7 +603,7 @@ const Solitaire = () => {
                   fontWeight="bold"
                   mb={2}
                   // fontFamily="Playfair Display"
-                  color="var(--main-color)"
+                  color="var(--sub-color)"
                 >
                   Purity
                 </Text>
@@ -618,7 +623,7 @@ const Solitaire = () => {
                   fontWeight="bold"
                   mb={2}
                   // fontFamily="Playfair Display"
-                  color="var(--main-color)"
+                  color="var(--sub-color)"
                 >
                   Lab
                 </Text>
@@ -636,7 +641,7 @@ const Solitaire = () => {
                   fontWeight="bold"
                   mb={2}
                   // fontFamily="Playfair Display"
-                  color="var(--main-color)"
+                  color="var(--sub-color)"
                 >
                   Symmerty
                 </Text>
@@ -654,7 +659,7 @@ const Solitaire = () => {
                   fontWeight="bold"
                   mb={2}
                   // fontFamily="Playfair Display"
-                  color="var(--main-color)"
+                  color="var(--sub-color)"
                 >
                   Location
                 </Text>
@@ -674,7 +679,7 @@ const Solitaire = () => {
 
           <Button
             backgroundColor="black"
-            color="var(--sub-color)"
+            color="var(--main-color)"
             size="sm"
             mt={4}
             mb={6}
@@ -682,8 +687,9 @@ const Solitaire = () => {
             onClick={handleSearch}
             sx={{
               "&:hover": {
-                backgroundColor: "var(--sub-color)",
+                backgroundColor: "var(--main-color)",
                 color: "black",
+                border: "1px solid var(--sub-color)",
               },
             }}
           >
@@ -694,13 +700,14 @@ const Solitaire = () => {
           <Flex mt={6} justify="flex-end">
             <Button
               backgroundColor="black"
-              color="var(--sub-color)"
+              color="var(--main-color)"
               mr={2}
               borderRadius="20px"
               sx={{
                 "&:hover": {
-                  backgroundColor: "var(--sub-color)",
+                  backgroundColor: "var(--main-color)",
                   color: "black",
+                  border: "1px solid var(--sub-color)",
                 },
               }}
             >
@@ -708,7 +715,7 @@ const Solitaire = () => {
             </Button>
             <Button
               backgroundColor="black"
-              color="var(--sub-color)"
+              color="var(--main-color)"
               mr={2}
               borderRadius="20px"
               onClick={() => {
@@ -716,8 +723,9 @@ const Solitaire = () => {
               }}
               sx={{
                 "&:hover": {
-                  backgroundColor: "var(--sub-color)",
+                  backgroundColor: "var(--main-color)",
                   color: "black",
+                  border: "1px solid var(--sub-color)",
                 },
               }}
             >
@@ -725,15 +733,16 @@ const Solitaire = () => {
             </Button>
             <Button
               backgroundColor="black"
-              color="var(--sub-color)"
+              color="var(--main-color)"
               borderRadius="20px"
               onClick={() => {
                 handleSearch();
               }}
               sx={{
                 "&:hover": {
-                  backgroundColor: "var(--sub-color)",
+                  backgroundColor: "var(--main-color)",
                   color: "black",
+                  border: "1px solid var(--sub-color)",
                 },
               }}
             >
@@ -741,15 +750,16 @@ const Solitaire = () => {
             </Button>
             <Button
               backgroundColor="black"
-              color="var(--sub-color)"
+              color="var(--main-color)"
               ml={2}
               borderRadius="20px"
               rightIcon={<ChevronDownIcon />}
               onClick={handleSearch} // Redirect on "Save Search"
               sx={{
                 "&:hover": {
-                  backgroundColor: "var(--sub-color)",
+                  backgroundColor: "var(--main-color)",
                   color: "black",
+                  border: "1px solid var(--sub-color)",
                 },
               }}
             >

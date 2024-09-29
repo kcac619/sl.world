@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Head from "next/head";
 import Link from "next/link";
-import Glide from "@glidejs/glide"; // Import Glide
+import Glide from "@glidejs/glide";
 
 // Import Glide CSS
 import "@glidejs/glide/dist/css/glide.core.min.css";
@@ -14,15 +14,9 @@ import {
   updateCartItemQuantity,
 } from "../utils/cartfns";
 import { Skeleton } from "@chakra-ui/react";
-import Header from "@/components/Header";
 
 const Pair = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const toggleDrawer = () => {
-    setIsOpen(!isOpen);
-  };
   const [solitaires, setSolitaires] = useState([
-    // Dummy data for two solitaires
     {
       SolitaireID: 1,
       SolitaireName: "Radiant-13",
@@ -87,11 +81,12 @@ const Pair = () => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [quantities, setQuantities] = useState([1, 1]); // Quantities for each solitaire
+  const [pairQuantity, setPairQuantity] = useState(1); // Quantity for the pair
   const [cartItems, setCartItems] = useState([]);
   const [cartDropdownOpen, setCartDropdownOpen] = useState(false);
   const [mainImageUrls, setMainImageUrls] = useState([null, null]);
   const [showSkeletons, setShowSkeletons] = useState([false, false]);
+  const [isPairInCart, setIsPairInCart] = useState(false);
 
   const galleryRefs = [useRef(null), useRef(null)];
 
@@ -114,9 +109,6 @@ const Pair = () => {
     setCartItems(getCartItemsFromLocalStorage());
   };
 
-  const handleSubmit = () => {
-    console.log("submitted");
-  };
   // Toggle the cart dropdown
   const toggleCartDropdown = () => {
     setCartDropdownOpen(!cartDropdownOpen);
@@ -156,36 +148,41 @@ const Pair = () => {
     }, 300);
   };
 
-  // Handle quantity changes
-  const handleQuantityChange = (solitaireIndex, newQuantity) => {
-    const newQuantities = [...quantities];
-    newQuantities[solitaireIndex] = parseInt(newQuantity) || 1;
-    setQuantities(newQuantities);
+  // Handle quantity changes for the pair
+  const handlePairQuantityChange = (newQuantity) => {
+    setPairQuantity(parseInt(newQuantity) || 1);
   };
 
-  const increaseQuantity = (solitaireIndex) => {
-    const newQuantities = [...quantities];
-    newQuantities[solitaireIndex]++;
-    setQuantities(newQuantities);
+  const increasePairQuantity = () => {
+    setPairQuantity(pairQuantity + 1);
   };
 
-  const decreaseQuantity = (solitaireIndex) => {
-    const newQuantities = [...quantities];
-    if (newQuantities[solitaireIndex] > 1) {
-      newQuantities[solitaireIndex]--;
+  const decreasePairQuantity = () => {
+    if (pairQuantity > 1) {
+      setPairQuantity(pairQuantity - 1);
     }
-    setQuantities(newQuantities);
   };
-  const areSolitairesInCart = solitaires.map((solitaire) =>
-    cartItems.some((item) => item.SolitaireID === solitaire.SolitaireID)
-  );
-  const handleAddToCart = (solitaireIndex) => {
-    const solitaireToAdd = {
-      ...solitaires[solitaireIndex],
-      quantity: quantities[solitaireIndex],
-    };
-    addToCart(solitaireToAdd);
+
+  // Check if the pair is already in the cart (using a simple check for now)
+  useEffect(() => {
+    setIsPairInCart(
+      cartItems.some(
+        (item) =>
+          item.SolitaireID === solitaires[0].SolitaireID ||
+          item.SolitaireID === solitaires[1].SolitaireID
+      )
+    );
+  }, [cartItems, solitaires]);
+
+  const handleAddToCart = () => {
+    // Add both solitaires to the cart individually
+    solitaires.forEach((solitaire) => {
+      const solitaireToAdd = { ...solitaire, quantity: pairQuantity };
+      addToCart(solitaireToAdd);
+    });
+
     setCartItems(getCartItemsFromLocalStorage());
+    setIsPairInCart(true);
   };
 
   // Calculate subtotal and total
@@ -193,34 +190,23 @@ const Pair = () => {
     (total, item) => total + item.Price * item.quantity,
     0
   );
-  const total = subTotal; // For now, total is the same as subtotal
+  const total = subTotal;
 
   return (
     <div>
       <Head>
         <title>Pair - Diamond Store</title>
-        {/* ... [Add other meta tags] ... */}
       </Head>
 
-      {/* Header */}
-      <Header />
-
-      {/* Main Content */}
       <main>
         <div className="container mt-5">
-          <div
-            className="row mt-2 mb-3"
-            style={{ alignItems: "center", textAlign: "center" }}
-          >
-            <h1> Demo Pair Details</h1>
-          </div>
           <div className="row">
             {/* Solitaire 1 */}
             {solitaires.map((solitaire, solitaireIndex) => (
               <div
                 key={solitaire.SolitaireID}
                 className={`col-lg-6 col-md-12 ${
-                  solitaires.length === 1 ? "col-sm-12" : "col-sm-6" // Adjust column classes based on number of solitaires
+                  solitaires.length === 1 ? "col-sm-12" : "col-sm-6"
                 } mb-4`}
               >
                 <div className="productbg p-bg">
@@ -255,7 +241,7 @@ const Pair = () => {
                                   )}
 
                                   <img
-                                    id={`img_01_${solitaireIndex}`} // Unique ID
+                                    id={`img_01_${solitaireIndex}`}
                                     src={mainImageUrls[solitaireIndex]}
                                     data-zoom-image={
                                       mainImageUrls[solitaireIndex]
@@ -463,222 +449,247 @@ const Pair = () => {
                             </li>
                           </ul>
                         </div>
-
-                        {/* Product Form (replace OpenCart logic)  */}
-                        <div id="product" className="clearfix">
-                          <form id="form-product" onSubmit={handleSubmit}>
-                            {/* ... [Your web_option JSX] ... */}
-
-                            {/* Quantity Input */}
-                            <div className="pro-qut">
-                              <label
-                                htmlFor="input-quantity"
-                                className="form-label text-decorop"
-                              >
-                                Qty
-                              </label>
-                              <div className="op-box qty-plus-minus">
-                                <button
-                                  type="button"
-                                  className="form-control pull-left btn-number btnminus"
-                                  disabled={quantities[solitaireIndex] === 1}
-                                  onClick={() =>
-                                    decreaseQuantity(solitaireIndex)
-                                  }
-                                >
-                                  <span className="fa fa-minus"></span>
-                                </button>
-                                <input
-                                  id={`input-quantity-${solitaireIndex}`}
-                                  type="text"
-                                  name="quantity"
-                                  value={quantities[solitaireIndex]}
-                                  size="2"
-                                  className="form-control input-number pull-left"
-                                  onChange={(e) =>
-                                    handleQuantityChange(
-                                      solitaireIndex,
-                                      e.target.value
-                                    )
-                                  }
-                                />
-                                <button
-                                  type="button"
-                                  className="form-control pull-left btn-number btnplus"
-                                  onClick={() =>
-                                    increaseQuantity(solitaireIndex)
-                                  }
-                                >
-                                  <span className="fa fa-plus"></span>
-                                </button>
-                                <div
-                                  id={`error-quantity-${solitaireIndex}`}
-                                  className="form-text"
-                                ></div>
-                              </div>
-                            </div>
-
-                            {/* Price */}
-                            <div className="pro-price">
-                              <ul className="list-unstyled">
-                                <li className="text-decor-bold">
-                                  <h2>
-                                    <span
-                                      className="price-new"
-                                      style={{
-                                        fontFamily: "outfit",
-                                        fontWeight: "200",
-                                      }}
-                                    >
-                                      $999{solitaire.Price}
-                                    </span>
-                                  </h2>
-                                </li>
-                              </ul>
-                            </div>
-
-                            {/* Add to Cart Button */}
-                            <div className="qty-flex">
-                              {areSolitairesInCart[solitaireIndex] ? ( // Check if this solitaire is in the cart
-                                <div
-                                  style={{
-                                    display: "flex",
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                  }}
-                                >
-                                  <button
-                                    className="btn btn-primary btn-lg btn-block text-success"
-                                    style={{
-                                      marginRight: "10px",
-                                      display: "flex",
-                                      alignItems: "center",
-                                      scale: "0.7",
-                                    }}
-                                    disabled
-                                  >
-                                    Already in cart!
-                                  </button>
-                                  <Link
-                                    href="/cart"
-                                    className="btn btn-primary btn-lg btn-block"
-                                    style={{
-                                      display: "flex",
-                                      alignItems: "center",
-                                      scale: "0.7",
-                                    }}
-                                  >
-                                    Open Cart
-                                    <img
-                                      alt="stor-bg"
-                                      src="image/catalog/stor-bg.svg"
-                                      style={{ marginLeft: "5px" }}
-                                    />
-                                  </Link>
-                                </div>
-                              ) : (
-                                <button
-                                  onClick={() =>
-                                    handleAddToCart(solitaireIndex)
-                                  }
-                                  className="btn btn-primary btn-lg btn-block"
-                                >
-                                  Add to Cart
-                                  <img
-                                    alt="stor-bg"
-                                    src="image/catalog/stor-bg.svg"
-                                  />
-                                </button>
-                              )}
-
-                              <input
-                                type="hidden"
-                                name="product_id"
-                                value={solitaire.SolitaireID}
-                              />
-                            </div>
-                          </form>
-                        </div>
-                        {/* ... [Replace AddToAny section as needed] ... */}
-                        {/*  PDF and Video Panels (Dummy Data) */}
-                      </div>
-                    </div>
-                    <div className="row mt-4">
-                      <div className="row">
-                        {/* PDF Panel */}
-                        <div className="col-md-12">
-                          <div className="card">
-                            <div
-                              className="card-header"
-                              style={{
-                                color: "var(--main-color)",
-                                fontFamily: "outfit",
-                                textAlign: "center",
-                              }}
-                            >
-                              Product Certificate (PDF)
-                            </div>
-                            <div className="card-body embed-responsive embed-responsive-4by3">
-                              <iframe
-                                src="/pdf/dummy.pdf"
-                                title="Product Certificate"
-                                className="embed-responsive-item"
-                              ></iframe>
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Video Panel */}
-                        <div className="col-md-12">
-                          <div
-                            className="card"
-                            style={{
-                              alignItems: "center",
-                              justifyContent: "center",
-                            }}
-                          >
-                            <div
-                              className="card-header"
-                              style={{
-                                color: "var(--main-color)",
-                                fontFamily: "outfit",
-                                textAlign: "center",
-                              }}
-                            >
-                              Product Video
-                            </div>
-                            <div
-                              className="card-body embed-responsive embed-responsive-16by9"
-                              style={{
-                                width: "100%",
-                                height: "100%",
-                                minHeight: "300px",
-                                alignItems: "center",
-                                justifyContent: "center",
-                              }}
-                            >
-                              <iframe
-                                src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-                                title="Product Video"
-                                allowFullScreen
-                                className="embed-responsive-item"
-                                style={{
-                                  width: "100%",
-                                  height: "100%",
-                                  minHeight: "250px",
-                                }}
-                              ></iframe>
-                            </div>
-                          </div>
-                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                {/* ... [Your product-reviews and pro-banner JSX - remove jQuery/inline scripts] ...  */}
+                {/*  PDF and Video Panels (Dummy Data) */}
+                <div className="container mt-4">
+                  <div className="row">
+                    {/* PDF Panel */}
+                    <div className="col-md-12">
+                      <div className="card">
+                        <div
+                          className="card-header"
+                          style={{
+                            color: "var(--main-color)",
+                            fontFamily: "outfit",
+                            textAlign: "center",
+                          }}
+                        >
+                          Product Certificate (PDF)
+                        </div>
+                        <div className="card-body embed-responsive embed-responsive-4by3">
+                          <iframe
+                            src="/pdf/dummy.pdf"
+                            title="Product Certificate"
+                            className="embed-responsive-item"
+                          ></iframe>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Video Panel */}
+                    <div className="col-md-12">
+                      <div
+                        className="card"
+                        style={{
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <div
+                          className="card-header"
+                          style={{
+                            color: "var(--main-color)",
+                            fontFamily: "outfit",
+                            textAlign: "center",
+                          }}
+                        >
+                          Product Video
+                        </div>
+                        <div
+                          className="card-body embed-responsive embed-responsive-16by9"
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            minHeight: "300px",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                        >
+                          <iframe
+                            src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                            title="Product Video"
+                            allowFullScreen
+                            className="embed-responsive-item"
+                            style={{
+                              width: "100%",
+                              height: "100%",
+                              minHeight: "250px",
+                            }}
+                          ></iframe>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             ))}
+
+            {/* Product Form (modified for pair) */}
+            <div className="row">
+              <div
+                id="product "
+                className="clearfix"
+                style={{
+                  display: "flex !important",
+                  flexDirection: "row !important",
+                }}
+              >
+                <form id="form-product" onSubmit={(e) => e.preventDefault()}>
+                  {/* ... [Remove web_option if not needed for the pair] ... */}
+
+                  {/* Quantity Input (for the pair) */}
+                  <div
+                    className="pro-qut"
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                    }}
+                  >
+                    <label
+                      htmlFor="input-quantity"
+                      className="form-label text-decorop"
+                      style={{
+                        color: "var(--main-color)",
+                        marginRight: "10px",
+                      }}
+                    >
+                      Qty
+                    </label>
+                    <div
+                      className="op-box qty-plus-minus"
+                      style={{ display: "flex", flexDirection: "row" }}
+                    >
+                      <button
+                        type="button"
+                        className="form-control pull-left btn-number btnminus"
+                        disabled={pairQuantity === 1}
+                        onClick={decreasePairQuantity}
+                        style={{
+                          width: "40px",
+                          backgroundColor: "var(--sub-color)",
+                          borderRight: "none !important",
+                          borderTopRightRadius: "0",
+                          borderBottomRightRadius: "0",
+                        }}
+                      >
+                        <span className="fa fa-minus"></span>
+                      </button>
+                      <input
+                        id="input-quantity-pair"
+                        type="text"
+                        name="quantity"
+                        value={pairQuantity}
+                        size="2"
+                        className="form-control input-number pull-left"
+                        onChange={(e) =>
+                          handlePairQuantityChange(e.target.value)
+                        }
+                        style={{
+                          borderTopLeftRadius: "0",
+                          borderBottomLeftRadius: "0",
+                          borderTopRightRadius: "0",
+                          borderBottomRightRadius: "0",
+                        }}
+                      />
+                      <button
+                        type="button"
+                        className="form-control pull-left btn-number btnplus"
+                        onClick={increasePairQuantity}
+                        style={{
+                          width: "40px",
+                          backgroundColor: "var(--sub-color)",
+                          borderLeft: "none !important",
+                          borderTopLeftRadius: "0",
+                          borderBottomLeftRadius: "0",
+                        }}
+                      >
+                        <span className="fa fa-plus"></span>
+                      </button>
+                      <div id="error-quantity-pair" className="form-text"></div>
+                    </div>
+                  </div>
+
+                  {/* Price (for the pair) */}
+                  <div className="pro-price">
+                    <ul className="list-unstyled">
+                      <li className="text-decor-bold">
+                        <h2>
+                          <span
+                            className="price-new"
+                            style={{
+                              fontFamily: "outfit",
+                              fontWeight: "200",
+                              color: "var(--main-color)",
+                            }}
+                          >
+                            $
+                            {(
+                              solitaires[0].Price + solitaires[1].Price
+                            ).toFixed(2)}
+                          </span>
+                        </h2>
+                      </li>
+                    </ul>
+                  </div>
+
+                  {/* Add to Cart Button (for the pair) */}
+                  <div className="qty-flex">
+                    {isPairInCart ? (
+                      // Display a message if already in cart
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <button
+                          className="btn btn-primary btn-lg btn-block text-success"
+                          style={{
+                            marginRight: "10px",
+                            display: "flex",
+                            alignItems: "center",
+                            // scale: "0.7",
+                          }}
+                          disabled
+                        >
+                          Already in cart!
+                        </button>
+                        <Link
+                          href="/cart"
+                          className="btn btn-primary btn-lg btn-block"
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            // scale: "0.7",
+                          }}
+                        >
+                          Open Cart
+                          <img
+                            alt="stor-bg"
+                            src="image/catalog/stor-bg.svg"
+                            style={{ marginLeft: "5px" }}
+                          />
+                        </Link>
+                      </div>
+                    ) : (
+                      <button
+                        onClick={handleAddToCart}
+                        className="btn btn-primary btn-lg btn-block"
+                      >
+                        Add Pair to Cart
+                        <img alt="stor-bg" src="image/catalog/stor-bg.svg" />
+                      </button>
+                    )}
+                  </div>
+                </form>
+              </div>
+            </div>
           </div>
         </div>
       </main>

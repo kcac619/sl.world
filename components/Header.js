@@ -163,7 +163,7 @@ const Header = () => {
                         <div className="close-nav">
                           <span
                             className="categories"
-                            style={{ color: "#20C997" }}
+                            style={{ color: "var(--main-color)" }}
                           >
                             Categories
                           </span>

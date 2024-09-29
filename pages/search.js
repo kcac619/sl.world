@@ -235,7 +235,6 @@ const SearchResults = () => {
   // console.log(" matched  solitaires", matchedSolitaires);
   return (
     <div style={{ width: "100vw" }}>
-      <Header />
       <div
         className="container-fluid mt-5"
         style={{
@@ -247,7 +246,7 @@ const SearchResults = () => {
         }}
       >
         <h1
-          className="mb-4 text-white"
+          className="mb-4 "
           style={{ textAlign: "center", color: "var(--main-color) !important" }}
         >
           Search Results

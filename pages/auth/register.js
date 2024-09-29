@@ -56,8 +56,6 @@ const Register = () => {
         {/* ... [Add other meta tags] ... */}
       </Head>
 
-      <Header />
-
       <div className="container">
         <div className="pb-50">
           <div id="account-register" className="container">

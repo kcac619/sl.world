@@ -67,8 +67,6 @@ const MyAccount = () => {
         {/* ... [Your meta tags] ... */}
       </Head>
 
-      <Header />
-
       <div className="container">
         <div className="pb-50">
           <div id="account-account" className="container acpage">
@@ -123,48 +121,48 @@ const MyAccount = () => {
                       description="Edit your address"
                       link="/account/address"
                     />
-                    <AccountCard
+                    {/* <AccountCard
                       icon="/image/catalog/account/keyboard.svg"
                       title="Subscribe / unsubscribe to newsletter"
                       description="subscribe for newsletter"
                       link="/account/newsletter"
-                    />
+                    /> */}
                     <AccountCard
                       icon="/image/catalog/account/box.svg"
                       title="View your order history"
                       description="See your order history"
                       link="/account/order"
                     />
-                    <AccountCard
+                    {/* <AccountCard
                       icon="/image/catalog/account/download.svg"
                       title="Downloads"
                       description="Download Your Theme"
                       link="/account/download"
-                    />
-                    <AccountCard
+                    /> */}
+                    {/* <AccountCard
                       icon="/image/catalog/account/star.svg"
                       title="Your Reward Points"
                       description="Count Reward Point"
                       link="/account/reward"
-                    />
-                    <AccountCard
+                    /> */}
+                    {/* <AccountCard
                       icon="/image/catalog/account/insert.svg"
                       title="View your return requests"
                       description="See your Return"
                       link="/account/return"
-                    />
-                    <AccountCard
+                    /> */}
+                    {/* <AccountCard
                       icon="/image/catalog/account/cabinet.svg"
                       title="Your Transactions"
                       description="See your Transaction"
                       link="/account/transaction"
-                    />
-                    <AccountCard
+                    /> */}
+                    {/* <AccountCard
                       icon="/image/catalog/account/recurring.svg"
                       title="Recurring payments"
                       description="See your Payment"
                       link="/account/recurring"
-                    />
+                    /> */}
 
                     {/* ... [Add more AccountCard components as needed] ... */}
                   </div>
@@ -211,7 +209,7 @@ const MyAccount = () => {
                   <Link href="/account/order" className="list-group-item">
                     Order History
                   </Link>{" "}
-                  <Link href="/account/download" className="list-group-item">
+                  {/* <Link href="/account/download" className="list-group-item">
                     Downloads
                   </Link>
                   <Link href="/account/returns" className="list-group-item">
@@ -219,9 +217,9 @@ const MyAccount = () => {
                   </Link>{" "}
                   <Link href="/account/transaction" className="list-group-item">
                     Transactions
-                  </Link>
+                  </Link> */}
                   <hr />
-                  <h3>
+                  {/* <h3>
                     <svg className="" width="20px" height="20px">
                       <use xlinkHref="#aclufolder" />
                     </svg>
@@ -235,7 +233,7 @@ const MyAccount = () => {
                   </Link>
                   <Link href="/account/newsletter" className="list-group-item">
                     Newsletter
-                  </Link>
+                  </Link> */}
                   <hr />
                   <h3 className="acl">
                     <svg className="" width="20px" height="20px">
@@ -256,8 +254,6 @@ const MyAccount = () => {
           </div>
         </div>
       </div>
-
-      <Footer />
     </div>
   );
 };
