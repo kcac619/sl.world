@@ -33,8 +33,8 @@ const FilterSection = ({
               padding: "8px",
               marginRight: "8px",
               backgroundColor: selectedValues.includes(option.value)
-                ? "#167065"
-                : "#C0C0C0",
+                ? "rgba(13,30,20, 0.9)"
+                : "rgba(242, 223, 207, 0.8)",
               backdropFilter: "blur(10px)",
               color: selectedValues.includes(option.value)
                 ? "var(--main-color)"
