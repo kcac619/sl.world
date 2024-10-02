@@ -141,12 +141,12 @@ const Breadcrumb = ({ name, description }) => {
       <div className="">
         <ul className="breadcrumb ">
           <li className="breadcrumb-item">
-            <a href="https://opencart.workdo.io/diamond/index.php?route=common/home&amp;language=en-gb">
+            <a href="diamond/index.php?route=common/home&amp;language=en-gb">
               <i className="fas fa-home"></i>
             </a>
           </li>
           <li className="breadcrumb-item">
-            <a href="https://opencart.workdo.io/diamond/index.php?route=product/category&amp;language=en-gb&amp;path=67">
+            <a href="diamond/index.php?route=product/category&amp;language=en-gb&amp;path=67">
               {name}
             </a>
           </li>
@@ -182,9 +182,9 @@ const Category = () => {
   const router = useRouter();
   const [categories, setCategories] = useState([{
     imageUrl:
-      "https://opencart.workdo.io/diamond/image/cache/catalog/category/1-270x335.jpg",
+      "diamond/image/cache/catalog/category/1-270x335.jpg",
     name: "bracelet",
-    link: "https://opencart.workdo.io/diamond/index.php?route=product/category&path=57",
+    link: "diamond/index.php?route=product/category&path=57",
   }]);
   const [isLoadingSlider, setIsLoadingSlider] = useState(true);
   const [errorSlider, setErrorSlider] = useState(null);
@@ -356,27 +356,27 @@ const CategorySlider = () => {
   const categories = [
     {
       imageUrl:
-        "https://opencart.workdo.io/diamond/image/cache/catalog/category/1-270x335.jpg",
+        "diamond/image/cache/catalog/category/1-270x335.jpg",
       name: "bracelet",
-      link: "https://opencart.workdo.io/diamond/index.php?route=product/category&path=57",
+      link: "diamond/index.php?route=product/category&path=57",
     },
     {
       imageUrl:
-        "https://opencart.workdo.io/diamond/image/cache/catalog/category/2-270x335.jpg",
+        "diamond/image/cache/catalog/category/2-270x335.jpg",
       name: "necklace",
-      link: "https://opencart.workdo.io/diamond/index.php?route=product/category&path=25",
+      link: "diamond/index.php?route=product/category&path=25",
     },
     {
       imageUrl:
-        "https://opencart.workdo.io/diamond/image/cache/catalog/category/3-270x335.jpg",
+        "diamond/image/cache/catalog/category/3-270x335.jpg",
       name: "ring",
-      link: "https://opencart.workdo.io/diamond/index.php?route=product/category&path=20",
+      link: "diamond/index.php?route=product/category&path=20",
     },
     {
       imageUrl:
-        "https://opencart.workdo.io/diamond/image/cache/catalog/category/4-270x335.jpg",
+        "diamond/image/cache/catalog/category/4-270x335.jpg",
       name: "bead",
-      link: "https://opencart.workdo.io/diamond/index.php?route=product/category&path=17",
+      link: "diamond/index.php?route=product/category&path=17",
     },
   ];
 
@@ -601,7 +601,7 @@ const Footer = () => {
                               <form
                                 id="formNewLestter"
                                 method="post"
-                                action="https://opencart.workdo.io/diamond/index.php?route=extension/Workdonewsletter/module/workdonewsletter|subscribe"
+                                action="diamond/index.php?route=extension/Workdonewsletter/module/workdonewsletter|subscribe"
                                 className="formNewLestter newsletter-bg"
                               >
                                 <div className="inner">
@@ -669,7 +669,7 @@ const Footer = () => {
                   <div id="info" className="collapse footer-collapse">
                     <ul className="list-unstyled">
                       <li>
-                        <a href="https://opencart.workdo.io/diamond/index.php?route=information/information&language=en-gb&information_id=5">
+                        <a href="diamond/index.php?route=information/information&language=en-gb&information_id=5">
                           FAQ
                         </a>
                       </li>
@@ -684,7 +684,7 @@ const Footer = () => {
                         </a>
                       </li>
                       <li>
-                        <a href="https://opencart.workdo.io/diamond/index.php?route=information/information&language=en-gb&information_id=1">
+                        <a href="diamond/index.php?route=information/information&language=en-gb&information_id=1">
                           About Us
                         </a>
                       </li>
@@ -710,27 +710,27 @@ const Footer = () => {
                   <div id="account" className="collapse footer-collapse">
                     <ul className="list-unstyled">
                       <li>
-                        <a href="https://opencart.workdo.io/diamond/index.php?route=account/account&language=en-gb">
+                        <a href="diamond/index.php?route=account/account&language=en-gb">
                           Account
                         </a>
                       </li>
                       <li>
-                        <a href="https://opencart.workdo.io/diamond/index.php?route=account/order&language=en-gb">
+                        <a href="diamond/index.php?route=account/order&language=en-gb">
                           Order History
                         </a>
                       </li>
                       <li>
-                        <a href="https://opencart.workdo.io/diamond/index.php?route=account/wishlist&language=en-gb">
+                        <a href="diamond/index.php?route=account/wishlist&language=en-gb">
                           Wish List
                         </a>
                       </li>
                       <li>
-                        <a href="https://opencart.workdo.io/diamond/index.php?route=account/newsletter&language=en-gb">
+                        <a href="diamond/index.php?route=account/newsletter&language=en-gb">
                           Newsletter
                         </a>
                       </li>
                       <li>
-                        <a href="https://opencart.workdo.io/diamond/index.php?route=product/special&language=en-gb">
+                        <a href="diamond/index.php?route=product/special&language=en-gb">
                           Specials
                         </a>
                       </li>
@@ -1003,16 +1003,16 @@ const Header = () => {
                             </li>
                             <li className="nav-item">
                               <a
-                                href="https://opencart.workdo.io/diamond/index.php?route=product/category&language=en-gb&path=60"
+                                href="diamond/index.php?route=product/category&language=en-gb&path=60"
                                 className="nav-link"
                               >
-                                {/*<img src="https://opencart.workdo.io/diamond/image/cache/catalog/menu-icon/meat-fish-14x14.png" alt="Amethyst" title="Amethyst"> */}{" "}
+                                {/*<img src="diamond/image/cache/catalog/menu-icon/meat-fish-14x14.png" alt="Amethyst" title="Amethyst"> */}{" "}
                                 Amethyst
                               </a>
                             </li>
                             <li className="nav-item">
                               <a
-                                href="https://opencart.workdo.io/diamond/index.php?route=product/category&language=en-gb&path=67"
+                                href="diamond/index.php?route=product/category&language=en-gb&path=67"
                                 className="nav-link"
                               >
                                 {/*<img src="" alt="Blue Sapphire" title="Blue Sapphire"> */}{" "}
@@ -1130,16 +1130,16 @@ const Header = () => {
                                   }}
                                 >
                                   <a
-                                    href="https://opencart.workdo.io/diamond/index.php?route=product/category&language=en-gb&path=60"
+                                    href="diamond/index.php?route=product/category&language=en-gb&path=60"
                                     className="nav-link"
                                   >
-                                    {/*<img src="https://opencart.workdo.io/diamond/image/cache/catalog/menu-icon/meat-fish-14x14.png" alt="Amethyst" title="Amethyst"> */}{" "}
+                                    {/*<img src="diamond/image/cache/catalog/menu-icon/meat-fish-14x14.png" alt="Amethyst" title="Amethyst"> */}{" "}
                                     Amethyst
                                   </a>
                                 </li>
                                 <li className="nav-item">
                                   <a
-                                    href="https://opencart.workdo.io/diamond/index.php?route=product/category&language=en-gb&path=67"
+                                    href="diamond/index.php?route=product/category&language=en-gb&path=67"
                                     className="nav-link"
                                   >
                                     {/*<img src="" alt="Blue Sapphire" title="Blue Sapphire"> */}{" "}
@@ -1318,7 +1318,7 @@ const Header = () => {
                             </h6>
                             <li className="acd">
                               <a
-                                href="https://opencart.workdo.io/diamond/index.php?route=account/register&language=en-gb"
+                                href="diamond/index.php?route=account/register&language=en-gb"
                                 className="dropdown-item"
                               >
                                 <i className="fa fa-user-plus" />
@@ -1327,7 +1327,7 @@ const Header = () => {
                             </li>
                             <li className="acd">
                               <a
-                                href="https://opencart.workdo.io/diamond/index.php?route=account/login&language=en-gb"
+                                href="diamond/index.php?route=account/login&language=en-gb"
                                 className="dropdown-item"
                               >
                                 <i className="fa fa-lock" />
@@ -1341,7 +1341,7 @@ const Header = () => {
                               </a>
                             </li>
                             <li className="wishcom">
-                              <a href="https://opencart.workdo.io/diamond/index.php?route=account/wishlist&language=en-gb">
+                              <a href="diamond/index.php?route=account/wishlist&language=en-gb">
                                 <i className="fa fa-heart" />
                                 wishlist
                               </a>
@@ -1349,7 +1349,7 @@ const Header = () => {
                             <li className="xsla d-inline-block">
                               {" "}
                               <form
-                                action="https://opencart.workdo.io/diamond/index.php?route=common/currency|save&language=en-gb"
+                                action="diamond/index.php?route=common/currency|save&language=en-gb"
                                 method="post"
                                 encType="multipart/form-data"
                                 id="form-currency"
@@ -1391,7 +1391,7 @@ const Header = () => {
                                 <input
                                   type="hidden"
                                   name="redirect"
-                                  defaultValue="https://opencart.workdo.io/diamond/index.php?route=common/home"
+                                  defaultValue="diamond/index.php?route=common/home"
                                 />
                               </form>
                             </li>
@@ -1864,54 +1864,54 @@ const OnsaleSlider = () => {
   const products = [
     {
       imageUrl1:
-        "https://opencart.workdo.io/diamond/image/cache/catalog/product/2/1-1000x1000.png",
+        "diamond/image/cache/catalog/product/2/1-1000x1000.png",
       imageUrl2:
-        "https://opencart.workdo.io/diamond/image/cache/catalog/product/2/2-1000x1000.png",
+        "diamond/image/cache/catalog/product/2/2-1000x1000.png",
       brand: "bag",
       name: "heart design pandal chain",
       price: "$1.00",
       description:
         "The 30-inch Apple Cinema HD Display delivers an amazing 2560 x 1600 pixel resolution. Designed specifically for the creative professional, this display provides more space for easier access to all the...",
-      link: "https://opencart.workdo.io/diamond/index.php?route=product/product&language=en-gb&product_id=42",
+      link: "diamond/index.php?route=product/product&language=en-gb&product_id=42",
       sizes: ["m", "s"],
     },
     {
       imageUrl1:
-        "https://opencart.workdo.io/diamond/image/cache/catalog/product/11/1-1000x1000.png",
+        "diamond/image/cache/catalog/product/11/1-1000x1000.png",
       imageUrl2:
-        "https://opencart.workdo.io/diamond/image/cache/catalog/product/11/2-1000x1000.png",
+        "diamond/image/cache/catalog/product/11/2-1000x1000.png",
       brand: "cloths",
       name: "Crystal Gym & Fitness Glove",
       price: "$1.00",
       description:
         "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy.Lorem Ipsum is simply dummy text of the printing and typesetting industry...",
-      link: "https://opencart.workdo.io/diamond/index.php?route=product/product&language=en-gb&product_id=30",
+      link: "diamond/index.php?route=product/product&language=en-gb&product_id=30",
       sizes: ["l", "m"],
     },
     {
       imageUrl1:
-        "https://opencart.workdo.io/diamond/image/cache/catalog/product/1/1-1000x1000.png",
+        "diamond/image/cache/catalog/product/1/1-1000x1000.png",
       imageUrl2:
-        "https://opencart.workdo.io/diamond/image/cache/catalog/product/1/2-1000x1000.png",
+        "diamond/image/cache/catalog/product/1/2-1000x1000.png",
       brand: "shoes",
       name: "Abigail Moon & Stars Ring",
       price: "$1.00",
       description:
         "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry...",
-      link: "https://opencart.workdo.io/diamond/index.php?route=product/product&language=en-gb&product_id=28",
+      link: "diamond/index.php?route=product/product&language=en-gb&product_id=28",
       sizes: ["m", "s", "l"],
     },
     {
       imageUrl1:
-        "https://opencart.workdo.io/diamond/image/cache/catalog/product/13/1-1000x1000.png",
+        "diamond/image/cache/catalog/product/13/1-1000x1000.png",
       imageUrl2:
-        "https://opencart.workdo.io/diamond/image/cache/catalog/product/13/2-1000x1000.png",
+        "diamond/image/cache/catalog/product/13/2-1000x1000.png",
       brand: "bag",
       name: "golden ring",
       price: "$1.00",
       description:
         "Born to be worn. Clip on the worlds most wearable music player and take up to 240 songs with you anywhere. Choose from five colors including four new hues to make your musical fashion statement. R..",
-      link: "https://opencart.workdo.io/diamond/index.php?route=product/product&language=en-gb&product_id=34",
+      link: "diamond/index.php?route=product/product&language=en-gb&product_id=34",
       sizes: ["xl", "xxl"],
     },
     // ... Add more product data
@@ -2291,7 +2291,7 @@ const TestimonialSlider = ({
   // const testimonials = [
   //   {
   //     imageUrl:
-  //       "https://opencart.workdo.io/diamond/image/catalog/testimonial/1.png",
+  //       "diamond/image/catalog/testimonial/1.png",
   //     quote:
   //       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's dummy.",
   //     author: "mr. onsequat developer",
@@ -2299,7 +2299,7 @@ const TestimonialSlider = ({
   //   },
   //   {
   //     imageUrl:
-  //       "https://opencart.workdo.io/diamond/image/catalog/testimonial/2.png",
+  //       "diamond/image/catalog/testimonial/2.png",
   //     quote:
   //       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's dummy.",
   //     author: "mr. onsequat developer",
@@ -2307,7 +2307,7 @@ const TestimonialSlider = ({
   //   },
   //   {
   //     imageUrl:
-  //       "https://opencart.workdo.io/diamond/image/catalog/testimonial/1.png",
+  //       "diamond/image/catalog/testimonial/1.png",
   //     quote:
   //       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's dummy.",
   //     author: "mr. onsequat developer",
@@ -2315,7 +2315,7 @@ const TestimonialSlider = ({
   //   },
   //   {
   //     imageUrl:
-  //       "https://opencart.workdo.io/diamond/image/catalog/testimonial/2.png",
+  //       "diamond/image/catalog/testimonial/2.png",
   //     quote:
   //       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's dummy.",
   //     author: "mr. onsequat developer",
@@ -2468,7 +2468,7 @@ const WbSpecialSlider = () => {
       PriceNew: "$150.00",
       PriceOld: "$3.00",
       DiscountPercentage: "46%",
-      Link: "https://opencart.workdo.io/diamond/index.php?route=product/product&language=en-gb&product_id=29",
+      Link: "diamond/index.php?route=product/product&language=en-gb&product_id=29",
       sizes: ["xl", "xxl", "xxxl"], // Add size options if needed
       // ... other product properties
     },
@@ -2480,7 +2480,7 @@ const WbSpecialSlider = () => {
       PriceNew: "$150.00",
       PriceOld: "$3.00",
       DiscountPercentage: "46%",
-      Link: "https://opencart.workdo.io/diamond/index.php?route=product/product&language=en-gb&product_id=29",
+      Link: "diamond/index.php?route=product/product&language=en-gb&product_id=29",
       sizes: ["xl", "xxl", "xxxl"], // Add size options if needed
       // ... other product properties
     },
@@ -2492,7 +2492,7 @@ const WbSpecialSlider = () => {
       PriceNew: "$150.00",
       PriceOld: "$3.00",
       DiscountPercentage: "46%",
-      Link: "https://opencart.workdo.io/diamond/index.php?route=product/product&language=en-gb&product_id=29",
+      Link: "diamond/index.php?route=product/product&language=en-gb&product_id=29",
       sizes: ["xl", "xxl", "xxxl"], // Add size options if needed
       // ... other product properties
     },
@@ -2504,7 +2504,7 @@ const WbSpecialSlider = () => {
       PriceNew: "$150.00",
       PriceOld: "$3.00",
       DiscountPercentage: "46%",
-      Link: "https://opencart.workdo.io/diamond/index.php?route=product/product&language=en-gb&product_id=29",
+      Link: "diamond/index.php?route=product/product&language=en-gb&product_id=29",
       sizes: ["xl", "xxl", "xxxl"], // Add size options if needed
       // ... other product properties
     },
@@ -2516,7 +2516,7 @@ const WbSpecialSlider = () => {
       PriceNew: "$150.00",
       PriceOld: "$3.00",
       DiscountPercentage: "46%",
-      Link: "https://opencart.workdo.io/diamond/index.php?route=product/product&language=en-gb&product_id=29",
+      Link: "diamond/index.php?route=product/product&language=en-gb&product_id=29",
       sizes: ["xl", "xxl", "xxxl"], // Add size options if needed
       // ... other product properties
     },
@@ -2638,32 +2638,32 @@ const WdCategorySlider = () => {
   const categories = [
     {
       imageUrl:
-        "https://opencart.workdo.io/diamond/image/cache/catalog/category/1-270x335.jpg",
+        "diamond/image/cache/catalog/category/1-270x335.jpg",
       name: "bracelet",
-      link: "https://opencart.workdo.io/diamond/index.php?route=product/category&path=57",
+      link: "diamond/index.php?route=product/category&path=57",
       description: "A beautiful collection of bracelets for every occasion.",
     },
     {
       imageUrl:
-        "https://opencart.workdo.io/diamond/image/cache/catalog/category/2-270x335.jpg",
+        "diamond/image/cache/catalog/category/2-270x335.jpg",
       name: "necklace",
-      link: "https://opencart.workdo.io/diamond/index.php?route=product/category&path=25",
+      link: "diamond/index.php?route=product/category&path=25",
       description:
         "Explore our stunning range of necklaces, from classic to modern.",
     },
     {
       imageUrl:
-        "https://opencart.workdo.io/diamond/image/cache/catalog/category/3-270x335.jpg",
+        "diamond/image/cache/catalog/category/3-270x335.jpg",
       name: "ring",
-      link: "https://opencart.workdo.io/diamond/index.php?route=product/category&path=20",
+      link: "diamond/index.php?route=product/category&path=20",
       description:
         "Find the perfect ring for any occasion - engagement, wedding, or everyday wear.",
     },
     {
       imageUrl:
-        "https://opencart.workdo.io/diamond/image/cache/catalog/category/4-270x335.jpg",
+        "diamond/image/cache/catalog/category/4-270x335.jpg",
       name: "bead",
-      link: "https://opencart.workdo.io/diamond/index.php?route=product/category&path=17",
+      link: "diamond/index.php?route=product/category&path=17",
       description:
         "Browse our collection of beautiful beads for jewelry making and crafting.",
     },
@@ -2767,7 +2767,7 @@ const WdSelectedSlider = () => {
       name: "Abigail Moon & Stars Ring",
       brand: "shoes", // Assuming brand is the manufacturer name
       price: "$1.00",
-      link: "https://opencart.workdo.io/diamond/index.php?route=product/product&language=en-gb&product_id=28",
+      link: "diamond/index.php?route=product/product&language=en-gb&product_id=28",
       // ... other product properties
     },
     {
@@ -2776,7 +2776,7 @@ const WdSelectedSlider = () => {
       name: "Abigail Moon & Stars Ring",
       brand: "shoes", // Assuming brand is the manufacturer name
       price: "$1.00",
-      link: "https://opencart.workdo.io/diamond/index.php?route=product/product&language=en-gb&product_id=28",
+      link: "diamond/index.php?route=product/product&language=en-gb&product_id=28",
       // ... other product properties
     },
     {
@@ -2785,7 +2785,7 @@ const WdSelectedSlider = () => {
       name: "Abigail Moon & Stars Ring",
       brand: "shoes", // Assuming brand is the manufacturer name
       price: "$1.00",
-      link: "https://opencart.workdo.io/diamond/index.php?route=product/product&language=en-gb&product_id=28",
+      link: "diamond/index.php?route=product/product&language=en-gb&product_id=28",
       // ... other product properties
     },
     {
@@ -2794,7 +2794,7 @@ const WdSelectedSlider = () => {
       name: "Abigail Moon & Stars Ring",
       brand: "shoes", // Assuming brand is the manufacturer name
       price: "$1.00",
-      link: "https://opencart.workdo.io/diamond/index.php?route=product/product&language=en-gb&product_id=28",
+      link: "diamond/index.php?route=product/product&language=en-gb&product_id=28",
       // ... other product properties
     },
     {
@@ -2803,7 +2803,7 @@ const WdSelectedSlider = () => {
       name: "Abigail Moon & Stars Ring",
       brand: "shoes", // Assuming brand is the manufacturer name
       price: "$1.00",
-      link: "https://opencart.workdo.io/diamond/index.php?route=product/product&language=en-gb&product_id=28",
+      link: "diamond/index.php?route=product/product&language=en-gb&product_id=28",
       // ... other product properties
     },
     {
@@ -2812,7 +2812,7 @@ const WdSelectedSlider = () => {
       name: "Abigail Moon & Stars Ring",
       brand: "shoes", // Assuming brand is the manufacturer name
       price: "$1.00",
-      link: "https://opencart.workdo.io/diamond/index.php?route=product/product&language=en-gb&product_id=28",
+      link: "diamond/index.php?route=product/product&language=en-gb&product_id=28",
       // ... other product properties
     },
   ];
@@ -2922,7 +2922,7 @@ const WdSelectedSlider = () => {
       name: "Abigail Moon & Stars Ring",
       brand: "shoes", // Assuming brand is the manufacturer name
       price: "$1.00",
-      link: "https://opencart.workdo.io/diamond/index.php?route=product/product&language=en-gb&product_id=28",
+      link: "diamond/index.php?route=product/product&language=en-gb&product_id=28",
       // ... other product properties
     },
     {
@@ -2933,29 +2933,7 @@ const WdSelectedSlider = () => {
       name: "Abigail Moon & Stars Ring",
       brand: "shoes", // Assuming brand is the manufacturer name
       price: "$1.00",
-      link: "https://opencart.workdo.io/diamond/index.php?route=product/product&language=en-gb&product_id=28",
-      // ... other product properties
-    },
-    {
-      imageUrl1:
-        "https://img.freepik.com/free-photo/precious-necklace-decorated-with-gemstones-lights-isolated_181624-28431.jpg",
-      imageUrl2:
-        "https://img.freepik.com/free-photo/precious-necklace-decorated-with-gemstones-lights-isolated_181624-28431.jpg",
-      name: "Abigail Moon & Stars Ring",
-      brand: "shoes", // Assuming brand is the manufacturer name
-      price: "$1.00",
-      link: "https://opencart.workdo.io/diamond/index.php?route=product/product&language=en-gb&product_id=28",
-      // ... other product properties
-    },
-    {
-      imageUrl1:
-        "https://img.freepik.com/free-photo/beautiful-luxury-necklace-jewelry-stand-neck_1339-7953.jpg",
-      imageUrl2:
-        "https://img.freepik.com/free-photo/beautiful-luxury-necklace-jewelry-stand-neck_1339-7953.jpg",
-      name: "Abigail Moon & Stars Ring",
-      brand: "shoes", // Assuming brand is the manufacturer name
-      price: "$1.00",
-      link: "https://opencart.workdo.io/diamond/index.php?route=product/product&language=en-gb&product_id=28",
+      link: "diamond/index.php?route=product/product&language=en-gb&product_id=28",
       // ... other product properties
     },
     {
@@ -2966,7 +2944,7 @@ const WdSelectedSlider = () => {
       name: "Abigail Moon & Stars Ring",
       brand: "shoes", // Assuming brand is the manufacturer name
       price: "$1.00",
-      link: "https://opencart.workdo.io/diamond/index.php?route=product/product&language=en-gb&product_id=28",
+      link: "diamond/index.php?route=product/product&language=en-gb&product_id=28",
       // ... other product properties
     },
     {
@@ -2977,7 +2955,29 @@ const WdSelectedSlider = () => {
       name: "Abigail Moon & Stars Ring",
       brand: "shoes", // Assuming brand is the manufacturer name
       price: "$1.00",
-      link: "https://opencart.workdo.io/diamond/index.php?route=product/product&language=en-gb&product_id=28",
+      link: "diamond/index.php?route=product/product&language=en-gb&product_id=28",
+      // ... other product properties
+    },
+    {
+      imageUrl1:
+        "https://img.freepik.com/free-photo/precious-necklace-decorated-with-gemstones-lights-isolated_181624-28431.jpg",
+      imageUrl2:
+        "https://img.freepik.com/free-photo/precious-necklace-decorated-with-gemstones-lights-isolated_181624-28431.jpg",
+      name: "Abigail Moon & Stars Ring",
+      brand: "shoes", // Assuming brand is the manufacturer name
+      price: "$1.00",
+      link: "diamond/index.php?route=product/product&language=en-gb&product_id=28",
+      // ... other product properties
+    },
+    {
+      imageUrl1:
+        "https://img.freepik.com/free-photo/beautiful-luxury-necklace-jewelry-stand-neck_1339-7953.jpg",
+      imageUrl2:
+        "https://img.freepik.com/free-photo/beautiful-luxury-necklace-jewelry-stand-neck_1339-7953.jpg",
+      name: "Abigail Moon & Stars Ring",
+      brand: "shoes", // Assuming brand is the manufacturer name
+      price: "$1.00",
+      link: "diamond/index.php?route=product/product&language=en-gb&product_id=28",
       // ... other product properties
     },
   ];
@@ -4205,16 +4205,16 @@ const CartPage = () => {
                               </li>
                               <li className="nav-item">
                                 <a
-                                  href="https://opencart.workdo.io/diamond/index.php?route=product/category&language=en-gb&path=60"
+                                  href="diamond/index.php?route=product/category&language=en-gb&path=60"
                                   className="nav-link"
                                 >
-                                  {/*<img src="https://opencart.workdo.io/diamond/image/cache/catalog/menu-icon/meat-fish-14x14.png" alt="Amethyst" title="Amethyst"> */}{" "}
+                                  {/*<img src="diamond/image/cache/catalog/menu-icon/meat-fish-14x14.png" alt="Amethyst" title="Amethyst"> */}{" "}
                                   Amethyst
                                 </a>
                               </li>
                               <li className="nav-item">
                                 <a
-                                  href="https://opencart.workdo.io/diamond/index.php?route=product/category&language=en-gb&path=67"
+                                  href="diamond/index.php?route=product/category&language=en-gb&path=67"
                                   className="nav-link"
                                 >
                                   {/*<img src="" alt="Blue Sapphire" title="Blue Sapphire"> */}{" "}
@@ -4223,19 +4223,19 @@ const CartPage = () => {
                               </li>
                               <li className="nav-item">
                                 <a
-                                  href="https://opencart.workdo.io/diamond/index.php?route=product/category&language=en-gb&path=17"
+                                  href="diamond/index.php?route=product/category&language=en-gb&path=17"
                                   className="nav-link"
                                 >
-                                  {/*<img src="https://opencart.workdo.io/diamond/image/cache/catalog/menu-icon/coffee--tea-14x14.png" alt="Black Diamond" title="Black Diamond"> */}{" "}
+                                  {/*<img src="diamond/image/cache/catalog/menu-icon/coffee--tea-14x14.png" alt="Black Diamond" title="Black Diamond"> */}{" "}
                                   Black Diamond
                                 </a>
                               </li>
                               <li className="nav-item">
                                 <a
-                                  href="https://opencart.workdo.io/diamond/index.php?route=product/category&language=en-gb&path=68"
+                                  href="diamond/index.php?route=product/category&language=en-gb&path=68"
                                   className="nav-link"
                                 >
-                                  {/*<img src="https://opencart.workdo.io/diamond/image/cache/catalog/menu-icon/chocolate-crackers-14x14.png" alt="Ametrine" title="Ametrine"> */}{" "}
+                                  {/*<img src="diamond/image/cache/catalog/menu-icon/chocolate-crackers-14x14.png" alt="Ametrine" title="Ametrine"> */}{" "}
                                   Ametrine
                                 </a>
                               </li>
@@ -4303,16 +4303,16 @@ const CartPage = () => {
                                   </li>
                                   <li className="nav-item">
                                     <a
-                                      href="https://opencart.workdo.io/diamond/index.php?route=product/category&language=en-gb&path=60"
+                                      href="diamond/index.php?route=product/category&language=en-gb&path=60"
                                       className="nav-link"
                                     >
-                                      {/*<img src="https://opencart.workdo.io/diamond/image/cache/catalog/menu-icon/meat-fish-14x14.png" alt="Amethyst" title="Amethyst"> */}{" "}
+                                      {/*<img src="diamond/image/cache/catalog/menu-icon/meat-fish-14x14.png" alt="Amethyst" title="Amethyst"> */}{" "}
                                       Amethyst
                                     </a>
                                   </li>
                                   <li className="nav-item">
                                     <a
-                                      href="https://opencart.workdo.io/diamond/index.php?route=product/category&language=en-gb&path=67"
+                                      href="diamond/index.php?route=product/category&language=en-gb&path=67"
                                       className="nav-link"
                                     >
                                       {/*<img src="" alt="Blue Sapphire" title="Blue Sapphire"> */}{" "}
@@ -4321,19 +4321,19 @@ const CartPage = () => {
                                   </li>
                                   <li className="nav-item">
                                     <a
-                                      href="https://opencart.workdo.io/diamond/index.php?route=product/category&language=en-gb&path=17"
+                                      href="diamond/index.php?route=product/category&language=en-gb&path=17"
                                       className="nav-link"
                                     >
-                                      {/*<img src="https://opencart.workdo.io/diamond/image/cache/catalog/menu-icon/coffee--tea-14x14.png" alt="Black Diamond" title="Black Diamond"> */}{" "}
+                                      {/*<img src="diamond/image/cache/catalog/menu-icon/coffee--tea-14x14.png" alt="Black Diamond" title="Black Diamond"> */}{" "}
                                       Black Diamond
                                     </a>
                                   </li>
                                   <li className="nav-item">
                                     <a
-                                      href="https://opencart.workdo.io/diamond/index.php?route=product/category&language=en-gb&path=68"
+                                      href="diamond/index.php?route=product/category&language=en-gb&path=68"
                                       className="nav-link"
                                     >
-                                      {/*<img src="https://opencart.workdo.io/diamond/image/cache/catalog/menu-icon/chocolate-crackers-14x14.png" alt="Ametrine" title="Ametrine"> */}{" "}
+                                      {/*<img src="diamond/image/cache/catalog/menu-icon/chocolate-crackers-14x14.png" alt="Ametrine" title="Ametrine"> */}{" "}
                                       Ametrine
                                     </a>
                                   </li>
@@ -4497,7 +4497,7 @@ const CartPage = () => {
                               </h6>
                               <li className="acd">
                                 <a
-                                  href="https://opencart.workdo.io/diamond/index.php?route=account/register&language=en-gb"
+                                  href="diamond/index.php?route=account/register&language=en-gb"
                                   className="dropdown-item"
                                 >
                                   <i className="fa fa-user-plus" />
@@ -4506,7 +4506,7 @@ const CartPage = () => {
                               </li>
                               <li className="acd">
                                 <a
-                                  href="https://opencart.workdo.io/diamond/index.php?route=account/login&language=en-gb"
+                                  href="diamond/index.php?route=account/login&language=en-gb"
                                   className="dropdown-item"
                                 >
                                   <i className="fa fa-lock" />
@@ -4520,7 +4520,7 @@ const CartPage = () => {
                                 </a>
                               </li>
                               <li className="wishcom">
-                                <a href="https://opencart.workdo.io/diamond/index.php?route=account/wishlist&language=en-gb">
+                                <a href="diamond/index.php?route=account/wishlist&language=en-gb">
                                   <i className="fa fa-heart" />
                                   wishlist
                                 </a>
@@ -4528,7 +4528,7 @@ const CartPage = () => {
                               <li className="xsla d-inline-block">
                                 {" "}
                                 <form
-                                  action="https://opencart.workdo.io/diamond/index.php?route=common/currency|save&language=en-gb"
+                                  action="diamond/index.php?route=common/currency|save&language=en-gb"
                                   method="post"
                                   encType="multipart/form-data"
                                   id="form-currency"
@@ -4570,7 +4570,7 @@ const CartPage = () => {
                                   <input
                                     type="hidden"
                                     name="redirect"
-                                    defaultValue="https://opencart.workdo.io/diamond/index.php?route=common/home"
+                                    defaultValue="diamond/index.php?route=common/home"
                                   />
                                 </form>
                               </li>
@@ -5227,7 +5227,7 @@ const Contact = () => {
               <h3 className="other-title">Contact Form</h3>
               <form
                 id="form-contact"
-                action="https://opencart.workdo.io/diamond/index.php?route=information/contact|send&amp;language=en-gb"
+                action="diamond/index.php?route=information/contact|send&amp;language=en-gb"
                 method="post"
                 data-oc-toggle="ajax"
               >
@@ -5792,7 +5792,7 @@ const Index = () => {
                       <div className="beffect">
                         <a href="#">
                           <img
-                            src="https://opencart.workdo.io/diamond/image/cache/catalog/left-banner/1-580x465.png"
+                            src="diamond/image/cache/catalog/left-banner/1-580x465.png"
                             alt="left-banner"
                             className="mx-auto img-fluid"
                           />
@@ -5849,7 +5849,7 @@ const Index = () => {
                       <div className="beffect">
                         <a href="#">
                           <img
-                            src="https://opencart.workdo.io/diamond/image/cache/catalog/specialbanner/1-580x465.png"
+                            src="diamond/image/cache/catalog/specialbanner/1-580x465.png"
                             alt="special-banner"
                             className="mx-auto img-fluid"
                           />
@@ -6019,11 +6019,11 @@ const Pair = () => {
       CertificateNumber: "123456789",
       UniqueCode: "RAD1234",
       Image1:
-        "https://opencart.workdo.io/diamond/image/cache/catalog/product/1/1-1000x1000.png",
+        "diamond/image/cache/catalog/product/1/1-1000x1000.png",
       Image2:
-        "https://opencart.workdo.io/diamond/image/cache/catalog/product/1/2-1000x1000.png",
+        "diamond/image/cache/catalog/product/1/2-1000x1000.png",
       Image3:
-        "https://opencart.workdo.io/diamond/image/cache/catalog/product/2/1-1000x1000.png", // Add a third image
+        "diamond/image/cache/catalog/product/2/1-1000x1000.png", // Add a third image
       Image4: null,
       Image5: null,
       PDFKey: "dummy.pdf",
@@ -6049,11 +6049,11 @@ const Pair = () => {
       CertificateNumber: "987654321",
       UniqueCode: "EME5678",
       Image1:
-        "https://opencart.workdo.io/diamond/image/cache/catalog/product/11/1-1000x1000.png",
+        "diamond/image/cache/catalog/product/11/1-1000x1000.png",
       Image2:
-        "https://opencart.workdo.io/diamond/image/cache/catalog/product/11/2-1000x1000.png",
+        "diamond/image/cache/catalog/product/11/2-1000x1000.png",
       Image3:
-        "https://opencart.workdo.io/diamond/image/cache/catalog/product/12/1-1000x1000.png", // Add a third image
+        "diamond/image/cache/catalog/product/12/1-1000x1000.png", // Add a third image
       Image4: null,
       Image5: null,
       PDFKey: "dummy.pdf",
@@ -6277,16 +6277,16 @@ const Pair = () => {
                               </li>
                               <li className="nav-item">
                                 <a
-                                  href="https://opencart.workdo.io/diamond/index.php?route=product/category&language=en-gb&path=60"
+                                  href="diamond/index.php?route=product/category&language=en-gb&path=60"
                                   className="nav-link"
                                 >
-                                  {/*<img src="https://opencart.workdo.io/diamond/image/cache/catalog/menu-icon/meat-fish-14x14.png" alt="Amethyst" title="Amethyst"> */}{" "}
+                                  {/*<img src="diamond/image/cache/catalog/menu-icon/meat-fish-14x14.png" alt="Amethyst" title="Amethyst"> */}{" "}
                                   Amethyst
                                 </a>
                               </li>
                               <li className="nav-item">
                                 <a
-                                  href="https://opencart.workdo.io/diamond/index.php?route=product/category&language=en-gb&path=67"
+                                  href="diamond/index.php?route=product/category&language=en-gb&path=67"
                                   className="nav-link"
                                 >
                                   {/*<img src="" alt="Blue Sapphire" title="Blue Sapphire"> */}{" "}
@@ -6373,16 +6373,16 @@ const Pair = () => {
                                   </li>
                                   <li className="nav-item">
                                     <a
-                                      href="https://opencart.workdo.io/diamond/index.php?route=product/category&language=en-gb&path=60"
+                                      href="diamond/index.php?route=product/category&language=en-gb&path=60"
                                       className="nav-link"
                                     >
-                                      {/*<img src="https://opencart.workdo.io/diamond/image/cache/catalog/menu-icon/meat-fish-14x14.png" alt="Amethyst" title="Amethyst"> */}{" "}
+                                      {/*<img src="diamond/image/cache/catalog/menu-icon/meat-fish-14x14.png" alt="Amethyst" title="Amethyst"> */}{" "}
                                       Amethyst
                                     </a>
                                   </li>
                                   <li className="nav-item">
                                     <a
-                                      href="https://opencart.workdo.io/diamond/index.php?route=product/category&language=en-gb&path=67"
+                                      href="diamond/index.php?route=product/category&language=en-gb&path=67"
                                       className="nav-link"
                                     >
                                       {/*<img src="" alt="Blue Sapphire" title="Blue Sapphire"> */}{" "}
@@ -6552,7 +6552,7 @@ const Pair = () => {
                               </h6>
                               <li className="acd">
                                 <a
-                                  href="https://opencart.workdo.io/diamond/index.php?route=account/register&language=en-gb"
+                                  href="diamond/index.php?route=account/register&language=en-gb"
                                   className="dropdown-item"
                                 >
                                   <i className="fa fa-user-plus" />
@@ -6561,7 +6561,7 @@ const Pair = () => {
                               </li>
                               <li className="acd">
                                 <a
-                                  href="https://opencart.workdo.io/diamond/index.php?route=account/login&language=en-gb"
+                                  href="diamond/index.php?route=account/login&language=en-gb"
                                   className="dropdown-item"
                                 >
                                   <i className="fa fa-lock" />
@@ -6575,7 +6575,7 @@ const Pair = () => {
                                 </a>
                               </li>
                               <li className="wishcom">
-                                <a href="https://opencart.workdo.io/diamond/index.php?route=account/wishlist&language=en-gb">
+                                <a href="diamond/index.php?route=account/wishlist&language=en-gb">
                                   <i className="fa fa-heart" />
                                   wishlist
                                 </a>
@@ -6583,7 +6583,7 @@ const Pair = () => {
                               <li className="xsla d-inline-block">
                                 {" "}
                                 <form
-                                  action="https://opencart.workdo.io/diamond/index.php?route=common/currency|save&language=en-gb"
+                                  action="diamond/index.php?route=common/currency|save&language=en-gb"
                                   method="post"
                                   encType="multipart/form-data"
                                   id="form-currency"
@@ -6625,7 +6625,7 @@ const Pair = () => {
                                   <input
                                     type="hidden"
                                     name="redirect"
-                                    defaultValue="https://opencart.workdo.io/diamond/index.php?route=common/home"
+                                    defaultValue="diamond/index.php?route=common/home"
                                   />
                                 </form>
                               </li>
@@ -8395,16 +8395,16 @@ const Solitaire = () => {
                               </li>
                               <li className="nav-item">
                                 <a
-                                  href="https://opencart.workdo.io/diamond/index.php?route=product/category&language=en-gb&path=60"
+                                  href="diamond/index.php?route=product/category&language=en-gb&path=60"
                                   className="nav-link"
                                 >
-                                  {/*<img src="https://opencart.workdo.io/diamond/image/cache/catalog/menu-icon/meat-fish-14x14.png" alt="Amethyst" title="Amethyst"> */}{" "}
+                                  {/*<img src="diamond/image/cache/catalog/menu-icon/meat-fish-14x14.png" alt="Amethyst" title="Amethyst"> */}{" "}
                                   Amethyst
                                 </a>
                               </li>
                               <li className="nav-item">
                                 <a
-                                  href="https://opencart.workdo.io/diamond/index.php?route=product/category&language=en-gb&path=67"
+                                  href="diamond/index.php?route=product/category&language=en-gb&path=67"
                                   className="nav-link"
                                 >
                                   {/*<img src="" alt="Blue Sapphire" title="Blue Sapphire"> */}{" "}
@@ -8491,16 +8491,16 @@ const Solitaire = () => {
                                   </li>
                                   <li className="nav-item">
                                     <a
-                                      href="https://opencart.workdo.io/diamond/index.php?route=product/category&language=en-gb&path=60"
+                                      href="diamond/index.php?route=product/category&language=en-gb&path=60"
                                       className="nav-link"
                                     >
-                                      {/*<img src="https://opencart.workdo.io/diamond/image/cache/catalog/menu-icon/meat-fish-14x14.png" alt="Amethyst" title="Amethyst"> */}{" "}
+                                      {/*<img src="diamond/image/cache/catalog/menu-icon/meat-fish-14x14.png" alt="Amethyst" title="Amethyst"> */}{" "}
                                       Amethyst
                                     </a>
                                   </li>
                                   <li className="nav-item">
                                     <a
-                                      href="https://opencart.workdo.io/diamond/index.php?route=product/category&language=en-gb&path=67"
+                                      href="diamond/index.php?route=product/category&language=en-gb&path=67"
                                       className="nav-link"
                                     >
                                       {/*<img src="" alt="Blue Sapphire" title="Blue Sapphire"> */}{" "}
@@ -8670,7 +8670,7 @@ const Solitaire = () => {
                               </h6>
                               <li className="acd">
                                 <a
-                                  href="https://opencart.workdo.io/diamond/index.php?route=account/register&language=en-gb"
+                                  href="diamond/index.php?route=account/register&language=en-gb"
                                   className="dropdown-item"
                                 >
                                   <i className="fa fa-user-plus" />
@@ -8679,7 +8679,7 @@ const Solitaire = () => {
                               </li>
                               <li className="acd">
                                 <a
-                                  href="https://opencart.workdo.io/diamond/index.php?route=account/login&language=en-gb"
+                                  href="diamond/index.php?route=account/login&language=en-gb"
                                   className="dropdown-item"
                                 >
                                   <i className="fa fa-lock" />
@@ -8693,7 +8693,7 @@ const Solitaire = () => {
                                 </a>
                               </li>
                               <li className="wishcom">
-                                <a href="https://opencart.workdo.io/diamond/index.php?route=account/wishlist&language=en-gb">
+                                <a href="diamond/index.php?route=account/wishlist&language=en-gb">
                                   <i className="fa fa-heart" />
                                   wishlist
                                 </a>
@@ -8701,7 +8701,7 @@ const Solitaire = () => {
                               <li className="xsla d-inline-block">
                                 {" "}
                                 <form
-                                  action="https://opencart.workdo.io/diamond/index.php?route=common/currency|save&language=en-gb"
+                                  action="diamond/index.php?route=common/currency|save&language=en-gb"
                                   method="post"
                                   encType="multipart/form-data"
                                   id="form-currency"
@@ -8743,7 +8743,7 @@ const Solitaire = () => {
                                   <input
                                     type="hidden"
                                     name="redirect"
-                                    defaultValue="https://opencart.workdo.io/diamond/index.php?route=common/home"
+                                    defaultValue="diamond/index.php?route=common/home"
                                   />
                                 </form>
                               </li>
@@ -9345,7 +9345,7 @@ class MyDocument extends Document {
 
           <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
 
-          {/* <base href="https://opencart.workdo.io/diamond/" />
+          {/* <base href="diamond/" />
           <meta name="description" content="Product Store" /> */}
 
           <link

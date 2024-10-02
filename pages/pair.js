@@ -33,12 +33,9 @@ const Pair = () => {
       LocationName: "New York",
       CertificateNumber: "123456789",
       UniqueCode: "RAD1234",
-      Image1:
-        "https://opencart.workdo.io/diamond/image/cache/catalog/product/1/1-1000x1000.png",
-      Image2:
-        "https://opencart.workdo.io/diamond/image/cache/catalog/product/1/2-1000x1000.png",
-      Image3:
-        "https://opencart.workdo.io/diamond/image/cache/catalog/product/2/1-1000x1000.png", // Add a third image
+      Image1: "diamond/image/cache/catalog/product/1/1-1000x1000.png",
+      Image2: "diamond/image/cache/catalog/product/1/2-1000x1000.png",
+      Image3: "diamond/image/cache/catalog/product/2/1-1000x1000.png", // Add a third image
       Image4: null,
       Image5: null,
       PDFKey: "dummy.pdf",
@@ -63,12 +60,9 @@ const Pair = () => {
       LocationName: "London",
       CertificateNumber: "987654321",
       UniqueCode: "EME5678",
-      Image1:
-        "https://opencart.workdo.io/diamond/image/cache/catalog/product/11/1-1000x1000.png",
-      Image2:
-        "https://opencart.workdo.io/diamond/image/cache/catalog/product/11/2-1000x1000.png",
-      Image3:
-        "https://opencart.workdo.io/diamond/image/cache/catalog/product/12/1-1000x1000.png", // Add a third image
+      Image1: "diamond/image/cache/catalog/product/11/1-1000x1000.png",
+      Image2: "diamond/image/cache/catalog/product/11/2-1000x1000.png",
+      Image3: "diamond/image/cache/catalog/product/12/1-1000x1000.png", // Add a third image
       Image4: null,
       Image5: null,
       PDFKey: "dummy.pdf",

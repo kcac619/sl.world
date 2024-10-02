@@ -51,33 +51,29 @@ const WdCategorySlider = () => {
 
   const categories = [
     {
-      imageUrl:
-        "https://opencart.workdo.io/diamond/image/cache/catalog/category/1-270x335.jpg",
+      imageUrl: "diamond/image/cache/catalog/category/1-270x335.jpg",
       name: "bracelet",
-      link: "https://opencart.workdo.io/diamond/index.php?route=product/category&path=57",
+      link: "diamond/index.php?route=product/category&path=57",
       description: "A beautiful collection of bracelets for every occasion.",
     },
     {
-      imageUrl:
-        "https://opencart.workdo.io/diamond/image/cache/catalog/category/2-270x335.jpg",
+      imageUrl: "diamond/image/cache/catalog/category/2-270x335.jpg",
       name: "necklace",
-      link: "https://opencart.workdo.io/diamond/index.php?route=product/category&path=25",
+      link: "diamond/index.php?route=product/category&path=25",
       description:
         "Explore our stunning range of necklaces, from classic to modern.",
     },
     {
-      imageUrl:
-        "https://opencart.workdo.io/diamond/image/cache/catalog/category/3-270x335.jpg",
+      imageUrl: "diamond/image/cache/catalog/category/3-270x335.jpg",
       name: "ring",
-      link: "https://opencart.workdo.io/diamond/index.php?route=product/category&path=20",
+      link: "diamond/index.php?route=product/category&path=20",
       description:
         "Find the perfect ring for any occasion - engagement, wedding, or everyday wear.",
     },
     {
-      imageUrl:
-        "https://opencart.workdo.io/diamond/image/cache/catalog/category/4-270x335.jpg",
+      imageUrl: "diamond/image/cache/catalog/category/4-270x335.jpg",
       name: "bead",
-      link: "https://opencart.workdo.io/diamond/index.php?route=product/category&path=17",
+      link: "diamond/index.php?route=product/category&path=17",
       description:
         "Browse our collection of beautiful beads for jewelry making and crafting.",
     },

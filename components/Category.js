@@ -11,10 +11,9 @@ const Category = () => {
   const router = useRouter();
   const [categories, setCategories] = useState([
     {
-      imageUrl:
-        "https://opencart.workdo.io/diamond/image/cache/catalog/category/1-270x335.jpg",
+      imageUrl: "diamond/image/cache/catalog/category/1-270x335.jpg",
       name: "bracelet",
-      link: "https://opencart.workdo.io/diamond/index.php?route=product/category&path=57",
+      link: "diamond/index.php?route=product/category&path=57",
     },
   ]);
   const [isLoadingSlider, setIsLoadingSlider] = useState(true);

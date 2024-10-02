@@ -32,7 +32,7 @@ const Product = () => {
     }, 300); // Adjust delay as needed
   };
   const [mainImageUrl, setMainImageUrl] = useState(
-    "https://opencart.workdo.io/diamond/image/cache/catalog/product/9/5-1000x1000.png"
+    "diamond/image/cache/catalog/product/9/5-1000x1000.png"
   );
   const [isLoadingSlider, setIsLoadingSlider] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
@@ -68,13 +68,13 @@ const Product = () => {
   }, []);
 
   const galleryImages = [
-    "https://opencart.workdo.io/diamond/image/cache/catalog/product/9/1-1000x1000.png",
-    "https://opencart.workdo.io/diamond/image/cache/catalog/product/9/2-1000x1000.png",
-    "https://opencart.workdo.io/diamond/image/cache/catalog/product/9/3-1000x1000.png",
-    "https://opencart.workdo.io/diamond/image/cache/catalog/product/9/1-1000x1000.png",
-    "https://opencart.workdo.io/diamond/image/cache/catalog/product/9/2-1000x1000.png",
-    "https://opencart.workdo.io/diamond/image/cache/catalog/product/9/3-1000x1000.png",
-    "https://opencart.workdo.io/diamond/image/cache/catalog/product/9/5-1000x1000.png",
+    "diamond/image/cache/catalog/product/9/1-1000x1000.png",
+    "diamond/image/cache/catalog/product/9/2-1000x1000.png",
+    "diamond/image/cache/catalog/product/9/3-1000x1000.png",
+    "diamond/image/cache/catalog/product/9/1-1000x1000.png",
+    "diamond/image/cache/catalog/product/9/2-1000x1000.png",
+    "diamond/image/cache/catalog/product/9/3-1000x1000.png",
+    "diamond/image/cache/catalog/product/9/5-1000x1000.png",
   ];
 
   useEffect(() => {
@@ -321,12 +321,12 @@ const Product = () => {
                           <div className="">
                             <ul className="breadcrumb">
                               <li className="breadcrumb-item">
-                                <a href="https://opencart.workdo.io/diamond/index.php?route=common/home&amp;language=en-gb">
+                                <a href="diamond/index.php?route=common/home&amp;language=en-gb">
                                   <i className="fas fa-home"></i>
                                 </a>
                               </li>
                               <li className="breadcrumb-item">
-                                <a href="https://opencart.workdo.io/diamond/index.php?route=product/product&amp;language=en-gb&amp;product_id=30">
+                                <a href="diamond/index.php?route=product/product&amp;language=en-gb&amp;product_id=30">
                                   Crystal Gym &amp; Fitness Glove
                                 </a>
                               </li>
@@ -384,7 +384,7 @@ const Product = () => {
                           <div className="pro-btn">
                             <a
                               className="product-name"
-                              href="https://opencart.workdo.io/diamond/index.php?route=product/manufacturer|info&amp;language=en-gb&amp;manufacturer_id=9"
+                              href="diamond/index.php?route=product/manufacturer|info&amp;language=en-gb&amp;manufacturer_id=9"
                             >
                               {product.category}
                             </a>
@@ -395,7 +395,7 @@ const Product = () => {
                             >
                               <button
                                 type="submit"
-                                formaction="https://opencart.workdo.io/diamond/index.php?route=account/wishlist|add&amp;language=en-gb"
+                                formaction="diamond/index.php?route=account/wishlist|add&amp;language=en-gb"
                                 data-bs-toggle="tooltip"
                                 className="btn pcrt wish"
                                 title="Add to Wish List"
@@ -405,7 +405,7 @@ const Product = () => {
                               </button>
                               <button
                                 type="submit"
-                                formaction="https://opencart.workdo.io/diamond/index.php?route=product/compare|add&amp;language=en-gb"
+                                formaction="diamond/index.php?route=product/compare|add&amp;language=en-gb"
                                 data-bs-toggle="tooltip"
                                 className="btn pcrt compare"
                                 title="Add to Compare"
@@ -430,7 +430,7 @@ const Product = () => {
                             <ul className="list-unstyled">
                               <li>
                                 <span className="text-decor">Brand:</span>
-                                <a href="https://opencart.workdo.io/diamond/index.php?route=product/manufacturer|info&amp;language=en-gb&amp;manufacturer_id=9">
+                                <a href="diamond/index.php?route=product/manufacturer|info&amp;language=en-gb&amp;manufacturer_id=9">
                                   cloths
                                 </a>
                               </li>

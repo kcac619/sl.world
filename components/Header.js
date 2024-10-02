@@ -26,8 +26,8 @@ import { useRouter } from "next/router";
 const Header = () => {
   useEffect(() => {
     // Ensure Bootstrap JS is loaded
-    if (typeof window !== 'undefined') {
-      import('bootstrap/dist/js/bootstrap.bundle.min.js');
+    if (typeof window !== "undefined") {
+      import("bootstrap/dist/js/bootstrap.bundle.min.js");
     }
   }, []);
   const router = useRouter();
@@ -196,10 +196,10 @@ const Header = () => {
                             </li>
                             <li className="nav-item">
                               <a
-                                href="https://opencart.workdo.io/diamond/index.php?route=product/category&language=en-gb&path=60"
+                                href="diamond/index.php?route=product/category&language=en-gb&path=60"
                                 className="nav-link"
                               >
-                                {/*<img src="https://opencart.workdo.io/diamond/image/cache/catalog/menu-icon/meat-fish-14x14.png" alt="Amethyst" title="Amethyst"> */}{" "}
+                                {/*<img src="diamond/image/cache/catalog/menu-icon/meat-fish-14x14.png" alt="Amethyst" title="Amethyst"> */}{" "}
                                 Amethyst
                               </a>
                             </li>
@@ -489,7 +489,7 @@ const Header = () => {
                             </h6>
                             <li className="acd">
                               <a
-                                href="https://opencart.workdo.io/diamond/index.php?route=account/register&language=en-gb"
+                                href="diamond/index.php?route=account/register&language=en-gb"
                                 className="dropdown-item"
                               >
                                 <i className="fa fa-user-plus" />
@@ -498,7 +498,7 @@ const Header = () => {
                             </li>
                             <li className="acd">
                               <a
-                                href="https://opencart.workdo.io/diamond/index.php?route=account/login&language=en-gb"
+                                href="diamond/index.php?route=account/login&language=en-gb"
                                 className="dropdown-item"
                               >
                                 <i className="fa fa-lock" />
@@ -512,7 +512,7 @@ const Header = () => {
                               </a>
                             </li>
                             <li className="wishcom">
-                              <a href="https://opencart.workdo.io/diamond/index.php?route=account/wishlist&language=en-gb">
+                              <a href="diamond/index.php?route=account/wishlist&language=en-gb">
                                 <i className="fa fa-heart" />
                                 wishlist
                               </a>
@@ -520,7 +520,7 @@ const Header = () => {
                             <li className="xsla d-inline-block">
                               {" "}
                               <form
-                                action="https://opencart.workdo.io/diamond/index.php?route=common/currency|save&language=en-gb"
+                                action="diamond/index.php?route=common/currency|save&language=en-gb"
                                 method="post"
                                 encType="multipart/form-data"
                                 id="form-currency"
@@ -562,7 +562,7 @@ const Header = () => {
                                 <input
                                   type="hidden"
                                   name="redirect"
-                                  defaultValue="https://opencart.workdo.io/diamond/index.php?route=common/home"
+                                  defaultValue="diamond/index.php?route=common/home"
                                 />
                               </form>
                             </li>

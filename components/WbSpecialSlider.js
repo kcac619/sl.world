@@ -96,7 +96,7 @@ const WbSpecialSlider = () => {
       PriceNew: "$150.00",
       PriceOld: "$3.00",
       DiscountPercentage: "46%",
-      Link: "https://opencart.workdo.io/diamond/index.php?route=product/product&language=en-gb&product_id=29",
+      Link: "diamond/index.php?route=product/product&language=en-gb&product_id=29",
       sizes: ["xl", "xxl", "xxxl"], // Add size options if needed
       // ... other product properties
     },
@@ -108,7 +108,7 @@ const WbSpecialSlider = () => {
       PriceNew: "$150.00",
       PriceOld: "$3.00",
       DiscountPercentage: "46%",
-      Link: "https://opencart.workdo.io/diamond/index.php?route=product/product&language=en-gb&product_id=29",
+      Link: "diamond/index.php?route=product/product&language=en-gb&product_id=29",
       sizes: ["xl", "xxl", "xxxl"], // Add size options if needed
       // ... other product properties
     },
@@ -120,7 +120,7 @@ const WbSpecialSlider = () => {
       PriceNew: "$150.00",
       PriceOld: "$3.00",
       DiscountPercentage: "46%",
-      Link: "https://opencart.workdo.io/diamond/index.php?route=product/product&language=en-gb&product_id=29",
+      Link: "diamond/index.php?route=product/product&language=en-gb&product_id=29",
       sizes: ["xl", "xxl", "xxxl"], // Add size options if needed
       // ... other product properties
     },
@@ -132,7 +132,7 @@ const WbSpecialSlider = () => {
       PriceNew: "$150.00",
       PriceOld: "$3.00",
       DiscountPercentage: "46%",
-      Link: "https://opencart.workdo.io/diamond/index.php?route=product/product&language=en-gb&product_id=29",
+      Link: "diamond/index.php?route=product/product&language=en-gb&product_id=29",
       sizes: ["xl", "xxl", "xxxl"], // Add size options if needed
       // ... other product properties
     },
@@ -144,7 +144,7 @@ const WbSpecialSlider = () => {
       PriceNew: "$150.00",
       PriceOld: "$3.00",
       DiscountPercentage: "46%",
-      Link: "https://opencart.workdo.io/diamond/index.php?route=product/product&language=en-gb&product_id=29",
+      Link: "diamond/index.php?route=product/product&language=en-gb&product_id=29",
       sizes: ["xl", "xxl", "xxxl"], // Add size options if needed
       // ... other product properties
     },

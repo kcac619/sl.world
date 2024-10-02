@@ -197,7 +197,7 @@ const Index = () => {
                       <div className="beffect">
                         <a href="#">
                           <img
-                            src="https://opencart.workdo.io/diamond/image/cache/catalog/left-banner/1-580x465.png"
+                            src="diamond/image/cache/catalog/left-banner/1-580x465.png"
                             alt="left-banner"
                             className="mx-auto img-fluid"
                           />
@@ -254,7 +254,7 @@ const Index = () => {
                       <div className="beffect">
                         <a href="#">
                           <img
-                            src="https://opencart.workdo.io/diamond/image/cache/catalog/specialbanner/1-580x465.png"
+                            src="diamond/image/cache/catalog/specialbanner/1-580x465.png"
                             alt="special-banner"
                             className="mx-auto img-fluid"
                           />

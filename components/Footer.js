@@ -58,7 +58,7 @@ const Footer = () => {
                           <form
                             id="formNewLestter"
                             method="post"
-                            action="https://opencart.workdo.io/diamond/index.php?route=extension/Workdonewsletter/module/workdonewsletter|subscribe"
+                            action="diamond/index.php?route=extension/Workdonewsletter/module/workdonewsletter|subscribe"
                             className="formNewLestter newsletter-bg"
                           >
                             <div className="inner">
@@ -125,7 +125,7 @@ const Footer = () => {
                 <ul className="list-unstyled">
                   <li>
                     <a
-                      style={{ cursor: "pointer" }}
+                      style={{ cursor: "pointer", color: "#000000" }}
                       onClick={() => handleNavigation("/faq")}
                     >
                       FAQ
@@ -133,7 +133,7 @@ const Footer = () => {
                   </li>
                   <li>
                     <a
-                      style={{ cursor: "pointer" }}
+                      style={{ cursor: "pointer", color: "#000000" }}
                       onClick={() => handleNavigation("/terms-conditions")}
                     >
                       Terms &amp; Conditions
@@ -141,21 +141,24 @@ const Footer = () => {
                   </li>
                   <li>
                     <a
-                      style={{ cursor: "pointer" }}
+                      style={{ cursor: "pointer", color: "#000000" }}
                       onClick={() => handleNavigation("/shipping-policy")}
                     >
                       Shipping Policy
                     </a>
                   </li>
                   <li>
-                    <a href="https://opencart.workdo.io/diamond/index.php?route=information/information&language=en-gb&information_id=1">
+                    <a
+                      style={{ cursor: "pointer", color: "#000000" }}
+                      onClick={() => handleNavigation("/shipping-policy")}
+                    >
                       About Us
                     </a>
                   </li>
 
                   <li>
                     <a
-                      style={{ cursor: "pointer" }}
+                      style={{ cursor: "pointer", color: "#000000" }}
                       onClick={() => handleNavigation("/privacy-policy")}
                     >
                       Privacy Policy
@@ -177,27 +180,27 @@ const Footer = () => {
               <div id="account" className="collapse footer-collapse">
                 <ul className="list-unstyled">
                   <li>
-                    <a href="https://opencart.workdo.io/diamond/index.php?route=account/account&language=en-gb">
+                    <a href="diamond/index.php?route=account/account&language=en-gb">
                       Account
                     </a>
                   </li>
                   <li>
-                    <a href="https://opencart.workdo.io/diamond/index.php?route=account/order&language=en-gb">
+                    <a href="diamond/index.php?route=account/order&language=en-gb">
                       Order History
                     </a>
                   </li>
                   <li>
-                    <a href="https://opencart.workdo.io/diamond/index.php?route=account/wishlist&language=en-gb">
+                    <a href="diamond/index.php?route=account/wishlist&language=en-gb">
                       Wish List
                     </a>
                   </li>
                   <li>
-                    <a href="https://opencart.workdo.io/diamond/index.php?route=account/newsletter&language=en-gb">
+                    <a href="diamond/index.php?route=account/newsletter&language=en-gb">
                       Newsletter
                     </a>
                   </li>
                   <li>
-                    <a href="https://opencart.workdo.io/diamond/index.php?route=product/special&language=en-gb">
+                    <a href="diamond/index.php?route=product/special&language=en-gb">
                       Specials
                     </a>
                   </li>

@@ -27,17 +27,11 @@ class MyDocument extends Document {
 
           <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
 
-          {/* <base href="https://opencart.workdo.io/diamond/" />
+          {/* <base href="diamond/" />
           <meta name="description" content="Product Store" /> */}
 
-          <link
-            href="/js/jquery/swiper/css/slick.css"
-            rel="stylesheet"
-          />
-          <link
-            href="/js/jquery/swiper/css/slick-theme.css"
-            rel="stylesheet"
-          />
+          <link href="/js/jquery/swiper/css/slick.css" rel="stylesheet" />
+          <link href="/js/jquery/swiper/css/slick-theme.css" rel="stylesheet" />
           <link
             href="/js/font-awesome/css/font-awesome.min.css"
             rel="stylesheet"
@@ -58,11 +52,7 @@ class MyDocument extends Document {
             type="text/css"
             rel="stylesheet"
           />
-          <link
-            href="/css/stylesheet.css"
-            type="text/css"
-            rel="stylesheet"
-          />
+          <link href="/css/stylesheet.css" type="text/css" rel="stylesheet" />
 
           <script
             type="text/javascript"
@@ -90,8 +80,6 @@ class MyDocument extends Document {
             href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&display=swap"
             rel="stylesheet"
           />
-
-
         </Head>
         <body>
           <Main />

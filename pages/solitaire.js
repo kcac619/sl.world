@@ -501,7 +501,7 @@ const Solitaire = () => {
         >
           {/* Diamond Shape Section */}
           <Box mb={6}>
-            <Heading as="h2" size="md" color="var(--main-color)" mb={5}>
+            <Heading as="h2" size="md" color="var(--black)" mb={5}>
               Shape
             </Heading>
             {loadingShapes ? (
@@ -545,6 +545,7 @@ const Solitaire = () => {
                   label: `${carat.LowLimit} - ${carat.HighLimit}`,
                   value: carat.CaratID,
                 }))}
+                
                 selectedValues={selectedFilters.carat}
                 onFilterChange={(value) => handleFilterChange("carat", value)}
               />
