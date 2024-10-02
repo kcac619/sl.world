@@ -13,7 +13,7 @@ const DiamondShape = ({ shape, isSelected, onClick }) => {
         padding: "10px 16px",
         textAlign: "center",
         backgroundColor: isSelected
-          ? "rgba(13,30,20, 0.8)"
+          ? "rgba(13,30,20, 1)"
           : "rgba(242, 223, 207, 0.8)",
         backdropFilter: "blur(10px)",
 
