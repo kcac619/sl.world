@@ -312,7 +312,7 @@ const SolitaireDetails = () => {
                                     data-glide-el="controls"
                                     style={{
                                       position: "absolute",
-                                      top: "50%",
+                                      top: "110%",
                                       transform: "translateY(-50%)",
                                       width: "100%",
 
@@ -324,7 +324,7 @@ const SolitaireDetails = () => {
                                       className="glide__arrow glide__arrow--left"
                                       data-glide-dir="<"
                                       style={{
-                                        backgroundColor: "rgb(0,0,0,0.2)",
+                                        backgroundColor: "#f38585",
                                         border: "none",
                                         padding: "10px",
                                         borderRadius: "50%",
@@ -338,7 +338,7 @@ const SolitaireDetails = () => {
                                       className="glide__arrow glide__arrow--right"
                                       data-glide-dir=">"
                                       style={{
-                                        backgroundColor: "rgb(0,0,0,0.2)",
+                                        backgroundColor: "#f38585",
                                         border: "none",
                                         padding: "10px",
                                         borderRadius: "40%",
@@ -572,7 +572,7 @@ const SolitaireDetails = () => {
                                           fontWeight: "200",
                                         }}
                                       >
-                                        $999{solitaire.Price}
+                                        ₹ {solitaire.Price}
                                       </span>
                                     </h2>
                                   </li>

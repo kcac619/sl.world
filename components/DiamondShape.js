@@ -12,14 +12,15 @@ const DiamondShape = ({ shape, isSelected, onClick }) => {
         boxShadow: "0px 3px 10px rgba(0, 0, 0, 0.15)",
         padding: "10px 16px",
         textAlign: "center",
+        fontWeight:"600",
         backgroundColor: isSelected
-          ? "rgba(13,30,20, 1)"
-          : "rgba(242, 223, 207, 0.8)",
+          ? "#167065"
+          : "#f38585",
         backdropFilter: "blur(10px)",
 
         cursor: "pointer",
-        fontFamily: "outfit",
-        color: isSelected ? "var(--main-color)" : "var(--sub-color)",
+      fontFamily: "auto",
+        color: isSelected ? "var(--main-color)" : "#000",
         // backgroundImage: isSelected
         //   ? "linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.3) 100%)"
         //   : "linear-gradient(135deg, rgba(230, 230, 230, 0.2) 0%, rgba(0, 0, 0, 1) 380%)",

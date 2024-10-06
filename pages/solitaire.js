@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 // import { useSession, signIn, signOut } from "next-auth/react";
 import { useDispatch, useSelector } from "react-redux";
 import { setFilter, resetFilters } from "../filterSlice";
+import useFilterStore from '../lib/store';
 import {
   Box,
   Flex,
@@ -45,6 +46,7 @@ const Solitaire = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   // const { isOpen, onOpen, onClose } = useDisclosure();
   const router = useRouter();
+  const addFilter = useFilterStore(state => state.addFilter);
   // const { data: session } = useSession();
   const dispatch = useDispatch();
   const filtersFromRedux = useSelector((state) => state.filters); // Get filters from Redux store
@@ -310,6 +312,7 @@ const Solitaire = () => {
     //     query: { callbackUrl: router.asPath }, // Pass current URL as callback
     //   });
     // }
+    addFilter("solitaire", selectedFilters);
     router.push({
       pathname: "/search", // Or your desired results page
       // query: filters, // Pass filters in the query string
@@ -749,7 +752,7 @@ const Solitaire = () => {
             >
               Search
             </Button>
-            <Button
+            {/* <Button
               backgroundColor="black"
               color="var(--main-color)"
               ml={2}
@@ -765,7 +768,7 @@ const Solitaire = () => {
               }}
             >
               Save Search
-            </Button>
+            </Button> */}
           </Flex>
         </Box>
       </Flex>

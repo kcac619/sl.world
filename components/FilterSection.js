@@ -22,23 +22,24 @@ const FilterSection = ({
           <Center
             key={option.value}
             style={{
-              fontWeight: 200,
+             
               borderRadius: "4px",
-              fontFamily: "outfit",
+              fontFamily: "auto",
               boxShadow: "0px 3px 10px rgba(0, 0, 0, 0.15)",
               minWidth: "40px",
               fontSize: "xs",
+              fontWeight:"600",
               cursor: "pointer",
               textAlign: "center",
               padding: "8px",
               marginRight: "8px",
               backgroundColor: selectedValues.includes(option.value)
-                ? "rgba(13,30,20, 0.9)"
-                : "rgba(242, 223, 207, 0.8)",
+                ? "#167065"
+                : "#f38585",
               backdropFilter: "blur(10px)",
               color: selectedValues.includes(option.value)
                 ? "var(--main-color)"
-                : "var(--sub-color)",
+                : "#000",
               backgroundImage: selectedValues.includes(option.value)
                 ? "linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.3) 100%)"
                 : "linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%)",
