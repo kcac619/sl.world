@@ -15,6 +15,12 @@ import axios from "axios";
 const Checkout = () => {
   const router = useRouter();
   const [cartItems, setCartItems] = useState([]);
+  const indianStates = [
+    "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat", "Haryana", 
+    "Himachal Pradesh", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", 
+    "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", 
+    "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal"
+  ];
   const [shippingDetails, setShippingDetails] = useState({
     firstName: "",
     lastName: "",
@@ -317,11 +323,8 @@ const Checkout = () => {
                         value={shippingDetails.country}
                         onChange={handleInputChange}
                       >
-                        <option value=""> --- Please Select --- </option>
-                        <option value="244">Aaland Islands</option>
-                        <option value="1">Afghanistan</option>
-                        <option value="2">Albania</option>
-                        <option value="3">Algeria</option>
+                        <option value="1">India</option>
+                
                         {/* ... [Your other country options] ... */}
                       </select>
                       <div
@@ -343,9 +346,13 @@ const Checkout = () => {
                         value={shippingDetails.region}
                         onChange={handleInputChange}
                       >
-                        <option value=""> --- Please Select --- </option>
-                        {/* ... [Your region/state options based on selected country] ... */}
-                      </select>
+                         <option value=""> --- Please Select --- </option>
+    {indianStates.map((state, index) => (
+      <option key={index} value={state}>
+        {state}
+      </option>
+    ))}
+  </select>
                       <div
                         id="error-payment-zone"
                         className="invalid-feedback"
@@ -652,7 +659,7 @@ const Checkout = () => {
                             <small> - Size: {item.SizeOptions || "N/A"}</small>
                           </td>
                           <td className="text-end">
-                            ${(item.Price * item.quantity).toFixed(2)}
+                          INR{""}{(item.Price * item.quantity).toFixed(2)}
                           </td>
                         </tr>
                       ))}
@@ -663,7 +670,7 @@ const Checkout = () => {
                         <td className="text-end">
                           <strong>Sub-Total</strong>
                         </td>
-                        <td className="text-end">${subTotal.toFixed(2)}</td>
+                        <td className="text-end">INR{""}{subTotal.toFixed(2)}</td>
                       </tr>
 
                       {/* Total */}
@@ -671,7 +678,7 @@ const Checkout = () => {
                         <td className="text-end">
                           <strong>Total</strong>
                         </td>
-                        <td className="text-end">${total.toFixed(2)}</td>
+                        <td className="text-end">INR{""}{total.toFixed(2)}</td>
                       </tr>
                     </tfoot>
                   </table>
@@ -844,7 +851,7 @@ const Checkout = () => {
                               : "var(--sub-color)",
                         }}
                       >
-                        <h5 className="card-title">PayPal</h5>
+                        <h5 className="card-title">Debit Card</h5>
                         {/* Add any details about PayPal payment here */}
                       </div>
                     </div>

@@ -31,7 +31,7 @@
     "jsonwebtoken": "^9.0.2",
     "jwt-decode": "^4.0.0",
     "mssql": "^11.0.1",
-    "next": "^14.2.5",
+    "next": "^15.0.0-canary.179",
     "react": "^18",
     "react-accessible-accordion": "^5.0.0",
     "react-dom": "^18",

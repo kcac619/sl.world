@@ -2,6 +2,7 @@
 import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 
+
 import {
   Drawer,
   DrawerBody,
@@ -61,6 +62,14 @@ const Header = () => {
   const handleRemoveFromCart = (solitaireId) => {
     removeFromCart(solitaireId);
     setCartItems(getCartItemsFromLocalStorage());
+  };
+  const handleNavigation1 = (e) => {
+    e.preventDefault(); 
+    router.push('/auth/register');
+  };
+  const handleLoginNavigation = (e) => {
+    e.preventDefault(); 
+    router.push('/auth/login'); 
   };
 
   // Toggle the cart dropdown
@@ -481,30 +490,28 @@ const Header = () => {
                               Access account and manage orders
                             </h6>
                             <li className="acd">
-                              <a
-                                href="diamond/index.php?route=account/register&language=en-gb"
-                                className="dropdown-item"
-                              >
-                                <i className="fa fa-user-plus" />
-                                Register
-                              </a>
-                            </li>
-                            <li className="acd">
-                              <a
-                                href="diamond/index.php?route=account/login&language=en-gb"
-                                className="dropdown-item"
-                              >
-                                <i className="fa fa-lock" />
-                                Login
-                              </a>
-                            </li>
-                            <li className="wishcom">
+      <a href="" className="dropdown-item" onClick={handleNavigation1}>
+        <i className="fa fa-user-plus" />
+        Register
+      </a>
+    </li>
+    <li className="acd">
+      <a
+        href=""
+        className="dropdown-item"
+        onClick={handleLoginNavigation}
+      >
+        <i className="fa fa-lock" />
+        Login
+      </a>
+    </li>
+                            {/* <li className="wishcom">
                               <a href="">
                                 <i className="fa fa-compress" />
                                 compare
                               </a>
-                            </li>
-                            <li className="wishcom">
+                            </li> */}
+                            {/* <li className="wishcom">
                               <a href="diamond/index.php?route=account/wishlist&language=en-gb">
                                 <i className="fa fa-heart" />
                                 wishlist
@@ -567,7 +574,7 @@ const Header = () => {
                         </DrawerHeader>
 
                         <DrawerBody color="var(--main-color)" fontSize="md">
-                          {cartItems.length === 0 ? (
+                          {cartItems?.length === 0 ? (
                             <p
                               className="text-center"
                               style={{ color: "var(--sub-color)" }}
@@ -581,8 +588,8 @@ const Header = () => {
                                 padding: 0,
                               }}
                             >
-                              {cartItems.map((item) => (
-                                <li key={item.SolitaireID} className="mb-3">
+                              {cartItems?.map((item) => (
+                                <li key={item?.SolitaireID} className="mb-3">
                                   <div className="d-flex align-items-center">
                                     <Link href={`/${item.Slug}`}>
                                       <img

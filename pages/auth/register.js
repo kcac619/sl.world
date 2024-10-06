@@ -363,23 +363,10 @@ const Register = () => {
                   <Link href="/account/transaction" className="list-group-item">
                     Transactions
                   </Link>
-                  <hr />
-                  <h3>
-                    <svg className="" width="20px" height="20px">
-                      <use xlinkHref="#aclufolder" />
-                    </svg>
-                    MY STUFF
-                  </h3>
-                  <Link href="/account/wishlist" className="list-group-item">
-                    Wish List
-                  </Link>
-                  <Link href="/account/reward" className="list-group-item">
-                    Reward Points
-                  </Link>
-                  <Link href="/account/newsletter" className="list-group-item">
-                    Newsletter
-                  </Link>
-                  <hr />
+                 
+                
+               
+               
                 </div>
               </aside>
             </div>

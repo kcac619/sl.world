@@ -227,7 +227,7 @@ const CartPage = () => {
                                   </button>
                                 </div>
                               </td>
-                              <td className="text-end">${item.Price || 0}</td>
+                              <td className="text-end"> INR{""}{item.Price || 0}</td>
                               <td className="text-end">
                                 INR{""}
                                 {((item.Price || 0) * item.quantity).toFixed(2)}
@@ -240,13 +240,13 @@ const CartPage = () => {
                             <td colSpan="5" className="text-end">
                               <strong>Sub-Total</strong>
                             </td>
-                            <td className="text-end">${subTotal.toFixed(2)}</td>
+                            <td className="text-end"> INR{""}{subTotal.toFixed(2)}</td>
                           </tr>
                           <tr>
                             <td colSpan="5" className="text-end">
                               <strong>Total</strong>
                             </td>
-                            <td className="text-end">${total.toFixed(2)}</td>
+                            <td className="text-end"> INR{""}{total.toFixed(2)}</td>
                           </tr>
                         </tfoot>
                       </table>
@@ -264,117 +264,7 @@ const CartPage = () => {
                 </p>
                 <div id="accordion" className="accordion">
                   {/* Estimate Shipping & Taxes */}
-                  <div className="accordion-item">
-                    <h2 className="accordion-header">
-                      <button
-                        type="button"
-                        className="accordion-button collapsed"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#collapse-shipping"
-                      >
-                        Estimate Shipping & Taxes
-                      </button>
-                    </h2>
-                    <div
-                      id="collapse-shipping"
-                      className="accordion-collapse collapse"
-                      data-bs-parent="#accordion"
-                    >
-                      <div className="accordion-body">
-                        <form id="form-quote" onSubmit={handleShippingSubmit}>
-                          <p>
-                            Enter your destination to get a shipping estimate.
-                          </p>
-                          <div className="row mb-3 required">
-                            <label
-                              htmlFor="input-country"
-                              className="col-md-4 col-form-label"
-                            >
-                              Country
-                            </label>
-                            <div className="col-md-8">
-                              <select
-                                name="country_id"
-                                id="input-country"
-                                className="form-select"
-                                value={country}
-                                onChange={(e) => setCountry(e.target.value)}
-                              >
-                                <option value="">
-                                  {" "}
-                                  --- Please Select ---{" "}
-                                </option>
-                                {/* ... [Your country options] ... */}
-                              </select>
-                              <div
-                                id="error-country"
-                                className="invalid-feedback"
-                              ></div>
-                            </div>
-                          </div>
-                          <div className="row mb-3 required">
-                            <label
-                              htmlFor="input-zone"
-                              className="col-md-4 col-form-label"
-                            >
-                              Region / State
-                            </label>
-                            <div className="col-md-8">
-                              <select
-                                name="zone_id"
-                                id="input-zone"
-                                className="form-select"
-                                value={region}
-                                onChange={(e) => setRegion(e.target.value)}
-                              >
-                                <option value="">
-                                  {" "}
-                                  --- Please Select ---{" "}
-                                </option>
-                                {/* ... [Your region/state options] ... */}
-                              </select>
-                              <div
-                                id="error-zone"
-                                className="invalid-feedback"
-                              ></div>
-                            </div>
-                          </div>
-                          <div className="row mb-3 required">
-                            <label
-                              htmlFor="input-postcode"
-                              className="col-md-4 col-form-label"
-                            >
-                              Post Code
-                            </label>
-                            <div className="col-md-8">
-                              <input
-                                type="text"
-                                name="postcode"
-                                value={postcode}
-                                placeholder="Post Code"
-                                id="input-postcode"
-                                className="form-control"
-                                onChange={(e) => setPostcode(e.target.value)}
-                              />
-                              <div
-                                id="error-postcode"
-                                className="invalid-feedback"
-                              ></div>
-                            </div>
-                          </div>
-                          <div className="text-end">
-                            <button
-                              type="submit"
-                              id="button-quote"
-                              className="btn btn-primary"
-                            >
-                              Get Quotes
-                            </button>
-                          </div>
-                        </form>
-                      </div>
-                    </div>
-                  </div>
+                
 
                   {/* Use Coupon Code */}
                   <div className="accordion-item">
@@ -425,57 +315,7 @@ const CartPage = () => {
                   </div>
 
                   {/* Use Gift Certificate */}
-                  <div className="accordion-item">
-                    <h2 className="accordion-header">
-                      <button
-                        type="button"
-                        className="accordion-button collapsed"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#collapse-voucher"
-                      >
-                        Use Gift Certificate
-                      </button>
-                    </h2>
-                    <div
-                      id="collapse-voucher"
-                      className="accordion-collapse collapse"
-                      data-bs-parent="#accordion"
-                    >
-                      <div className="accordion-body">
-                        <form
-                          id="form-voucher"
-                          onSubmit={handleGiftCertificateSubmit}
-                        >
-                          <div className="row mb-3">
-                            <label
-                              htmlFor="input-voucher"
-                              className="col-md-4 col-form-label"
-                            >
-                              Enter your gift certificate code here
-                            </label>
-                            <div className="col-md-8">
-                              <input
-                                type="text"
-                                name="voucher"
-                                value={giftCertificate}
-                                placeholder="Enter your gift certificate code here"
-                                id="input-voucher"
-                                className="form-control"
-                                onChange={(e) =>
-                                  setGiftCertificate(e.target.value)
-                                }
-                              />
-                            </div>
-                          </div>
-                          <div className="text-end">
-                            <button type="submit" className="btn btn-primary">
-                              Apply Gift Certificate
-                            </button>
-                          </div>
-                        </form>
-                      </div>
-                    </div>
-                  </div>
+               
                 </div>
                 <br />
                 <div className="d-inline-block pt-2 pd-2 w-100">
