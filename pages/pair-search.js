@@ -7,7 +7,7 @@ import { ChevronDownIcon } from "@chakra-ui/icons";
 import Link from "next/link";
 import Header from "../components/Header";
 import useFilterStore from '../lib/store';
-const SearchResults = () => {
+const PairSearchResults = () => {
   const router = useRouter();
   const filters = useSelector((state) => state.filters);
   const [solitaires, setSolitaires] = useState([]);
@@ -24,7 +24,7 @@ const SearchResults = () => {
   const [selectedFilters, setSelectedFilters] = useState({});
 
   useEffect(() => {
-    const keyToLoad = 'solitaire'; // Specify the key for which you want to load the value
+    const keyToLoad = 'pair'; // Specify the key for which you want to load the value
     if (Storefilters.hasOwnProperty(keyToLoad)) {
       setSelectedFilters(filters[keyToLoad]);
       console.log("keyToLoad", Storefilters[keyToLoad]);
@@ -445,7 +445,7 @@ C409.699,390.129,410.355,381.902,407.164,374.717z"
           className="mb-4 "
           style={{ textAlign: "center", color: "var(--main-color) !important" }}
         >
-          Search Results
+         Pair Search Results
         </h1>
 
         {isLoading && <p className="text-center text-white">Loading...</p>}
@@ -579,7 +579,7 @@ C409.699,390.129,410.355,381.902,407.164,374.717z"
                 onClick={handleMoreClick}
                 style={{
                   backgroundColor: "black",
-                  color: "var(--sub-color)",
+                  color: "var(--main-color)",
                   borderRadius: "20px",
                   fontFamily: "Outfit, sans-serif",
                 }}
@@ -603,8 +603,8 @@ C409.699,390.129,410.355,381.902,407.164,374.717z"
               onClick={() => setShowAllSolitaires(!showAllSolitaires)}
               className="btn btn-secondary btn-block"
               style={{
-                backgroundColor: "black",
-                color: "var(--sub-color)",
+                backgroundColor: "var(--main-color)",
+                color: "#000",
                 borderRadius: "20px",
                 fontFamily: "Outfit, sans-serif",
               }}
@@ -638,4 +638,4 @@ C409.699,390.129,410.355,381.902,407.164,374.717z"
   );
 };
 
-export default SearchResults;
+export default PairSearchResults;

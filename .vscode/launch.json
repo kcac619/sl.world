@@ -1,0 +1,39 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+      {
+          "type": "node",
+          "request": "launch",
+          "name": "Next.js: Node",
+          "runtimeExecutable": "npm",
+          "runtimeArgs": ["run", "dev"],
+          "port": 9229,
+          "restart": true,
+          "console": "integratedTerminal",
+          "protocol": "inspector",
+          "env": {
+              "NODE_OPTIONS": "--inspect"
+          },
+          "cwd": "${workspaceFolder}"
+      },
+      {
+          "type": "chrome",
+          "request": "launch",
+          "name": "Next.js: Chrome",
+          "url": "http://localhost:3000",
+          "webRoot": "${workspaceFolder}",
+          "breakOnLoad": true,
+          "sourceMaps": true,
+          "smartStep": true,
+          "skipFiles": [
+              "node_modules/**"
+          ]
+      }
+  ],
+  "compounds": [
+      {
+          "name": "Next.js: Fullstack",
+          "configurations": ["Next.js: Node", "Next.js: Chrome"]
+      }
+  ]
+}
