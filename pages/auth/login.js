@@ -90,24 +90,7 @@ const Login = () => {
 
             <div className="row">
               {/* New Customer Section */}
-              <div className="col-sm-6">
-                <div className="card mb-3">
-                  <div className="card-body">
-                    <h1>New Customer</h1>
-                    <p>
-                      <strong>Register Account</strong>
-                    </p>
-                    <p>
-                      By creating an account you will be able to shop faster, be
-                      up to date on an order's status, and keep track of the
-                      orders you have previously made.
-                    </p>
-                    <Link href="/auth/register" className="btn btn-primary">
-                      Continue
-                    </Link>
-                  </div>
-                </div>
-              </div>
+              
 
               {/* Returning Customer Section */}
               <div className="col-sm-6">
@@ -184,6 +167,24 @@ const Login = () => {
                   </div>
                 </div>
               </div>
+              <div className="col-sm-6">
+                <div className="card mb-3">
+                  <div className="card-body">
+                    <h1>New Customer</h1>
+                    <p>
+                      <strong>Register Account</strong>
+                    </p>
+                    <p>
+                      By creating an account you will be able to shop faster, be
+                      up to date on an order's status, and keep track of the
+                      orders you have previously made.
+                    </p>
+                    <Link href="/auth/register" className="btn btn-primary">
+                      Continue
+                    </Link>
+                  </div>
+                </div>
+              </div>
             </div>
 
             {/* Column Right */}
@@ -234,24 +235,7 @@ const Login = () => {
                 <Link href="/account/transaction" className="list-group-item">
                   Transactions
                 </Link>
-                <hr />
-                <h3>
-                  <svg className="" width="20px" height="20px">
-                    {" "}
-                    <use xlinkHref="#aclufolder" />{" "}
-                  </svg>
-                  MY STUFF
-                </h3>
-                <Link href="/account/wishlist" className="list-group-item">
-                  Wish List
-                </Link>
-                <Link href="/account/reward" className="list-group-item">
-                  Reward Points
-                </Link>
-                <Link href="/account/newsletter" className="list-group-item">
-                  Newsletter
-                </Link>
-                <hr />
+               
               </div>
             </aside>
           </div>

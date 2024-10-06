@@ -505,19 +505,19 @@ const Header = () => {
                                 Login
                               </a>
                             </li>
-                            <li className="wishcom">
+                            {/* <li className="wishcom">
                               <a href="">
                                 <i className="fa fa-compress" />
                                 compare
                               </a>
-                            </li>
-                            <li className="wishcom">
+                            </li> */}
+                            {/* <li className="wishcom">
                               <a href="diamond/index.php?route=account/wishlist&language=en-gb">
                                 <i className="fa fa-heart" />
                                 wishlist
                               </a>
-                            </li>
-                            <li className="xsla d-inline-block">
+                            </li> */}
+                            {/* <li className="xsla d-inline-block">
                               {" "}
                               <form
                                 action="diamond/index.php?route=common/currency|save&language=en-gb"
@@ -565,7 +565,7 @@ const Header = () => {
                                   defaultValue="diamond/index.php?route=common/home"
                                 />
                               </form>
-                            </li>
+                            </li> */}
                           </ul>
                           <ul></ul>
                         </div>
@@ -626,7 +626,7 @@ const Header = () => {
                         </DrawerHeader>
 
                         <DrawerBody color="var(--main-color)" fontSize="md">
-                          {cartItems.length === 0 ? (
+                          {cartItems?.length === 0 ? (
                             <p
                               className="text-center"
                               style={{ color: "var(--sub-color)" }}
@@ -640,8 +640,8 @@ const Header = () => {
                                 padding: 0,
                               }}
                             >
-                              {cartItems.map((item) => (
-                                <li key={item.SolitaireID} className="mb-3">
+                              {cartItems?.map((item) => (
+                                <li key={item?.SolitaireID} className="mb-3">
                                   <div className="d-flex align-items-center">
                                     <Link href={`/${item.Slug}`}>
                                       <img
