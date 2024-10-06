@@ -1,6 +1,4 @@
 // components/SearchBar.js
-import { InputGroup, InputLeftElement, Input } from "@chakra-ui/react";
-import { SearchIcon } from "@chakra-ui/icons";
 import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 
@@ -24,12 +22,7 @@ import {
 import { useRouter } from "next/router";
 
 const Header = () => {
-  useEffect(() => {
-    // Ensure Bootstrap JS is loaded
-    if (typeof window !== "undefined") {
-      import("bootstrap/dist/js/bootstrap.bundle.min.js");
-    }
-  }, []);
+  
   const router = useRouter();
   const cartBtnRef = useRef(null); // Create a ref for the cart button
   const [isOpen, setIsOpen] = useState(false);
@@ -347,7 +340,7 @@ const Header = () => {
                     src="/img/logo-gold.png"
                     title="diamond"
                     alt="diamond"
-                    class="img-responsive img-fluid"
+                    className="img-responsive img-fluid"
                   />
                 </a>
               </div>
@@ -517,77 +510,25 @@ const Header = () => {
                                 wishlist
                               </a>
                             </li>
-                            <li className="xsla d-inline-block">
-                              {" "}
-                              <form
-                                action="diamond/index.php?route=common/currency|save&language=en-gb"
-                                method="post"
-                                encType="multipart/form-data"
-                                id="form-currency"
-                              >
-                                <div className="dropdown">
-                                  <button
-                                    className="btn-link dropdown-toggle test"
-                                    data-bs-toggle="dropdown"
-                                  >
-                                    <strong>$</strong>
-                                    <span className="d-md-inline">
-                                      Currency
-                                    </span>{" "}
-                                    <i className="fa fa-angle-down" />
-                                  </button>
-                                  <ul className="dropdown-menu">
-                                    <li>
-                                      <a href="EUR" className="dropdown-item">
-                                        € Euro
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a href="GBP" className="dropdown-item">
-                                        £ Pound Sterling
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a href="USD" className="dropdown-item">
-                                        $ US Dollar
-                                      </a>
-                                    </li>
-                                  </ul>
-                                </div>
-                                <input
-                                  type="hidden"
-                                  name="code"
-                                  defaultValue=""
-                                />{" "}
-                                <input
-                                  type="hidden"
-                                  name="redirect"
-                                  defaultValue="diamond/index.php?route=common/home"
-                                />
-                              </form>
-                            </li>
+                          
                           </ul>
                           <ul></ul>
                         </div>
                       </li>
                     </ul>
                     <div className="d-inline-block">
-                      <span id="header-cart">
+                    <span id="header-cart">
                         <div
                           ref={cartBtnRef} // Use cartBtnRef here
                           onClick={onCartOpen} // Use onCartOpen
                           id="cart"
                           className="dropdown btn-block"
                         >
-                          <button
+                        <button
                             type="button"
-                            data-bs-toggle="dropdown"
-                            className="btn btn-inverse dropdown-toggle"
-                            onClick={toggleCartDropdown}
-                            aria-expanded={cartDropdownOpen}
+                           className="btn btn-inverse dropdown-toggle"
                           >
-                            {/* ... [Your existing cart icon and text] ...  */}
-                            <div className="xuser">
+                           <div className="xuser">
                               <img src="/image/catalog/hcart.svg" alt="cart" />
                             </div>
                             <span className="cartl">
@@ -602,7 +543,7 @@ const Header = () => {
                             </span>
                           </button>
                         </div>
-                      </span>
+                        </span>
                     </div>
                     {/* Cart Drawer */}
                     <Drawer
@@ -674,7 +615,7 @@ const Header = () => {
                                         <span className="font-weight-bold">
                                           {item.quantity} x{" "}
                                         </span>
-                                        ${item?.Price?.toFixed(2)}
+                                        ₹ {item?.Price?.toFixed(2)}
                                       </p>
                                     </div>
                                     <button

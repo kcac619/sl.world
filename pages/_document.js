@@ -66,6 +66,10 @@ class MyDocument extends Document {
             type="text/javascript"
             src="/js/jquery/datetimepicker/daterangepicker.js"
           ></script>
+           <script
+            type="text/javascript"
+            src="/js/bootstrap/js/bootstrap.bundle.min.js"
+          ></script>
           <link
             href="/js/jquery/datetimepicker/daterangepicker.css"
             rel="stylesheet"

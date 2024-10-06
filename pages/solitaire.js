@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { setFilter, resetFilters } from "../filterSlice";
 import useFilterStore from '../lib/store';
+import { useToast } from '@chakra-ui/react'
 import {
   Box,
   Flex,
@@ -49,6 +50,7 @@ const Solitaire = () => {
   const addFilter = useFilterStore(state => state.addFilter);
   // const { data: session } = useSession();
   const dispatch = useDispatch();
+  const toast = useToast()
   const filtersFromRedux = useSelector((state) => state.filters); // Get filters from Redux store
   const [shapes, setShapes] = useState([]);
   const [loadingShapes, setLoadingShapes] = useState(true);
@@ -167,7 +169,6 @@ const Solitaire = () => {
     location: [],
     shape: [], // Make sure 'shape' is in your selectedFilters
   });
-
   const filters = {
     // Define the filters object
     carat: selectedFilters.carat,
@@ -313,11 +314,23 @@ const Solitaire = () => {
     //   });
     // }
     addFilter("solitaire", selectedFilters);
+
+    if (selectedFilters.carat.length === 0) {
+     
+        toast({
+          title: 'No filters selected.',
+          description: "Please select at least one filter to search.",
+          status: 'warning',
+          duration: 9000,
+          isClosable: true,
+        })
+        return
+      }   
+
     router.push({
       pathname: "/search", // Or your desired results page
       // query: filters, // Pass filters in the query string
-    });
-  };
+    });  };
 
   const handleNavigation = () => {
     if (session) {
