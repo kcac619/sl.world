@@ -7,6 +7,7 @@ import { ChevronDownIcon } from "@chakra-ui/icons";
 import Link from "next/link";
 import Header from "../components/Header";
 import useFilterStore from '../lib/store';
+import TableSolitaire from '../components/TableSolitaire';
 const SearchResults = () => {
   const router = useRouter();
   const filters = useSelector((state) => state.filters);
@@ -243,7 +244,9 @@ const SearchResults = () => {
     setCurrentPage((prevPage) => prevPage + 1);
     fetchSolitaires(currentPage + 1);
   };
-
+const handleFilterChange = () => {
+  
+}
   // console.log(" matched  solitaires", matchedSolitaires);
   return (
     <div>
@@ -468,89 +471,7 @@ C409.699,390.129,410.355,381.902,407.164,374.717z"
             </div>
           )}
           {!showLoading &&
-            (showAllSolitaires ? uniqueAllSolitaires : uniqueSolitaires).map(
-              (solitaire) => (
-                <div
-                  key={solitaire.SolitaireID}
-                  className="panel panel-default col-lg-3"
-                >
-                  <div className="panel-body blog-thumbnail">
-                    <div
-                      className="blogshadow blog-thumbnail"
-                    
-                    >
-                      <div className="blog-left">
-                        <div
-                          className="workdo-blog-image"
-                          style={{
-                            height: "201px",
-                            display: "flex",
-                            overflow: "hidden",
-                            borderTopLeftRadius: "20px",
-                            borderTopRightRadius: "20px",
-                          
-                            justifyContent: "center",
-                            alignItems: "center",
-                          }}
-                        >
-                          {solitaire.Image && (
-                            <img
-                              src={solitaire.Image}
-                              alt={`Solitaire  ${solitaire.SolitaireID}`}
-                              className="img-fluid"
-                              style={{ maxWidth: "100%", height: "auto" }}
-                            />
-                          )}
-                          <div className="blog-post-image-hover"></div>
-                        </div>
-                      </div>
-                      <div className="blog-right">
-                        <h4>
-                          <a href="#">{solitaire.SolitaireName}</a>
-                        </h4>
-                        <div className="blog-desc">
-                          {/* <p className="card-text">Shape: {solitaire.ShapeName}</p> */}
-                          <p className="card-text">Carat: {solitaire.Carat}</p>
-                          <p className="card-text">
-                            Description: Lorem ipsum dolor sit amet, consectetur
-                            adipiscing elit.
-                          </p>
-                        </div>
-                        <div className="blog-date blog-bottom">
-                          <div className="read_link">
-                            <Link
-                              href={`/${solitaire.Slug}`}
-                              className="btn btn-primary read_more"
-                            >
-                              View Details
-                            </Link>
-                          </div>
-                          {/*  Add to Cart Button with isInCart Logic  */}
-                          {/* {cartItems.some(
-                            (item) => item.SolitaireID === solitaire.SolitaireID
-                          ) ? (
-                            <button
-                              className="btn btn-primary"
-                              disabled
-                              style={{ fontSize: "0.7rem" }}
-                            >
-                              Added to Cart
-                            </button>
-                          ) : (
-                            <button
-                              className="btn btn-primary"
-                              onClick={() => handleAddToCart(solitaire)}
-                            >
-                              Add to Cart
-                            </button>
-                          )} */}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )
-            )}
+            <TableSolitaire options={showAllSolitaires ? uniqueAllSolitaires : uniqueSolitaires} onFilterChange={handleFilterChange} />}
           {console.log("current page", currentPage, "total pages", totalPages)}
           {!showLoading &&
             currentPage === totalPages &&

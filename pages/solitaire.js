@@ -315,17 +315,17 @@ const Solitaire = () => {
     // }
     addFilter("solitaire", selectedFilters);
 
-    if (selectedFilters.carat.length === 0) {
+    // if (selectedFilters.carat.length === 0) {
      
-        toast({
-          title: 'No filters selected.',
-          description: "Please select at least one filter to search.",
-          status: 'warning',
-          duration: 9000,
-          isClosable: true,
-        })
-        return
-      }   
+    //     toast({
+    //       title: 'No filters selected.',
+    //       description: "Please select at least one filter to search.",
+    //       status: 'warning',
+    //       duration: 9000,
+    //       isClosable: true,
+    //     })
+    //     return
+    //   }   
 
     router.push({
       pathname: "/search", // Or your desired results page
