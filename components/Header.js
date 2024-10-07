@@ -2,7 +2,6 @@
 import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 
-
 import {
   Drawer,
   DrawerBody,
@@ -23,7 +22,6 @@ import {
 import { useRouter } from "next/router";
 
 const Header = () => {
-  
   const router = useRouter();
   const cartBtnRef = useRef(null); // Create a ref for the cart button
   const [isOpen, setIsOpen] = useState(false);
@@ -64,12 +62,12 @@ const Header = () => {
     setCartItems(getCartItemsFromLocalStorage());
   };
   const handleNavigation1 = (e) => {
-    e.preventDefault(); 
-    router.push('/auth/register');
+    e.preventDefault();
+    router.push("/auth/register");
   };
   const handleLoginNavigation = (e) => {
-    e.preventDefault(); 
-    router.push('/auth/login'); 
+    e.preventDefault();
+    router.push("/auth/login");
   };
 
   // Toggle the cart dropdown
@@ -490,21 +488,25 @@ const Header = () => {
                               Access account and manage orders
                             </h6>
                             <li className="acd">
-      <a href="" className="dropdown-item" onClick={handleNavigation1}>
-        <i className="fa fa-user-plus" />
-        Register
-      </a>
-    </li>
-    <li className="acd">
-      <a
-        href=""
-        className="dropdown-item"
-        onClick={handleLoginNavigation}
-      >
-        <i className="fa fa-lock" />
-        Login
-      </a>
-    </li>
+                              <a
+                                href=""
+                                className="dropdown-item"
+                                onClick={handleNavigation1}
+                              >
+                                <i className="fa fa-user-plus" />
+                                Register
+                              </a>
+                            </li>
+                            <li className="acd">
+                              <a
+                                href=""
+                                className="dropdown-item"
+                                onClick={handleLoginNavigation}
+                              >
+                                <i className="fa fa-lock" />
+                                Login
+                              </a>
+                            </li>
                             {/* <li className="wishcom">
                               <a href="">
                                 <i className="fa fa-compress" />
@@ -516,26 +518,74 @@ const Header = () => {
                                 <i className="fa fa-heart" />
                                 wishlist
                               </a>
-                            </li>
-                          
+                            </li> */}
+                            {/* <li className="xsla d-inline-block">
+                              {" "}
+                              <form
+                                action="diamond/index.php?route=common/currency|save&language=en-gb"
+                                method="post"
+                                encType="multipart/form-data"
+                                id="form-currency"
+                              >
+                                <div className="dropdown">
+                                  <button
+                                    className="btn-link dropdown-toggle test"
+                                    data-bs-toggle="dropdown"
+                                  >
+                                    <strong>$</strong>
+                                    <span className="d-md-inline">
+                                      Currency
+                                    </span>{" "}
+                                    <i className="fa fa-angle-down" />
+                                  </button>
+                                  <ul className="dropdown-menu">
+                                    <li>
+                                      <a href="EUR" className="dropdown-item">
+                                        € Euro
+                                      </a>
+                                    </li>
+                                    <li>
+                                      <a href="GBP" className="dropdown-item">
+                                        £ Pound Sterling
+                                      </a>
+                                    </li>
+                                    <li>
+                                      <a href="USD" className="dropdown-item">
+                                        $ US Dollar
+                                      </a>
+                                    </li>
+                                  </ul>
+                                </div>
+                                <input
+                                  type="hidden"
+                                  name="code"
+                                  defaultValue=""
+                                />{" "}
+                                <input
+                                  type="hidden"
+                                  name="redirect"
+                                  defaultValue="diamond/index.php?route=common/home"
+                                />
+                              </form>
+                            </li> */}
                           </ul>
                           <ul></ul>
                         </div>
                       </li>
                     </ul>
                     <div className="d-inline-block">
-                    <span id="header-cart">
+                      <span id="header-cart">
                         <div
                           ref={cartBtnRef} // Use cartBtnRef here
                           onClick={onCartOpen} // Use onCartOpen
                           id="cart"
                           className="dropdown btn-block"
                         >
-                        <button
+                          <button
                             type="button"
-                           className="btn btn-inverse dropdown-toggle"
+                            className="btn btn-inverse dropdown-toggle"
                           >
-                           <div className="xuser">
+                            <div className="xuser">
                               <img src="/image/catalog/hcart.svg" alt="cart" />
                             </div>
                             <span className="cartl">
@@ -550,7 +600,7 @@ const Header = () => {
                             </span>
                           </button>
                         </div>
-                        </span>
+                      </span>
                     </div>
                     {/* Cart Drawer */}
                     <Drawer
