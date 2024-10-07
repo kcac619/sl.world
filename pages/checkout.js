@@ -104,6 +104,7 @@ const Checkout = () => {
         setOrderSuccess(true);
         localStorage.removeItem("cart");
         setTimeout(() => {
+          console.log("forr push")
           router.push("/order-success");
           setSubmitting(false);
         }, 1000);
