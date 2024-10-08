@@ -563,7 +563,7 @@ const SolitaireDetails = () => {
                                 {solitaire.CertificateNumber}
                                 </div>
                                 <Link
-    href={`/${solitaire.Slug}`}
+href="/certificate"
     className="btn btn-primary read_more"
     style={{ padding: '10px 20px', fontSize: '16px', width: 'auto', height: 'auto',marginLeft:'25px' }}
     >
