@@ -4,6 +4,7 @@ import React from "react";
 const Certificate = () => {
   const router = useRouter();
   const { slug } = router.query;
+  console.log(slug,"8778787")
 
   return (
     <div className="container">
@@ -27,6 +28,7 @@ const Certificate = () => {
               height="600"
               style={{ marginBottom: "50px" }}
             ></object>
+            
           </div>
         </div>
       </div>

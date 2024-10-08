@@ -21,6 +21,7 @@ import Header from "@/components/Header";
 const SolitaireDetails = () => {
   const router = useRouter();
   const { solitaireSlug } = router.query;
+  
 
   const [solitaire, setSolitaire] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -563,8 +564,10 @@ const SolitaireDetails = () => {
                                 {solitaire.CertificateNumber}
                                 </div>
                                 <Link
-href="/certificate"
-    className="btn btn-primary read_more"
+  // href="/certificate" // Navigate to the /certificate page
+  href={`/certificate?slug=${solitaire.Slug}`} // Pass slug as a query parameter
+
+  className="btn btn-primary read_more"
     style={{ padding: '10px 20px', fontSize: '16px', width: 'auto', height: 'auto',marginLeft:'25px' }}
     >
     View Certificate
@@ -860,7 +863,7 @@ href="/certificate"
                 <div className="container " >
                   <div className="row">
                     {/* PDF Panel */}
-                    <div className="col-md-6">
+                    {/* <div className="col-md-6">
                       <div className="card">
                         <div
                           className="card-header"
@@ -880,7 +883,7 @@ href="/certificate"
                           style={{ marginBottom: "50px" }}
                         ></object>
                       </div>
-                    </div>
+                    </div> */}
 
                     {/* Video Panel */}
                     <div className="col-md-6">
