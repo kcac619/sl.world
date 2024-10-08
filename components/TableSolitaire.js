@@ -8,6 +8,7 @@ import {
   TableContainer,Button,Stack
 } from '@chakra-ui/react'
 import { MdBuild , MdCall } from "react-icons/md"
+import Link from "next/link";
 const TableSolitaire = ({
 
   options,
@@ -16,9 +17,9 @@ const TableSolitaire = ({
   return (
     <TableContainer  backgroundColor="#feedd6" >
     <Table variant='simple'>
-      <Thead>
-        <Tr>
-          <Th textAlign="left">Image</Th>
+      <Thead style={{ backgroundColor: '#f0f3f4', color: '#f1f1f1' }}>
+      <Tr>
+      <Th textAlign="left">Image</Th>
           <Th textAlign="center">Shape</Th>
           <Th textAlign="center">Carat</Th>
           <Th textAlign="center">Color</Th>
@@ -50,13 +51,20 @@ const TableSolitaire = ({
             <Td style={{color: 'black', margin: 0, padding: 0,borderColor: '#ccc', textAlign: 'center'}}>
           
 
-<Stack direction='row' spacing={4}>
-  <Button leftIcon={<MdBuild />} colorScheme='pink' variant='solid'>
-    Settings
-  </Button>
-  <Button rightIcon={<MdCall />} colorScheme='blue' variant='outline'>
-    Call us
-  </Button>
+            <Stack direction='row' spacing={2} justifyContent="center" alignItems="center" style={{ display: 'flex' }}>
+ 
+  <Link
+                              href={`/${solitaire.Slug}`}
+                              className="btn btn-primary read_more"
+                            >
+                              View Details
+                            </Link>
+                            <Link
+                              href={`/${solitaire.Slug}`}
+                              className="btn btn-primary read_more"
+                            >
+                              Preview
+                            </Link>
 </Stack>
             </Td>
           </Tr>
