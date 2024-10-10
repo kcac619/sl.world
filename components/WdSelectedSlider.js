@@ -58,7 +58,7 @@ const WdSelectedSlider = () => {
       name: "Abigail Moon & Stars Ring",
       brand: "shoes", // Assuming brand is the manufacturer name
       price: "$1.00",
-      link: "https://opencart.workdo.io/diamond/index.php?route=product/product&language=en-gb&product_id=28",
+      link: "diamond/index.php?route=product/product&language=en-gb&product_id=28",
       // ... other product properties
     },
     {
@@ -67,7 +67,7 @@ const WdSelectedSlider = () => {
       name: "Abigail Moon & Stars Ring",
       brand: "shoes", // Assuming brand is the manufacturer name
       price: "$1.00",
-      link: "https://opencart.workdo.io/diamond/index.php?route=product/product&language=en-gb&product_id=28",
+      link: "diamond/index.php?route=product/product&language=en-gb&product_id=28",
       // ... other product properties
     },
     {
@@ -76,7 +76,7 @@ const WdSelectedSlider = () => {
       name: "Abigail Moon & Stars Ring",
       brand: "shoes", // Assuming brand is the manufacturer name
       price: "$1.00",
-      link: "https://opencart.workdo.io/diamond/index.php?route=product/product&language=en-gb&product_id=28",
+      link: "diamond/index.php?route=product/product&language=en-gb&product_id=28",
       // ... other product properties
     },
     {
@@ -85,7 +85,7 @@ const WdSelectedSlider = () => {
       name: "Abigail Moon & Stars Ring",
       brand: "shoes", // Assuming brand is the manufacturer name
       price: "$1.00",
-      link: "https://opencart.workdo.io/diamond/index.php?route=product/product&language=en-gb&product_id=28",
+      link: "diamond/index.php?route=product/product&language=en-gb&product_id=28",
       // ... other product properties
     },
     {
@@ -94,7 +94,7 @@ const WdSelectedSlider = () => {
       name: "Abigail Moon & Stars Ring",
       brand: "shoes", // Assuming brand is the manufacturer name
       price: "$1.00",
-      link: "https://opencart.workdo.io/diamond/index.php?route=product/product&language=en-gb&product_id=28",
+      link: "diamond/index.php?route=product/product&language=en-gb&product_id=28",
       // ... other product properties
     },
     {
@@ -103,7 +103,7 @@ const WdSelectedSlider = () => {
       name: "Abigail Moon & Stars Ring",
       brand: "shoes", // Assuming brand is the manufacturer name
       price: "$1.00",
-      link: "https://opencart.workdo.io/diamond/index.php?route=product/product&language=en-gb&product_id=28",
+      link: "diamond/index.php?route=product/product&language=en-gb&product_id=28",
       // ... other product properties
     },
   ];

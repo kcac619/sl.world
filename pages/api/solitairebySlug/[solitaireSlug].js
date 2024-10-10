@@ -12,6 +12,7 @@ export default async (req, res) => {
 
       if (result.status === 1 && result.data.length > 0) {
         const solitaire = result.data[0];
+        console.log("solitaire from route", solitaire);
 
         // Generate signed URLs for images, PDF, and video
         const signedUrls = await generateSignedUrls(solitaire);

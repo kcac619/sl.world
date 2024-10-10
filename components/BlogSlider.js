@@ -68,7 +68,7 @@ const BlogSlider = ({ blogs, isLoadingBlogs, errorBlogs }) => {
         </Box>
       ) : (
         <Slider {...settings} style={{ height: "200px !important" }}>
-          {blogPosts.map((post, index) => (
+          {blogPosts?.map((post, index) => (
             <div key={index} className="product-block cless">
               <div className="blogshadow blog-thumbnail">
                 <div className="blog-left">

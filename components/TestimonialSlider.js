@@ -59,7 +59,7 @@ const TestimonialSlider = ({
   // const testimonials = [
   //   {
   //     imageUrl:
-  //       "https://opencart.workdo.io/diamond/image/catalog/testimonial/1.png",
+  //       "diamond/image/catalog/testimonial/1.png",
   //     quote:
   //       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's dummy.",
   //     author: "mr. onsequat developer",
@@ -67,7 +67,7 @@ const TestimonialSlider = ({
   //   },
   //   {
   //     imageUrl:
-  //       "https://opencart.workdo.io/diamond/image/catalog/testimonial/2.png",
+  //       "diamond/image/catalog/testimonial/2.png",
   //     quote:
   //       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's dummy.",
   //     author: "mr. onsequat developer",
@@ -75,7 +75,7 @@ const TestimonialSlider = ({
   //   },
   //   {
   //     imageUrl:
-  //       "https://opencart.workdo.io/diamond/image/catalog/testimonial/1.png",
+  //       "diamond/image/catalog/testimonial/1.png",
   //     quote:
   //       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's dummy.",
   //     author: "mr. onsequat developer",
@@ -83,7 +83,7 @@ const TestimonialSlider = ({
   //   },
   //   {
   //     imageUrl:
-  //       "https://opencart.workdo.io/diamond/image/catalog/testimonial/2.png",
+  //       "diamond/image/catalog/testimonial/2.png",
   //     quote:
   //       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's dummy.",
   //     author: "mr. onsequat developer",

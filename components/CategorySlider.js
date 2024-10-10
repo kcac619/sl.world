@@ -50,28 +50,24 @@ const CategorySlider = () => {
 
   const categories = [
     {
-      imageUrl:
-        "https://opencart.workdo.io/diamond/image/cache/catalog/category/1-270x335.jpg",
+      imageUrl: "diamond/image/cache/catalog/category/1-270x335.jpg",
       name: "bracelet",
-      link: "https://opencart.workdo.io/diamond/index.php?route=product/category&path=57",
+      link: "diamond/index.php?route=product/category&path=57",
     },
     {
-      imageUrl:
-        "https://opencart.workdo.io/diamond/image/cache/catalog/category/2-270x335.jpg",
+      imageUrl: "diamond/image/cache/catalog/category/2-270x335.jpg",
       name: "necklace",
-      link: "https://opencart.workdo.io/diamond/index.php?route=product/category&path=25",
+      link: "diamond/index.php?route=product/category&path=25",
     },
     {
-      imageUrl:
-        "https://opencart.workdo.io/diamond/image/cache/catalog/category/3-270x335.jpg",
+      imageUrl: "diamond/image/cache/catalog/category/3-270x335.jpg",
       name: "ring",
-      link: "https://opencart.workdo.io/diamond/index.php?route=product/category&path=20",
+      link: "diamond/index.php?route=product/category&path=20",
     },
     {
-      imageUrl:
-        "https://opencart.workdo.io/diamond/image/cache/catalog/category/4-270x335.jpg",
+      imageUrl: "diamond/image/cache/catalog/category/4-270x335.jpg",
       name: "bead",
-      link: "https://opencart.workdo.io/diamond/index.php?route=product/category&path=17",
+      link: "diamond/index.php?route=product/category&path=17",
     },
   ];
 

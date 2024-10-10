@@ -16,6 +16,7 @@ import {
   updateCartItemQuantity,
 } from "../utils/cartfns";
 import { Skeleton } from "@chakra-ui/react";
+import Header from "@/components/Header";
 
 const SolitaireDetails = () => {
   const router = useRouter();
@@ -201,599 +202,6 @@ const SolitaireDetails = () => {
         {/* ... [Add other meta tags] ... */}
       </Head>
 
-      {/* Header */}
-      <header>
-        <div className="top-header hidden-xs" style={{ fontFamily: "outfit" }}>
-          <div className="container">
-            <div className="row">
-              <div className="topbspinner">
-                <div className="col-md-6 col-xs-12">
-                  <div className="ebook">
-                    <div className="ebook-ctn">
-                      <h4>Monday - Friday: 8:00 AM - 9:00 PM</h4>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-md-6 col-xs-12">
-                  <div className="custom-link">
-                    <a href="index.php?route=information/information&language=en-gb&information_id=1">
-                      About
-                    </a>
-                    <a href="index.php?route=information/sitemap&language=en-gb">
-                      Site Map
-                    </a>
-                    <a href="index.php?route=product/manufacturer&language=en-gb">
-                      Brand
-                    </a>
-                    <a href="index.php?route=information/contact&language=en-gb">
-                      Contact
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="homemenu">
-          <div className="container">
-            <div className="row">
-              <div className="sub_megamenu">
-                <div className="container_wb_megamenu">
-                  <div
-                    id="stamenu"
-                    className={` ${isOpen ? "active" : ""} menu-fixed`}
-                  >
-                    <nav id="menu" className="navbar">
-                      <div className="navbar-expand-md">
-                        <button
-                          type="button"
-                          className="btn-navbar navbar-toggler"
-                          onClick={toggleDrawer}
-                          data-bs-toggle="collapse"
-                          data-bs-target=".navbar-ex1-collapse"
-                        >
-                          <i className="fa fa-bars" />
-                        </button>
-                      </div>
-                      <div id="wr-menu-icon ">
-                        <div
-                          className="wrmenu collapsed"
-                          data-bs-toggle="collapse"
-                          data-bs-target="#under-menu"
-                          aria-expanded="false"
-                          aria-controls="collapseExample"
-                        ></div>
-                      </div>
-                      <div
-                        id="mySidenav"
-                        className={`sidenav menu-vertical ${
-                          isOpen ? "open" : ""
-                        }`}
-                      >
-                        <div id="under-menu" className="">
-                          <div className="close-nav">
-                            <span
-                              className="categories"
-                              style={{ color: "var(--secondary-color)" }}
-                            >
-                              Categories
-                            </span>
-                            <button
-                              type="button"
-                              className=" float-end"
-                              onClick={toggleDrawer}
-                            >
-                              <i className="fa fa-close" />
-                            </button>
-                          </div>
-                          <div className="navbar-collapse navbar-ex1-collapse">
-                            <ul className="nav navbar-nav">
-                              <li className="nav-item">
-                                <Link href={"/solitaire"} className="nav-item">
-                                  Solitaire
-                                </Link>
-                              </li>
-                              <li className="nav-item">
-                                <a
-                                  href="https://opencart.workdo.io/diamond/index.php?route=product/category&language=en-gb&path=60"
-                                  className="nav-link"
-                                >
-                                  {/*<img src="https://opencart.workdo.io/diamond/image/cache/catalog/menu-icon/meat-fish-14x14.png" alt="Amethyst" title="Amethyst"> */}{" "}
-                                  Amethyst
-                                </a>
-                              </li>
-                              <li className="nav-item">
-                                <a
-                                  href="https://opencart.workdo.io/diamond/index.php?route=product/category&language=en-gb&path=67"
-                                  className="nav-link"
-                                >
-                                  {/*<img src="" alt="Blue Sapphire" title="Blue Sapphire"> */}{" "}
-                                  Blue Sapphire
-                                </a>
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                    </nav>
-                    <div
-                      className="w3-overlay w3-animate-opacity"
-                      onclick={toggleDrawer}
-                      style={{
-                        cursor: "pointer",
-                        display: isOpen ? "block" : "none",
-                      }}
-                      id="myOverlay"
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="col-md-5 head-manu">
-                <div className="top-manu">
-                  <div className="megamenu">
-                    <div className="container_wb_megamenu">
-                      <div
-                        id="stamenu"
-                        // className={` ${isOpen ? "active" : ""} menu-fixed`}
-                      >
-                        <nav id="menu" className="navbar">
-                          <div className="navbar-expand-md">
-                            <button
-                              type="button"
-                              className="btn-navbar navbar-toggler"
-                              onClick={toggleDrawer}
-                              data-bs-toggle="collapse"
-                              data-bs-target=".navbar-ex1-collapse"
-                            >
-                              <i className="fa fa-bars" />
-                            </button>
-                          </div>
-                          <div id="wr-menu-icon ">
-                            <div
-                              className="wrmenu collapsed"
-                              data-bs-toggle="collapse"
-                              data-bs-target="#under-menu"
-                              aria-expanded="false"
-                              aria-controls="collapseExample"
-                            ></div>
-                          </div>
-                          <div
-                            id="mySidenav"
-                            className={`sidenav menu-vertical ${
-                              isOpen ? "open" : ""
-                            }`}
-                          >
-                            <div id="under-menu" className="">
-                              <div className="close-nav">
-                                <span
-                                  className="categories"
-                                  style={{ color: "#20C997" }}
-                                >
-                                  Categories
-                                </span>
-                                <button
-                                  type="button"
-                                  className=" float-end"
-                                  onClick={toggleDrawer}
-                                >
-                                  <i className="fa fa-close" />
-                                </button>
-                              </div>
-                              <div className="navbar-collapse navbar-ex1-collapse">
-                                <ul className="nav navbar-nav">
-                                  <li className="nav-item">
-                                    <Link
-                                      href={"/solitaire"}
-                                      className="nav-item"
-                                    >
-                                      Solitaire
-                                    </Link>
-                                  </li>
-                                  <li className="nav-item">
-                                    <a
-                                      href="https://opencart.workdo.io/diamond/index.php?route=product/category&language=en-gb&path=60"
-                                      className="nav-link"
-                                    >
-                                      {/*<img src="https://opencart.workdo.io/diamond/image/cache/catalog/menu-icon/meat-fish-14x14.png" alt="Amethyst" title="Amethyst"> */}{" "}
-                                      Amethyst
-                                    </a>
-                                  </li>
-                                  <li className="nav-item">
-                                    <a
-                                      href="https://opencart.workdo.io/diamond/index.php?route=product/category&language=en-gb&path=67"
-                                      className="nav-link"
-                                    >
-                                      {/*<img src="" alt="Blue Sapphire" title="Blue Sapphire"> */}{" "}
-                                      Blue Sapphire
-                                    </a>
-                                  </li>
-                                </ul>
-                              </div>
-                            </div>
-                          </div>
-                        </nav>
-                        <div
-                          className="w3-overlay w3-animate-opacity"
-                          onclick={toggleDrawer}
-                          style={{
-                            cursor: "pointer",
-                            // display: isOpen ? "block" : "none",
-                          }}
-                          id="myOverlay"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-md-2 col-sm-2 text-left header-logo">
-                <div id="logo">
-                  <Link href="/">
-                    <h4 style={{ color: "var(--main-color)" }}>HKSURANA</h4>
-                  </Link>
-                </div>
-              </div>
-              <div className="col-md-5 col-sm-5 megamenu_border">
-                <div className="main-header">
-                  <div className="h-icon">
-                    <div id="top-links">
-                      <div className="h-search">
-                        <div className="top-search">
-                          <ul>
-                            <li
-                              id="search"
-                              className="desktop-search d-inline-block"
-                            >
-                              <div className="d-search">
-                                <button
-                                  id="search_toggle"
-                                  className="search-toggle"
-                                  data-toggle="collapse"
-                                  onclick="openSearch()"
-                                >
-                                  <span>Search</span>
-                                  <img
-                                    src="image/catalog/search.png"
-                                    alt="search"
-                                  />
-                                </button>
-                              </div>
-                              <div id="search" className="wbSearch">
-                                <div id="search_block_top">
-                                  <select id="workdo-search-category">
-                                    <option value={0}>Categories</option>
-                                    <option value={60}>Amethyst</option>
-                                    <option value={20}>bead</option>
-                                    <option value={27}>
-                                      &nbsp;&nbsp;&nbsp;&nbsp;bracelet
-                                    </option>
-                                    <option value={61}>
-                                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Alexandrite
-                                    </option>
-                                    <option value={63}>
-                                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fashion
-                                    </option>
-                                    <option value={67}>Blue Sapphire</option>
-                                    <option value={25}>Burma Ruby</option>
-                                    <option value={29}>
-                                      &nbsp;&nbsp;&nbsp;&nbsp;Citrine
-                                    </option>
-                                    <option value={65}>
-                                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Colombian
-                                      Emerald
-                                    </option>
-                                    <option value={66}>
-                                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Diamond
-                                    </option>
-                                    <option value={64}>
-                                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Garnet
-                                    </option>
-                                    <option value={28}>
-                                      &nbsp;&nbsp;&nbsp;&nbsp;Morganite
-                                    </option>
-                                    <option value={17}>Black Diamond</option>
-                                    <option value={68}>Ametrine</option>
-                                  </select>
-                                  <div className="input-group">
-                                    <input
-                                      type="text"
-                                      name="search"
-                                      defaultValue=""
-                                      placeholder="Search Product..."
-                                      className="search_query form-control input-lg workdo-search"
-                                    />
-                                    <div className="input-group-btn">
-                                      <button
-                                        type="button"
-                                        className="btn btn-primary btn-lg"
-                                      >
-                                        <img
-                                          src="image/catalog/search.png"
-                                          alt="search"
-                                        />
-                                      </button>
-                                      <a
-                                        href="javascript:void(0)"
-                                        className="closebtn close-nav"
-                                        onclick="closeSearch()"
-                                      >
-                                        <i className="fa fa-close" />
-                                      </a>
-                                    </div>
-                                    {/* workdo Search Start  */}
-                                    <div className="workdo-search text-left">
-                                      <div
-                                        className="workdo-search-loader"
-                                        style={{ display: "none" }}
-                                      >
-                                        <div className="loaders" />
-                                      </div>
-                                      {/* Add Loader */}
-                                      <div className="workdo-search-result">
-                                        {/* search results */}
-                                      </div>
-                                    </div>
-                                    {/* workdo Search End  */}
-                                  </div>
-                                </div>
-                              </div>
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                      <ul className="list-inline d-flex user-bg">
-                        <li className="userapp" />
-                        <li className="huser">
-                          <div className="dropdown">
-                            <a
-                              href=""
-                              className="dropdown-toggle huser-drop"
-                              data-bs-toggle="dropdown"
-                            >
-                              <div className="xuser">
-                                <img src="image/catalog/huser.svg" alt="user" />
-                                <span>My Profile</span>
-                                <i className="fa fa-angle-down enaleng" />
-                              </div>
-                              <div className="xuser-desc d-none">
-                                <span>
-                                  <span className="d-none d-lg-inline">
-                                    My Account
-                                  </span>
-                                </span>
-                              </div>
-                            </a>
-                            <ul className="dropdown-menu dropdown-menu-right haccount  hlogout">
-                              <h5 className="text-left">Your Account</h5>
-                              <h6 className="text-left">
-                                Access account and manage orders
-                              </h6>
-                              <li className="acd">
-                                <a
-                                  href="https://opencart.workdo.io/diamond/index.php?route=account/register&language=en-gb"
-                                  className="dropdown-item"
-                                >
-                                  <i className="fa fa-user-plus" />
-                                  Register
-                                </a>
-                              </li>
-                              <li className="acd">
-                                <a
-                                  href="https://opencart.workdo.io/diamond/index.php?route=account/login&language=en-gb"
-                                  className="dropdown-item"
-                                >
-                                  <i className="fa fa-lock" />
-                                  Login
-                                </a>
-                              </li>
-                              <li className="wishcom">
-                                <a href="">
-                                  <i className="fa fa-compress" />
-                                  compare
-                                </a>
-                              </li>
-                              <li className="wishcom">
-                                <a href="https://opencart.workdo.io/diamond/index.php?route=account/wishlist&language=en-gb">
-                                  <i className="fa fa-heart" />
-                                  wishlist
-                                </a>
-                              </li>
-                              <li className="xsla d-inline-block">
-                                {" "}
-                                <form
-                                  action="https://opencart.workdo.io/diamond/index.php?route=common/currency|save&language=en-gb"
-                                  method="post"
-                                  encType="multipart/form-data"
-                                  id="form-currency"
-                                >
-                                  <div className="dropdown">
-                                    <button
-                                      className="btn-link dropdown-toggle test"
-                                      data-bs-toggle="dropdown"
-                                    >
-                                      <strong>$</strong>
-                                      <span className="d-md-inline">
-                                        Currency
-                                      </span>{" "}
-                                      <i className="fa fa-angle-down" />
-                                    </button>
-                                    <ul className="dropdown-menu">
-                                      <li>
-                                        <a href="EUR" className="dropdown-item">
-                                          € Euro
-                                        </a>
-                                      </li>
-                                      <li>
-                                        <a href="GBP" className="dropdown-item">
-                                          £ Pound Sterling
-                                        </a>
-                                      </li>
-                                      <li>
-                                        <a href="USD" className="dropdown-item">
-                                          $ US Dollar
-                                        </a>
-                                      </li>
-                                    </ul>
-                                  </div>
-                                  <input
-                                    type="hidden"
-                                    name="code"
-                                    defaultValue=""
-                                  />{" "}
-                                  <input
-                                    type="hidden"
-                                    name="redirect"
-                                    defaultValue="https://opencart.workdo.io/diamond/index.php?route=common/home"
-                                  />
-                                </form>
-                              </li>
-                            </ul>
-                            <ul></ul>
-                          </div>
-                        </li>
-                      </ul>
-                      <div className="d-inline-block">
-                        <span id="header-cart">
-                          <div id="cart" className="dropdown btn-block">
-                            <button
-                              type="button"
-                              data-bs-toggle="dropdown"
-                              className="btn btn-inverse dropdown-toggle"
-                              onClick={toggleCartDropdown}
-                              aria-expanded={cartDropdownOpen}
-                            >
-                              {/* ... [Your existing cart icon and text] ...  */}
-                              <div className="xuser">
-                                <img src="image/catalog/hcart.svg" alt="cart" />
-                              </div>
-                              <span className="cartl">
-                                <span className="cartt">
-                                  {cartItems.reduce(
-                                    (acc, item) => acc + item.quantity,
-                                    0
-                                  )}{" "}
-                                </span>
-                                <span className="cartna">cart: items</span>
-                                <strong>Items</strong>
-                              </span>
-                            </button>
-
-                            {/* Cart Dropdown (Custom Styled) */}
-                            <ul
-                              className={`dropdown-menu dropdown-menu-right${
-                                cartDropdownOpen ? " show" : ""
-                              }`}
-                              aria-labelledby="cart"
-                              style={{
-                                padding: "1rem",
-                                maxWidth: "300px",
-                                backgroundColor: "rgb(33, 37, 41)", // Dark background color
-                                boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-                                border: "1px solid #dee2e6",
-                              }}
-                            >
-                              {cartItems.length === 0 ? (
-                                <li className="text-center">
-                                  Your shopping cart is empty!
-                                </li>
-                              ) : (
-                                <>
-                                  <div
-                                    style={{
-                                      maxHeight: "250px",
-                                      overflowY: "auto",
-                                    }}
-                                  >
-                                    {cartItems.map((item) => (
-                                      <div
-                                        key={item.SolitaireID}
-                                        className="d-flex align-items-center mb-3"
-                                      >
-                                        <Link href={`/${item.SolitaireID}`}>
-                                          <img
-                                            src={item.Image1}
-                                            alt={
-                                              item.ShapeName +
-                                              "-" +
-                                              item.SolitaireID
-                                            }
-                                            style={{
-                                              width: "50px",
-                                              height: "50px",
-                                              objectFit: "cover",
-                                              marginRight: "10px",
-                                            }}
-                                          />
-                                        </Link>
-                                        <div>
-                                          <Link href={`/${item.SolitaireID}`}>
-                                            <h6
-                                              className="mb-0"
-                                              style={{
-                                                color: "#20C997",
-                                                fontFamily: "outfit",
-                                              }}
-                                            >
-                                              {item.ShapeName +
-                                                "-" +
-                                                item.SolitaireID}
-                                            </h6>
-                                          </Link>
-                                          <span className="text-muted small">
-                                            Qty: {item.quantity} x ${item.Price}
-                                          </span>
-                                        </div>
-                                        <button
-                                          type="button"
-                                          className="btn btn-sm btn-link text-danger ml-auto"
-                                          onClick={() =>
-                                            handleRemoveFromCart(
-                                              item.SolitaireID
-                                            )
-                                          }
-                                        >
-                                          <i className="fa fa-times"></i>
-                                        </button>
-                                      </div>
-                                    ))}
-                                  </div>
-
-                                  {/* Cart Totals */}
-                                  <div className="text-right">
-                                    <p className="mb-1">
-                                      Subtotal:{" "}
-                                      <span className="font-weight-bold">
-                                        ${subTotal.toFixed(2)}
-                                      </span>
-                                    </p>
-                                    <p className="mb-1">
-                                      Total:{" "}
-                                      <span className="font-weight-bold">
-                                        ${total.toFixed(2)}
-                                      </span>
-                                    </p>
-                                    <Link
-                                      href="/cart"
-                                      className="btn btn-primary btn-block"
-                                    >
-                                      View Cart
-                                    </Link>
-                                  </div>
-                                </>
-                              )}
-                            </ul>
-                          </div>
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </header>
-
       {/* Main Content */}
       <main>
         <div className="">
@@ -904,7 +312,7 @@ const SolitaireDetails = () => {
                                     data-glide-el="controls"
                                     style={{
                                       position: "absolute",
-                                      top: "50%",
+                                      top: "110%",
                                       transform: "translateY(-50%)",
                                       width: "100%",
 
@@ -916,7 +324,7 @@ const SolitaireDetails = () => {
                                       className="glide__arrow glide__arrow--left"
                                       data-glide-dir="<"
                                       style={{
-                                        backgroundColor: "rgb(0,0,0,0.2)",
+                                        backgroundColor: "#f38585",
                                         border: "none",
                                         padding: "10px",
                                         borderRadius: "50%",
@@ -930,7 +338,7 @@ const SolitaireDetails = () => {
                                       className="glide__arrow glide__arrow--right"
                                       data-glide-dir=">"
                                       style={{
-                                        backgroundColor: "rgb(0,0,0,0.2)",
+                                        backgroundColor: "#f38585",
                                         border: "none",
                                         padding: "10px",
                                         borderRadius: "40%",
@@ -1030,6 +438,47 @@ const SolitaireDetails = () => {
                             style={{ fontFamily: "outfit" }}
                           >
                             <ul className="list-unstyled">
+                              <li className="d-flex align-items-center justify-content-between">
+                                <div className="d-flex align-items-center">
+                                  <span className="text-decor">Style No:</span>{" "}
+                                  {solitaire.SolitaireID}
+                                </div>
+                                {/* Add a "View Details" link on the same line */}
+                                <Link
+                                  href={`/${solitaire.Slug}`}
+                                  className="btn btn-primary read_more"
+                                  style={{ marginLeft: "10px" }} // Optional margin for spacing
+                                >
+                                  View Details
+                                </Link>
+                              </li>
+                              <hr />
+                              <li className="d-flex align-items-center justify-content-between">
+                                <div className="d-flex align-items-center">
+                                  <span className="text-decor">Price:</span> ₹{" "}
+                                  {solitaire.Price}
+                                  <span
+                                    style={{
+                                      borderLeft: "1px solid #ccc",
+                                      height: "20px",
+                                      marginLeft: "10px",
+                                      paddingLeft: "10px",
+                                    }}
+                                  >
+                                    Shipped by: {solitaire.ShippedBy}
+                                  </span>
+                                </div>
+                              </li>
+                              <hr />
+                              <li className="d-flex align-items-center justify-content-between">
+                                <div className="d-flex align-items-center">
+                                  <h1 className="text-decor">
+                                    {solitaire.SolitaireName} Overview
+                                  </h1>
+                                </div>
+                              </li>
+                              <hr />
+
                               <li className="d-flex align-items-center">
                                 {" "}
                                 {/* Use flexbox for alignment */}
@@ -1106,6 +555,40 @@ const SolitaireDetails = () => {
                               </li>
                             </ul>
                           </div>
+                          <li className="d-flex align-items-center justify-content-between">
+                            <div className="d-flex align-items-center">
+                              <h1 className="text-decor">
+                                {solitaire.SolitaireName} Certificate
+                              </h1>
+                            </div>
+                          </li>
+                          <hr />
+
+                          <li className="d-flex align-items-center">
+                            {" "}
+                            {/* Use flexbox for alignment */}
+                            {/* Icon column - adjust icon class */}
+                            <div className="d-flex align-items-center">
+                              <span className="text-decor">
+                                Certificate Number:
+                              </span>{" "}
+                              {solitaire.CertificateNumber}
+                            </div>
+                            <Link
+                              // href="/certificate" // Navigate to the /certificate page
+                              href={`/certificate?slug=${solitaire.Slug}`} // Pass slug as a query parameter
+                              className="btn btn-primary read_more"
+                              style={{
+                                padding: "10px 20px",
+                                fontSize: "16px",
+                                width: "auto",
+                                height: "auto",
+                                marginLeft: "25px",
+                              }}
+                            >
+                              View Certificate
+                            </Link>
+                          </li>
 
                           {/* Product Form (replace OpenCart logic)  */}
                           <div id="product" className="clearfix">
@@ -1153,7 +636,7 @@ const SolitaireDetails = () => {
                               </div>
 
                               {/* Price */}
-                              <div className="pro-price">
+                              {/* <div className="pro-price">
                                 <ul className="list-unstyled">
                                   <li className="text-decor-bold">
                                     <h2>
@@ -1164,12 +647,12 @@ const SolitaireDetails = () => {
                                           fontWeight: "200",
                                         }}
                                       >
-                                        $999{solitaire.Price}
+                                        ₹ {solitaire.Price}
                                       </span>
                                     </h2>
                                   </li>
                                 </ul>
-                              </div>
+                              </div> */}
 
                               {/* Add to Cart Button */}
                               <div className="qty-flex">
@@ -1237,11 +720,265 @@ const SolitaireDetails = () => {
                     </div>
                   </div>
                 </div>
+                {/* {product Information} */}
+                <div style={{ textAlign: "center" }}>
+                  <h1>Product Information</h1>
+                  <hr />
+                  <div className="information" style={{ marginBottom: "" }}>
+                    <div id="information-information" className="container">
+                      {/* <div className="container" style={{ maxheight: '200px' }}> */}
+                      <div id="content1" className="col">
+                        <div className="row">
+                          <div className="col-8">
+                            <div className="accordion-item">
+                              <h2 className="accordion-header" id="heading0">
+                                <button
+                                  aria-controls="collapse0"
+                                  aria-expanded="false"
+                                  className="accordion-button collapsed"
+                                  data-bs-target="#collapse0"
+                                  data-bs-toggle="collapse"
+                                  type="button"
+                                >
+                                  Overview
+                                </button>
+                              </h2>
+                              <div
+                                aria-labelledby="heading0"
+                                className="accordion-collapse collapse"
+                                data-bs-parent="#faqone"
+                                id="collapse0"
+                              >
+                                <div
+                                  className="accordion-body"
+                                  style={{ padding: "20px" }}
+                                >
+                                  <ul
+                                    style={{
+                                      listStyleType: "none",
+                                      padding: 0,
+                                      margin: 0,
+                                    }}
+                                  >
+                                    <li
+                                      className="d-flex align-items-center mb-2"
+                                      style={{
+                                        justifyContent: "space-between",
+                                      }}
+                                    >
+                                      <span className="text-decor">
+                                        Style No:
+                                      </span>
+                                      <span>{solitaire.SolitaireID}</span>
+                                    </li>
+                                    <li
+                                      className="d-flex align-items-center mb-2"
+                                      style={{
+                                        justifyContent: "space-between",
+                                      }}
+                                    >
+                                      <span className="text-decor">
+                                        Certificate:
+                                      </span>
+                                      <span>{solitaire.Certificate}</span>
+                                    </li>
+                                    <li
+                                      className="d-flex align-items-center mb-2"
+                                      style={{
+                                        justifyContent: "space-between",
+                                      }}
+                                    >
+                                      <span className="text-decor">
+                                        Certificate No:
+                                      </span>
+                                      <span>{solitaire.CertificateNumber}</span>
+                                    </li>
+                                    <li
+                                      className="d-flex align-items-center mb-2"
+                                      style={{
+                                        justifyContent: "space-between",
+                                      }}
+                                    >
+                                      <span className="text-decor">
+                                        Measurements:
+                                      </span>
+                                      <span>{""}</span>
+                                    </li>
+                                  </ul>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="col-8">
+                            <div className="accordion-item">
+                              <h2 className="accordion-header" id="heading1">
+                                <button
+                                  aria-controls="collapse1"
+                                  aria-expanded="false"
+                                  className="accordion-button collapsed"
+                                  data-bs-target="#collapse1"
+                                  data-bs-toggle="collapse"
+                                  type="button"
+                                >
+                                  {solitaire.SolitaireName} Details
+                                </button>
+                              </h2>
+
+                              <div
+                                aria-labelledby="heading1"
+                                className="accordion-collapse collapse"
+                                data-bs-parent="#faqone"
+                                id="collapse1"
+                              >
+                                <div
+                                  className="accordion-body"
+                                  style={{ padding: "20px" }}
+                                >
+                                  <ul
+                                    style={{
+                                      listStyleType: "none",
+                                      padding: 0,
+                                      margin: 0,
+                                    }}
+                                  >
+                                    <li
+                                      className="d-flex align-items-center mb-2"
+                                      style={{
+                                        justifyContent: "space-between",
+                                      }}
+                                    >
+                                      <span className="text-decor">
+                                        Total Weight:
+                                      </span>
+                                      <span>{""}</span>
+                                    </li>
+                                    <li
+                                      className="d-flex align-items-center mb-2"
+                                      style={{
+                                        justifyContent: "space-between",
+                                      }}
+                                    >
+                                      <span className="text-decor">
+                                        Clarity :
+                                      </span>
+                                      <span>{solitaire.PurityName}</span>
+                                    </li>
+                                    <li
+                                      className="d-flex align-items-center mb-2"
+                                      style={{
+                                        justifyContent: "space-between",
+                                      }}
+                                    >
+                                      <span className="text-decor">Color:</span>
+                                      <span>{solitaire.ColorName}</span>
+                                    </li>
+                                    <li
+                                      className="d-flex align-items-center mb-2"
+                                      style={{
+                                        justifyContent: "space-between",
+                                      }}
+                                    >
+                                      <span className="text-decor">Cut:</span>
+                                      <span>{solitaire.CutName}</span>
+                                    </li>
+                                    <li
+                                      className="d-flex align-items-center mb-2"
+                                      style={{
+                                        justifyContent: "space-between",
+                                      }}
+                                    >
+                                      <span className="text-decor">Depth:</span>
+                                      <span>{}</span>
+                                    </li>
+                                    <li
+                                      className="d-flex align-items-center mb-2"
+                                      style={{
+                                        justifyContent: "space-between",
+                                      }}
+                                    >
+                                      <span className="text-decor">Width:</span>
+                                      <span>{}</span>
+                                    </li>
+                                    <li
+                                      className="d-flex align-items-center mb-2"
+                                      style={{
+                                        justifyContent: "space-between",
+                                      }}
+                                    >
+                                      <span className="text-decor">
+                                        Polish:
+                                      </span>
+                                      <span>{""}</span>
+                                    </li>
+                                    <li
+                                      className="d-flex align-items-center mb-2"
+                                      style={{
+                                        justifyContent: "space-between",
+                                      }}
+                                    >
+                                      <span className="text-decor">
+                                        Symmetry:
+                                      </span>
+                                      <span>{solitaire.SymmetryName}</span>
+                                    </li>
+                                    <li
+                                      className="d-flex align-items-center mb-2"
+                                      style={{
+                                        justifyContent: "space-between",
+                                      }}
+                                    >
+                                      <span className="text-decor">
+                                        Fluorescence:
+                                      </span>
+                                      <span>{solitaire.FluorName}</span>
+                                    </li>
+                                    <li
+                                      className="d-flex align-items-center mb-2"
+                                      style={{
+                                        justifyContent: "space-between",
+                                      }}
+                                    >
+                                      <span className="text-decor">Culet:</span>
+                                      <span>{solitaire.Carat}</span>
+                                    </li>
+                                  </ul>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* WhatsApp Image in Bottom Right Corner */}
+                        <div style={{ position: "relative" }}>
+                          <a
+                            href="https://wa.me/your-whatsapp-number"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            <img
+                              src="path-to-your-whatsapp-image.png"
+                              alt="Contact us on WhatsApp"
+                              style={{
+                                position: "absolute",
+                                bottom: "20px", // Adjust the vertical positioning
+                                right: "20px", // Adjust the horizontal positioning
+                                width: "60px", // Adjust image size as needed
+                                zIndex: "1000", // Ensure it stays on top
+                              }}
+                            />
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
                 {/*  PDF and Video Panels  */}
-                <div className="container mt-4">
+                <div className="container ">
                   <div className="row">
                     {/* PDF Panel */}
-                    <div className="col-md-6">
+                    {/* <div className="col-md-6">
                       <div className="card">
                         <div
                           className="card-header"
@@ -1261,7 +998,7 @@ const SolitaireDetails = () => {
                           style={{ marginBottom: "50px" }}
                         ></object>
                       </div>
-                    </div>
+                    </div> */}
 
                     {/* Video Panel */}
                     <div className="col-md-6">
@@ -1318,8 +1055,6 @@ const SolitaireDetails = () => {
 
         {/* ... [Your related products slider JSX - use Products table or adapt from Solitaires] ... */}
       </main>
-
-      {/* ... [Your footer JSX - replace jQuery/inline scripts] ... */}
     </div>
   );
 };

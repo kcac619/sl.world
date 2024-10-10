@@ -59,7 +59,7 @@ const WdSelectedSlider = () => {
       name: "Abigail Moon & Stars Ring",
       brand: "shoes", // Assuming brand is the manufacturer name
       price: "$1.00",
-      link: "https://opencart.workdo.io/diamond/index.php?route=product/product&language=en-gb&product_id=28",
+      link: "diamond/index.php?route=product/product&language=en-gb&product_id=28",
       // ... other product properties
     },
     {
@@ -70,29 +70,7 @@ const WdSelectedSlider = () => {
       name: "Abigail Moon & Stars Ring",
       brand: "shoes", // Assuming brand is the manufacturer name
       price: "$1.00",
-      link: "https://opencart.workdo.io/diamond/index.php?route=product/product&language=en-gb&product_id=28",
-      // ... other product properties
-    },
-    {
-      imageUrl1:
-        "https://img.freepik.com/free-photo/precious-necklace-decorated-with-gemstones-lights-isolated_181624-28431.jpg",
-      imageUrl2:
-        "https://img.freepik.com/free-photo/precious-necklace-decorated-with-gemstones-lights-isolated_181624-28431.jpg",
-      name: "Abigail Moon & Stars Ring",
-      brand: "shoes", // Assuming brand is the manufacturer name
-      price: "$1.00",
-      link: "https://opencart.workdo.io/diamond/index.php?route=product/product&language=en-gb&product_id=28",
-      // ... other product properties
-    },
-    {
-      imageUrl1:
-        "https://img.freepik.com/free-photo/beautiful-luxury-necklace-jewelry-stand-neck_1339-7953.jpg",
-      imageUrl2:
-        "https://img.freepik.com/free-photo/beautiful-luxury-necklace-jewelry-stand-neck_1339-7953.jpg",
-      name: "Abigail Moon & Stars Ring",
-      brand: "shoes", // Assuming brand is the manufacturer name
-      price: "$1.00",
-      link: "https://opencart.workdo.io/diamond/index.php?route=product/product&language=en-gb&product_id=28",
+      link: "diamond/index.php?route=product/product&language=en-gb&product_id=28",
       // ... other product properties
     },
     {
@@ -103,7 +81,7 @@ const WdSelectedSlider = () => {
       name: "Abigail Moon & Stars Ring",
       brand: "shoes", // Assuming brand is the manufacturer name
       price: "$1.00",
-      link: "https://opencart.workdo.io/diamond/index.php?route=product/product&language=en-gb&product_id=28",
+      link: "diamond/index.php?route=product/product&language=en-gb&product_id=28",
       // ... other product properties
     },
     {
@@ -114,7 +92,29 @@ const WdSelectedSlider = () => {
       name: "Abigail Moon & Stars Ring",
       brand: "shoes", // Assuming brand is the manufacturer name
       price: "$1.00",
-      link: "https://opencart.workdo.io/diamond/index.php?route=product/product&language=en-gb&product_id=28",
+      link: "diamond/index.php?route=product/product&language=en-gb&product_id=28",
+      // ... other product properties
+    },
+    {
+      imageUrl1:
+        "https://img.freepik.com/free-photo/precious-necklace-decorated-with-gemstones-lights-isolated_181624-28431.jpg",
+      imageUrl2:
+        "https://img.freepik.com/free-photo/precious-necklace-decorated-with-gemstones-lights-isolated_181624-28431.jpg",
+      name: "Abigail Moon & Stars Ring",
+      brand: "shoes", // Assuming brand is the manufacturer name
+      price: "$1.00",
+      link: "diamond/index.php?route=product/product&language=en-gb&product_id=28",
+      // ... other product properties
+    },
+    {
+      imageUrl1:
+        "https://img.freepik.com/free-photo/beautiful-luxury-necklace-jewelry-stand-neck_1339-7953.jpg",
+      imageUrl2:
+        "https://img.freepik.com/free-photo/beautiful-luxury-necklace-jewelry-stand-neck_1339-7953.jpg",
+      name: "Abigail Moon & Stars Ring",
+      brand: "shoes", // Assuming brand is the manufacturer name
+      price: "$1.00",
+      link: "diamond/index.php?route=product/product&language=en-gb&product_id=28",
       // ... other product properties
     },
   ];

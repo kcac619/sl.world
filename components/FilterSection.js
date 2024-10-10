@@ -1,6 +1,4 @@
-// components/FilterSection.js
-import { Box, Text, Stack, Button } from "@chakra-ui/react";
-import { Center } from "@chakra-ui/react";
+import { Box, Text, Stack, Center } from "@chakra-ui/react";
 
 const FilterSection = ({
   label,
@@ -14,40 +12,55 @@ const FilterSection = ({
         fontWeight="bold"
         mb={{ base: 1, md: 0 }}
         fontFamily="outfit"
-        color="var(--main-color)"
+        color="var(--sub-color)"
       >
         {label}
       </Text>
-      <hr style={{ color: "var(--main-color)", width: "50px" }} />
+      <hr style={{ color: "var(--sub-color)", width: "50px" }} />
       <Stack direction="row" spacing={2} flexWrap="wrap">
         {options.map((option) => (
           <Center
             key={option.value}
-            // variant="outline"
-            fontWeight={200}
-            borderRadius="4px"
-            fontFamily="outfit"
-            boxShadow={"0px 3px 10px rgba(0, 0, 0, 0.15)"}
-            minWidth="40px"
-            fontSize="xs"
-            _hover={{ boxShadow: "inset 0 0 0 1px rgb(242,223,207, 1)" }}
-            cursor="pointer"
-            textAlign={"center"}
-            p={{ base: 1, md: 2 }}
-            mr={2}
-            // pr={10}
+            style={{
+             
+              borderRadius: "4px",
+              fontFamily: "auto",
+              boxShadow: "0px 3px 10px rgba(0, 0, 0, 0.15)",
+              minWidth: "40px",
+              fontSize: "xs",
+              fontWeight:"600",
+              cursor: "pointer",
+              textAlign: "center",
+              padding: "8px",
+              marginRight: "8px",
+              backgroundColor: selectedValues.includes(option.value)
+                ? "#167065"
+                : "#f38585",
+              backdropFilter: "blur(10px)",
+              color: selectedValues.includes(option.value)
+                ? "var(--main-color)"
+                : "#000",
+              backgroundImage: selectedValues.includes(option.value)
+                ? "linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.3) 100%)"
+                : "linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%)",
+              transition: "all 0.3s ease",
+            }}
             onClick={() => onFilterChange(option.value)}
-            // Add active/selected state styles
-            backgroundColor={
-              selectedValues.includes(option.value)
-                ? "var(--secondary-color)"
-                : "var(--sub-color)"
-            }
-            color={
-              selectedValues.includes(option.value)
-                ? "var(--sub-color)"
-                : "var(--main-color)"
-            }
+            // _hover={{
+            //   boxShadow: "inset 0px 0px 2px  #000",
+            //   border: "1px solid var(--sub-color)",
+            // }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.boxShadow = "0 4px 8px rgba(0, 0, 0, 0.2)";
+              e.currentTarget.style.transform = "scale(1.08)";
+              // e.currentTarget.style.border = "1px solid var(--sub-color)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.boxShadow =
+                "0px 3px 10px rgba(0, 0, 0, 0.15)";
+              e.currentTarget.style.transform = "scale(1)";
+              e.currentTarget.style.border = "none";
+            }}
           >
             {option.label}
           </Center>
