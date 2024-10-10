@@ -15,7 +15,6 @@ import {
   removeFromCart,
   updateCartItemQuantity,
 } from "../utils/cartfns";
-import useCartStore from "@/utils/cartStore";
 import { Skeleton } from "@chakra-ui/react";
 import Header from "@/components/Header";
 
@@ -27,8 +26,7 @@ const SolitaireDetails = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [quantity, setQuantity] = useState(1);
-  const cartItems = useCartStore((state) => state.cartItems);
-  const addToCart = useCartStore((state) => state.addToCart);
+  const [cartItems, setCartItems] = useState([]);
   const [cartDropdownOpen, setCartDropdownOpen] = useState(false);
   const [mainImageUrl, setMainImageUrl] = useState(
     solitaire ? solitaire.Image1 : null
@@ -47,14 +45,14 @@ const SolitaireDetails = () => {
     setIsOpen(!isOpen);
   };
 
-  // useEffect(() => {
-  //   const updateCart = () => {
-  //     setCartItems(getCartItemsFromLocalStorage());
-  //   };
+  useEffect(() => {
+    const updateCart = () => {
+      setCartItems(getCartItemsFromLocalStorage());
+    };
 
-  //   window.addEventListener("storage", updateCart);
-  //   return () => window.removeEventListener("storage", updateCart);
-  // }, []);
+    window.addEventListener("storage", updateCart);
+    return () => window.removeEventListener("storage", updateCart);
+  }, []);
   const galleryRef = useRef(null);
   useEffect(() => {
     if (galleryRef.current && solitaire) {
@@ -69,22 +67,24 @@ const SolitaireDetails = () => {
     }
   }, [solitaire]);
 
-  // useEffect(() => {
-  //   // Fetch cart items from localStorage when the component mounts
-  //   setCartItems(getCartItemsFromLocalStorage());
-  // }, []);
+  useEffect(() => {
+    // Fetch cart items from localStorage when the component mounts
+    setCartItems(getCartItemsFromLocalStorage());
+  }, []);
   // Check if this solitaire is already in the cart
   const isInCart = cartItems.some(
     (item) => item.SolitaireID === solitaire?.SolitaireID
   );
 
   const handleAddToCart = () => {
+    console.log("quantity", quantity);
     addToCart({ ...solitaire, quantity });
+    setCartItems(getCartItemsFromLocalStorage());
   };
 
   const handleRemoveFromCart = (solitaireId) => {
     removeFromCart(solitaireId);
-    // setCartItems(getCartItemsFromLocalStorage());
+    setCartItems(getCartItemsFromLocalStorage());
   };
 
   // Toggle the cart dropdown
@@ -129,7 +129,6 @@ const SolitaireDetails = () => {
 
       if (response.status === 200) {
         setSolitaire(response.data.solitaire);
-        console.log("response solitaire", response.data.solitaire);
       } else {
         console.error("Error fetching solitaire details:", response.data.error);
         setError("Error fetching solitaire details.");
@@ -189,7 +188,6 @@ const SolitaireDetails = () => {
 
   // Collect image URLs from solitaire data
   const galleryImages = [
-    solitaire.Image,
     solitaire.Image1,
     solitaire.Image2,
     solitaire.Image3,
@@ -222,7 +220,7 @@ const SolitaireDetails = () => {
                               {mainImageUrl && ( // Only render image when URL is available
                                 <a
                                   href={mainImageUrl}
-                                  title={solitaire.SolitaireName}
+                                  title={solitaire.ProductName}
                                 >
                                   {/* Skeleton Overlay */}
                                   {showSkeleton ? (
@@ -241,8 +239,8 @@ const SolitaireDetails = () => {
                                       id="img_01"
                                       src={mainImageUrl}
                                       data-zoom-image={mainImageUrl}
-                                      title={solitaire.SolitaireName}
-                                      alt={solitaire.SolitaireName}
+                                      title={solitaire.ProductName}
+                                      alt={solitaire.ProductName}
                                       className="img-thumbnail img-fluid"
                                       style={{
                                         width: "100%",
@@ -440,6 +438,47 @@ const SolitaireDetails = () => {
                             style={{ fontFamily: "outfit" }}
                           >
                             <ul className="list-unstyled">
+                              <li className="d-flex align-items-center justify-content-between">
+                                <div className="d-flex align-items-center">
+                                  <span className="text-decor">Style No:</span>{" "}
+                                  {solitaire.SolitaireID}
+                                </div>
+                                {/* Add a "View Details" link on the same line */}
+                                <Link
+                                  href={`/${solitaire.Slug}`}
+                                  className="btn btn-primary read_more"
+                                  style={{ marginLeft: "10px" }} // Optional margin for spacing
+                                >
+                                  View Details
+                                </Link>
+                              </li>
+                              <hr />
+                              <li className="d-flex align-items-center justify-content-between">
+                                <div className="d-flex align-items-center">
+                                  <span className="text-decor">Price:</span> ₹{" "}
+                                  {solitaire.Price}
+                                  <span
+                                    style={{
+                                      borderLeft: "1px solid #ccc",
+                                      height: "20px",
+                                      marginLeft: "10px",
+                                      paddingLeft: "10px",
+                                    }}
+                                  >
+                                    Shipped by: {solitaire.ShippedBy}
+                                  </span>
+                                </div>
+                              </li>
+                              <hr />
+                              <li className="d-flex align-items-center justify-content-between">
+                                <div className="d-flex align-items-center">
+                                  <h1 className="text-decor">
+                                    {solitaire.SolitaireName} Overview
+                                  </h1>
+                                </div>
+                              </li>
+                              <hr />
+
                               <li className="d-flex align-items-center">
                                 {" "}
                                 {/* Use flexbox for alignment */}
@@ -516,6 +555,40 @@ const SolitaireDetails = () => {
                               </li>
                             </ul>
                           </div>
+                          <li className="d-flex align-items-center justify-content-between">
+                            <div className="d-flex align-items-center">
+                              <h1 className="text-decor">
+                                {solitaire.SolitaireName} Certificate
+                              </h1>
+                            </div>
+                          </li>
+                          <hr />
+
+                          <li className="d-flex align-items-center">
+                            {" "}
+                            {/* Use flexbox for alignment */}
+                            {/* Icon column - adjust icon class */}
+                            <div className="d-flex align-items-center">
+                              <span className="text-decor">
+                                Certificate Number:
+                              </span>{" "}
+                              {solitaire.CertificateNumber}
+                            </div>
+                            <Link
+                              // href="/certificate" // Navigate to the /certificate page
+                              href={`/certificate?slug=${solitaire.Slug}`} // Pass slug as a query parameter
+                              className="btn btn-primary read_more"
+                              style={{
+                                padding: "10px 20px",
+                                fontSize: "16px",
+                                width: "auto",
+                                height: "auto",
+                                marginLeft: "25px",
+                              }}
+                            >
+                              View Certificate
+                            </Link>
+                          </li>
 
                           {/* Product Form (replace OpenCart logic)  */}
                           <div id="product" className="clearfix">
@@ -563,7 +636,7 @@ const SolitaireDetails = () => {
                               </div>
 
                               {/* Price */}
-                              <div className="pro-price">
+                              {/* <div className="pro-price">
                                 <ul className="list-unstyled">
                                   <li className="text-decor-bold">
                                     <h2>
@@ -579,7 +652,7 @@ const SolitaireDetails = () => {
                                     </h2>
                                   </li>
                                 </ul>
-                              </div>
+                              </div> */}
 
                               {/* Add to Cart Button */}
                               <div className="qty-flex">
@@ -647,11 +720,265 @@ const SolitaireDetails = () => {
                     </div>
                   </div>
                 </div>
+                {/* {product Information} */}
+                <div style={{ textAlign: "center" }}>
+                  <h1>Product Information</h1>
+                  <hr />
+                  <div className="information" style={{ marginBottom: "" }}>
+                    <div id="information-information" className="container">
+                      {/* <div className="container" style={{ maxheight: '200px' }}> */}
+                      <div id="content1" className="col">
+                        <div className="row">
+                          <div className="col-8">
+                            <div className="accordion-item">
+                              <h2 className="accordion-header" id="heading0">
+                                <button
+                                  aria-controls="collapse0"
+                                  aria-expanded="false"
+                                  className="accordion-button collapsed"
+                                  data-bs-target="#collapse0"
+                                  data-bs-toggle="collapse"
+                                  type="button"
+                                >
+                                  Overview
+                                </button>
+                              </h2>
+                              <div
+                                aria-labelledby="heading0"
+                                className="accordion-collapse collapse"
+                                data-bs-parent="#faqone"
+                                id="collapse0"
+                              >
+                                <div
+                                  className="accordion-body"
+                                  style={{ padding: "20px" }}
+                                >
+                                  <ul
+                                    style={{
+                                      listStyleType: "none",
+                                      padding: 0,
+                                      margin: 0,
+                                    }}
+                                  >
+                                    <li
+                                      className="d-flex align-items-center mb-2"
+                                      style={{
+                                        justifyContent: "space-between",
+                                      }}
+                                    >
+                                      <span className="text-decor">
+                                        Style No:
+                                      </span>
+                                      <span>{solitaire.SolitaireID}</span>
+                                    </li>
+                                    <li
+                                      className="d-flex align-items-center mb-2"
+                                      style={{
+                                        justifyContent: "space-between",
+                                      }}
+                                    >
+                                      <span className="text-decor">
+                                        Certificate:
+                                      </span>
+                                      <span>{solitaire.Certificate}</span>
+                                    </li>
+                                    <li
+                                      className="d-flex align-items-center mb-2"
+                                      style={{
+                                        justifyContent: "space-between",
+                                      }}
+                                    >
+                                      <span className="text-decor">
+                                        Certificate No:
+                                      </span>
+                                      <span>{solitaire.CertificateNumber}</span>
+                                    </li>
+                                    <li
+                                      className="d-flex align-items-center mb-2"
+                                      style={{
+                                        justifyContent: "space-between",
+                                      }}
+                                    >
+                                      <span className="text-decor">
+                                        Measurements:
+                                      </span>
+                                      <span>{""}</span>
+                                    </li>
+                                  </ul>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="col-8">
+                            <div className="accordion-item">
+                              <h2 className="accordion-header" id="heading1">
+                                <button
+                                  aria-controls="collapse1"
+                                  aria-expanded="false"
+                                  className="accordion-button collapsed"
+                                  data-bs-target="#collapse1"
+                                  data-bs-toggle="collapse"
+                                  type="button"
+                                >
+                                  {solitaire.SolitaireName} Details
+                                </button>
+                              </h2>
+
+                              <div
+                                aria-labelledby="heading1"
+                                className="accordion-collapse collapse"
+                                data-bs-parent="#faqone"
+                                id="collapse1"
+                              >
+                                <div
+                                  className="accordion-body"
+                                  style={{ padding: "20px" }}
+                                >
+                                  <ul
+                                    style={{
+                                      listStyleType: "none",
+                                      padding: 0,
+                                      margin: 0,
+                                    }}
+                                  >
+                                    <li
+                                      className="d-flex align-items-center mb-2"
+                                      style={{
+                                        justifyContent: "space-between",
+                                      }}
+                                    >
+                                      <span className="text-decor">
+                                        Total Weight:
+                                      </span>
+                                      <span>{""}</span>
+                                    </li>
+                                    <li
+                                      className="d-flex align-items-center mb-2"
+                                      style={{
+                                        justifyContent: "space-between",
+                                      }}
+                                    >
+                                      <span className="text-decor">
+                                        Clarity :
+                                      </span>
+                                      <span>{solitaire.PurityName}</span>
+                                    </li>
+                                    <li
+                                      className="d-flex align-items-center mb-2"
+                                      style={{
+                                        justifyContent: "space-between",
+                                      }}
+                                    >
+                                      <span className="text-decor">Color:</span>
+                                      <span>{solitaire.ColorName}</span>
+                                    </li>
+                                    <li
+                                      className="d-flex align-items-center mb-2"
+                                      style={{
+                                        justifyContent: "space-between",
+                                      }}
+                                    >
+                                      <span className="text-decor">Cut:</span>
+                                      <span>{solitaire.CutName}</span>
+                                    </li>
+                                    <li
+                                      className="d-flex align-items-center mb-2"
+                                      style={{
+                                        justifyContent: "space-between",
+                                      }}
+                                    >
+                                      <span className="text-decor">Depth:</span>
+                                      <span>{}</span>
+                                    </li>
+                                    <li
+                                      className="d-flex align-items-center mb-2"
+                                      style={{
+                                        justifyContent: "space-between",
+                                      }}
+                                    >
+                                      <span className="text-decor">Width:</span>
+                                      <span>{}</span>
+                                    </li>
+                                    <li
+                                      className="d-flex align-items-center mb-2"
+                                      style={{
+                                        justifyContent: "space-between",
+                                      }}
+                                    >
+                                      <span className="text-decor">
+                                        Polish:
+                                      </span>
+                                      <span>{""}</span>
+                                    </li>
+                                    <li
+                                      className="d-flex align-items-center mb-2"
+                                      style={{
+                                        justifyContent: "space-between",
+                                      }}
+                                    >
+                                      <span className="text-decor">
+                                        Symmetry:
+                                      </span>
+                                      <span>{solitaire.SymmetryName}</span>
+                                    </li>
+                                    <li
+                                      className="d-flex align-items-center mb-2"
+                                      style={{
+                                        justifyContent: "space-between",
+                                      }}
+                                    >
+                                      <span className="text-decor">
+                                        Fluorescence:
+                                      </span>
+                                      <span>{solitaire.FluorName}</span>
+                                    </li>
+                                    <li
+                                      className="d-flex align-items-center mb-2"
+                                      style={{
+                                        justifyContent: "space-between",
+                                      }}
+                                    >
+                                      <span className="text-decor">Culet:</span>
+                                      <span>{solitaire.Carat}</span>
+                                    </li>
+                                  </ul>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* WhatsApp Image in Bottom Right Corner */}
+                        <div style={{ position: "relative" }}>
+                          <a
+                            href="https://wa.me/your-whatsapp-number"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            <img
+                              src="path-to-your-whatsapp-image.png"
+                              alt="Contact us on WhatsApp"
+                              style={{
+                                position: "absolute",
+                                bottom: "20px", // Adjust the vertical positioning
+                                right: "20px", // Adjust the horizontal positioning
+                                width: "60px", // Adjust image size as needed
+                                zIndex: "1000", // Ensure it stays on top
+                              }}
+                            />
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
                 {/*  PDF and Video Panels  */}
-                <div className="container mt-4">
+                <div className="container ">
                   <div className="row">
                     {/* PDF Panel */}
-                    <div className="col-md-6">
+                    {/* <div className="col-md-6">
                       <div className="card">
                         <div
                           className="card-header"
@@ -671,7 +998,7 @@ const SolitaireDetails = () => {
                           style={{ marginBottom: "50px" }}
                         ></object>
                       </div>
-                    </div>
+                    </div> */}
 
                     {/* Video Panel */}
                     <div className="col-md-6">

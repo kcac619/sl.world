@@ -9,7 +9,7 @@ export default async (req, res) => {
       const result = await callStoredProcedure("sp_GetPairBySlug", {
         PairSlug: pairSlug,
       });
-      //   console.log("pair from route", result);
+      //   console.log("pair from route", resul t);
       if (result.status === 1 && result.total > 0) {
         // Extract pair details (first result set)
         const pair = result.data[0];

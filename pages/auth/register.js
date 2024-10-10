@@ -176,6 +176,30 @@ const Register = () => {
                         ></div>
                       </div>
                     </div>
+                    <div className="row mb-3 required">
+                      <label
+                        htmlFor="input-email"
+                        className="col-sm-2 col-form-label"
+                      >
+                        Mobile Number
+                      </label>
+                      <div className="col-sm-10">
+                        <input
+                          type="Number"
+                          name="MobileNo"
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
+                          placeholder="Mobile No"
+                          id="input-email"
+                          className="form-control"
+                          required
+                        />
+                        <div
+                          id="error-mobile"
+                          className="invalid-feedback"
+                        ></div>
+                      </div>
+                    </div>
                   </fieldset>
 
                   {/* Your Password */}

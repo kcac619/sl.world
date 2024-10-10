@@ -93,7 +93,7 @@ const Login = () => {
               
 
               {/* Returning Customer Section */}
-              <div className="col-sm-6">
+              <div className="col-sm-4">
                 <div className="card mb-3">
                   <div className="card-body">
                     {/* Login Form */}
@@ -167,7 +167,7 @@ const Login = () => {
                   </div>
                 </div>
               </div>
-              <div className="col-sm-6">
+              <div className="col-sm-4">
                 <div className="card mb-3">
                   <div className="card-body">
                     <h1>New Customer</h1>
@@ -185,10 +185,7 @@ const Login = () => {
                   </div>
                 </div>
               </div>
-            </div>
-
-            {/* Column Right */}
-            <aside
+              <aside
               id="column-right"
               className="col-lg-3 col-md-3 d-none d-md-block"
             >
@@ -238,6 +235,11 @@ const Login = () => {
                
               </div>
             </aside>
+              
+            </div>
+
+            {/* Column Right */}
+          
           </div>
         </div>
       </div>
