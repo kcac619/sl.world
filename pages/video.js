@@ -4,7 +4,7 @@ import React from "react";
 const Certificate = () => {
   const router = useRouter();
   let { slug } = router.query;
-  slug = "dummy";
+  slug = "login-video";
   return (
     <div className="container">
       <div className="row">
@@ -18,15 +18,15 @@ const Certificate = () => {
                 textAlign: "center",
               }}
             >
-              Product Certificate (PDF)
+              Product Video
             </div>
-            <object
-              className="pdf"
-              data={`/pdf/${slug}.pdf`}
+            <video
+              src={`/vid/${slug}.mp4`}
               width="auto"
+              autoPlay={true}
               height="600"
               style={{ marginBottom: "50px" }}
-            ></object>
+            ></video>
           </div>
         </div>
       </div>

@@ -15,6 +15,7 @@ import {
   removeFromCart,
   updateCartItemQuantity,
 } from "../utils/cartfns";
+import useCartStore from "@/utils/cartStore";
 import { Skeleton } from "@chakra-ui/react";
 import Header from "@/components/Header";
 
@@ -26,7 +27,8 @@ const SolitaireDetails = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [quantity, setQuantity] = useState(1);
-  const [cartItems, setCartItems] = useState([]);
+  const cartItems = useCartStore((state) => state.cartItems);
+  const addToCart = useCartStore((state) => state.addToCart);
   const [cartDropdownOpen, setCartDropdownOpen] = useState(false);
   const [mainImageUrl, setMainImageUrl] = useState(
     solitaire ? solitaire.Image1 : null
@@ -45,14 +47,14 @@ const SolitaireDetails = () => {
     setIsOpen(!isOpen);
   };
 
-  useEffect(() => {
-    const updateCart = () => {
-      setCartItems(getCartItemsFromLocalStorage());
-    };
+  // useEffect(() => {
+  //   const updateCart = () => {
+  //     setCartItems(getCartItemsFromLocalStorage());
+  //   };
 
-    window.addEventListener("storage", updateCart);
-    return () => window.removeEventListener("storage", updateCart);
-  }, []);
+  //   window.addEventListener("storage", updateCart);
+  //   return () => window.removeEventListener("storage", updateCart);
+  // }, []);
   const galleryRef = useRef(null);
   useEffect(() => {
     if (galleryRef.current && solitaire) {
@@ -67,24 +69,22 @@ const SolitaireDetails = () => {
     }
   }, [solitaire]);
 
-  useEffect(() => {
-    // Fetch cart items from localStorage when the component mounts
-    setCartItems(getCartItemsFromLocalStorage());
-  }, []);
+  // useEffect(() => {
+  //   // Fetch cart items from localStorage when the component mounts
+  //   setCartItems(getCartItemsFromLocalStorage());
+  // }, []);
   // Check if this solitaire is already in the cart
   const isInCart = cartItems.some(
     (item) => item.SolitaireID === solitaire?.SolitaireID
   );
 
   const handleAddToCart = () => {
-    console.log("quantity", quantity);
     addToCart({ ...solitaire, quantity });
-    setCartItems(getCartItemsFromLocalStorage());
   };
 
   const handleRemoveFromCart = (solitaireId) => {
     removeFromCart(solitaireId);
-    setCartItems(getCartItemsFromLocalStorage());
+    // setCartItems(getCartItemsFromLocalStorage());
   };
 
   // Toggle the cart dropdown
@@ -129,6 +129,7 @@ const SolitaireDetails = () => {
 
       if (response.status === 200) {
         setSolitaire(response.data.solitaire);
+        console.log("response solitaire", response.data.solitaire);
       } else {
         console.error("Error fetching solitaire details:", response.data.error);
         setError("Error fetching solitaire details.");
@@ -188,6 +189,7 @@ const SolitaireDetails = () => {
 
   // Collect image URLs from solitaire data
   const galleryImages = [
+    solitaire.Image,
     solitaire.Image1,
     solitaire.Image2,
     solitaire.Image3,
@@ -220,7 +222,7 @@ const SolitaireDetails = () => {
                               {mainImageUrl && ( // Only render image when URL is available
                                 <a
                                   href={mainImageUrl}
-                                  title={solitaire.ProductName}
+                                  title={solitaire.SolitaireName}
                                 >
                                   {/* Skeleton Overlay */}
                                   {showSkeleton ? (
@@ -239,8 +241,8 @@ const SolitaireDetails = () => {
                                       id="img_01"
                                       src={mainImageUrl}
                                       data-zoom-image={mainImageUrl}
-                                      title={solitaire.ProductName}
-                                      alt={solitaire.ProductName}
+                                      title={solitaire.SolitaireName}
+                                      alt={solitaire.SolitaireName}
                                       className="img-thumbnail img-fluid"
                                       style={{
                                         width: "100%",

@@ -32,7 +32,7 @@
     "jwt-decode": "^4.0.0",
     "mssql": "^11.0.1",
     "next": "^15.0.0-canary.179",
-    "react": "^18",
+    "react": "^18.3.1",
     "react-accessible-accordion": "^5.0.0",
     "react-dom": "^18",
     "react-icons": "^5.2.1",

@@ -76,6 +76,7 @@ async function callStoredProcedure(
         : undefined,
       OrderID: outputParams.includes("OrderID") ? output.OrderID : undefined,
       data: result.recordset,
+      recordsets: result.recordsets,
       ...output,
     };
   } catch (error) {

@@ -13,13 +13,14 @@ import {
   Button,
   useDisclosure,
 } from "@chakra-ui/react";
-import {
-  getCartItemsFromLocalStorage,
-  addToCart,
-  removeFromCart,
-  updateCartItemQuantity,
-} from "../utils/cartfns";
+// import {
+//   getCartItemsFromLocalStorage,
+//   addToCart,
+//   removeFromCart,
+//   updateCartItemQuantity,
+// } from "../utils/cartfns";
 import { useRouter } from "next/router";
+import useCartStore from "../utils/cartStore";
 
 const Header = () => {
   const router = useRouter();
@@ -31,7 +32,9 @@ const Header = () => {
     onClose: onCartClose,
   } = useDisclosure();
   const [cartDropdownOpen, setCartDropdownOpen] = useState(false); // For dropdown
-  const [cartItems, setCartItems] = useState([]);
+
+  const cartItems = useCartStore((state) => state.cartItems);
+  const removeFromCart = useCartStore((state) => state.removeFromCart);
   const toggleDrawer = () => {
     setIsOpen(!isOpen);
   };
@@ -43,23 +46,22 @@ const Header = () => {
     0
   );
   const total = subTotal;
-  useEffect(() => {
-    const updateCart = () => {
-      setCartItems(getCartItemsFromLocalStorage());
-    };
+  // useEffect(() => {
+  //   const updateCart = () => {
+  //     setCartItems(getCartItemsFromLocalStorage());
+  //   };
 
-    window.addEventListener("storage", updateCart);
-    return () => window.removeEventListener("storage", updateCart);
-  }, []);
+  //   window.addEventListener("storage", updateCart);
+  //   return () => window.removeEventListener("storage", updateCart);
+  // }, []);
 
-  useEffect(() => {
-    setCartItems(getCartItemsFromLocalStorage());
-  }, []);
+  // useEffect(() => {
+  //   setCartItems(getCartItemsFromLocalStorage());
+  // }, []);
 
   // Function to remove item from cart and update state
   const handleRemoveFromCart = (solitaireId) => {
     removeFromCart(solitaireId);
-    setCartItems(getCartItemsFromLocalStorage());
   };
   const handleNavigation1 = (e) => {
     e.preventDefault();
@@ -74,24 +76,24 @@ const Header = () => {
 
   // Calculate subtotal and total
 
-  useEffect(() => {
-    const updateCart = () => {
-      setCartItems(getCartItemsFromLocalStorage());
-    };
+  // useEffect(() => {
+  //   const updateCart = () => {
+  //     setCartItems(getCartItemsFromLocalStorage());
+  //   };
 
-    window.addEventListener("storage", updateCart);
-    return () => window.removeEventListener("storage", updateCart);
-  }, []);
+  //   window.addEventListener("storage", updateCart);
+  //   return () => window.removeEventListener("storage", updateCart);
+  // }, []);
 
-  useEffect(() => {
-    // Fetch cart items from localStorage when the component mounts
-    setCartItems(getCartItemsFromLocalStorage());
-  }, []);
+  // useEffect(() => {
+  //   // Fetch cart items from localStorage when the component mounts
+  //   setCartItems(getCartItemsFromLocalStorage());
+  // }, []);
 
-  const handleAddToCart = (solitaire) => {
-    addToCart({ ...solitaire, quantity: 1 });
-    setCartItems(getCartItemsFromLocalStorage());
-  };
+  // const handleAddToCart = (solitaire) => {
+  //   addToCart({ ...solitaire, quantity: 1 });
+  //   setCartItems(getCartItemsFromLocalStorage());
+  // };
   const handleNavigation = (link) => {
     router.push(`/${link}`);
   };
