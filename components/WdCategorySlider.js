@@ -1,7 +1,7 @@
 // components/WdCategorySlider.js
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Slider from "react-slick";
-
+import axios from "axios";
 // Import Slick CSS (if not already imported in _document.js)
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -48,37 +48,52 @@ const WdCategorySlider = () => {
       },
     ],
   };
+  const [categories, setCategories] = useState([]);
+  const [isLoadingSlider, setIsLoadingSlider] = useState(true);
+  const [allImagesLoaded, setAllImagesLoaded] = useState(false);
+  const [errorSlider, setErrorSlider] = useState(null);
+  useEffect(() => {
+    fetchSliders();
+  }, []);
 
-  const categories = [
-    {
-      imageUrl: "diamond/image/cache/catalog/category/1-270x335.jpg",
-      name: "bracelet",
-      link: "diamond/index.php?route=product/category&path=57",
-      description: "A beautiful collection of bracelets for every occasion.",
-    },
-    {
-      imageUrl: "diamond/image/cache/catalog/category/2-270x335.jpg",
-      name: "necklace",
-      link: "diamond/index.php?route=product/category&path=25",
-      description:
-        "Explore our stunning range of necklaces, from classic to modern.",
-    },
-    {
-      imageUrl: "diamond/image/cache/catalog/category/3-270x335.jpg",
-      name: "ring",
-      link: "diamond/index.php?route=product/category&path=20",
-      description:
-        "Find the perfect ring for any occasion - engagement, wedding, or everyday wear.",
-    },
-    {
-      imageUrl: "diamond/image/cache/catalog/category/4-270x335.jpg",
-      name: "bead",
-      link: "diamond/index.php?route=product/category&path=17",
-      description:
-        "Browse our collection of beautiful beads for jewelry making and crafting.",
-    },
-    // ... add more categories
-  ];
+  const fetchSliders = async () => {
+    setIsLoadingSlider(true);
+    setErrorSlider(null);
+
+    try {
+      const response = await axios.get("/api/categories");
+      if (response.status === 200) {
+        const shuffled = response.data.data
+          .map(a => [Math.random(), a])
+          .sort((a, b) => a[0] - b[0])
+          .map(a => a[1]);
+        setCategories(shuffled.slice(0, 2));
+        preloadImages(shuffled.slice(0, 2));
+      } else {
+        console.error("Error fetching categories:", response.data.error);
+        setErrorSlider("Error fetching categories.");
+      }
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+      setErrorSlider("An error occurred.");
+    } finally {
+      setIsLoadingSlider(false);
+    }
+  };
+  const preloadImages = (categories) => {
+    const imagePromises = categories.map((category) => {
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.src = category.imageUrl;
+        img.onload = resolve;
+        img.onerror = resolve; // Resolve even if there's an error to avoid blocking
+      });
+    });
+
+    Promise.all(imagePromises).then(() => {
+      setAllImagesLoaded(true);
+    });
+  };
 
   return (
     <div className="wdcategory">
@@ -103,7 +118,7 @@ const WdCategorySlider = () => {
               <div className="wd-item-caption">
                 <a href={category.link} className="btn btn-primary">
                   <span>Go to categories</span>
-                  <img alt="stor-bg" src="image/catalog/stor-bg.svg" />
+                  <img alt="stor-bg" src="/image/catalog/stor-bg.svg" />
                 </a>
               </div>
             </h4>

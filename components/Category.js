@@ -143,9 +143,9 @@ const Category = () => {
                       </div>
                       <h4 className="wd-item-title">
                         <div className="catbr">
-                          <p>categories</p>
+                          <p style={{ color: "white" }}>categories</p>
                           <a
-                            style={{ cursor: "pointer" }}
+                            style={{ color: "white", cursor: "pointer" }}
                             onClick={() => handleNavigation(category.link)}
                             key={index}
                           >
