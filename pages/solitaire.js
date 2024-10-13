@@ -4,8 +4,8 @@ import { useRouter } from "next/router";
 // import { useSession, signIn, signOut } from "next-auth/react";
 import { useDispatch, useSelector } from "react-redux";
 import { setFilter, resetFilters } from "../filterSlice";
-import useFilterStore from '../lib/store';
-import { useToast } from '@chakra-ui/react'
+import useFilterStore from "../lib/store";
+import { useToast } from "@chakra-ui/react";
 import {
   Box,
   Flex,
@@ -47,10 +47,10 @@ const Solitaire = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   // const { isOpen, onOpen, onClose } = useDisclosure();
   const router = useRouter();
-  const addFilter = useFilterStore(state => state.addFilter);
+  const addFilter = useFilterStore((state) => state.addFilter);
   // const { data: session } = useSession();
   const dispatch = useDispatch();
-  const toast = useToast()
+  const toast = useToast();
   const filtersFromRedux = useSelector((state) => state.filters); // Get filters from Redux store
   const [shapes, setShapes] = useState([]);
   const [loadingShapes, setLoadingShapes] = useState(true);
@@ -316,7 +316,7 @@ const Solitaire = () => {
     addFilter("solitaire", selectedFilters);
 
     // if (selectedFilters.carat.length === 0) {
-     
+
     //     toast({
     //       title: 'No filters selected.',
     //       description: "Please select at least one filter to search.",
@@ -325,12 +325,13 @@ const Solitaire = () => {
     //       isClosable: true,
     //     })
     //     return
-    //   }   
+    //   }
 
     router.push({
       pathname: "/search", // Or your desired results page
       // query: filters, // Pass filters in the query string
-    });  };
+    });
+  };
 
   const handleNavigation = () => {
     if (session) {
@@ -561,7 +562,6 @@ const Solitaire = () => {
                   label: `${carat.LowLimit} - ${carat.HighLimit}`,
                   value: carat.CaratID,
                 }))}
-                
                 selectedValues={selectedFilters.carat}
                 onFilterChange={(value) => handleFilterChange("carat", value)}
               />
