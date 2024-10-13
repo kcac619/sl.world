@@ -3,6 +3,8 @@ import rbc from "../public/img/R.png";
 import Image from "next/image";
 
 const DiamondShape = ({ shape, isSelected, onClick }) => {
+  
+  const imgurl = "https://woodesy.s3.ap-south-1.amazonaws.com/";
   return (
     <Center
       style={{
@@ -43,7 +45,7 @@ const DiamondShape = ({ shape, isSelected, onClick }) => {
       }}
       onClick={onClick}
     >
-      <Image src={rbc} alt={shape.ShapeName} width={50} height={50} />
+      <Image src={imgurl + shape.ImageKey} alt={shape.ShapeName} width={50} height={50} style={{objectFit: "contain"}} />
       <Text fontSize="xs">{shape.ShapeName}</Text>
     </Center>
   );
