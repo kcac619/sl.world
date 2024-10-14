@@ -125,21 +125,22 @@ const TableSolitaire = ({ options, onFilterChange }) => {
               >
                 <Stack direction="row" spacing={4}>
                   <Link href={`/${solitaire.Slug}`}>
-                    <Button
-                      leftIcon={<MdOpenInNew />}
-                      colorScheme="pink"
-                      variant="solid"
+                    <button
+                      // colorScheme="black"
+                      className="btn btn-primary read_more"
+                      // variant="solid"
                     >
-                      View Details
-                    </Button>
+                      View Details &nbsp;
+                      <MdOpenInNew />
+                    </button>
                   </Link>
-                  <Button
+                  {/* <Button
                     rightIcon={<MdCall />}
                     colorScheme="blue"
                     variant="outline"
                   >
                     Call us
-                  </Button>
+                  </Button> */}
                 </Stack>
               </Td>
             </Tr>

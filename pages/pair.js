@@ -647,7 +647,6 @@ const PairSearch = () => {
           )}
         </div>
       </Box>
-      <Footer />
     </div>
   );
 };
