@@ -47,7 +47,7 @@ h3,
 h4,
 h5,
 h6 {
-  color: #444;
+  color: var(--main-color);
 }
 
 /* Override the bootstrap defaults */
@@ -8775,6 +8775,7 @@ footer .newsletter .container {
     z-index: -1;
     background: radial-gradient(50% 50% at 50% 50%, #16766b 0%, rgba(255, 255, 255, 0) 100%);
   }
+
   .selected_bg::after {
     content: "";
     position: absolute;
@@ -8793,7 +8794,7 @@ footer .newsletter .container {
     height: 950px;
     right: 0;
     top: 235px;
-    background: radial-gradient(50% 50% at 50% 50%,#16766b 0%,rgba(255,255,255,0) 100%);
+    background: radial-gradient(50% 50% at 50% 50%, #16766b 0%, rgba(255, 255, 255, 0) 100%);
   }
 
   .s-panel::before {
@@ -13077,8 +13078,9 @@ footer .newsletter .container {
 
   #common-success #content h1 {
     font-size: 28px;
+  }
 }
-}
+
 /* styles.css */
 .accordion__button {
   background-color: var(--main-color) !important;
@@ -13094,5 +13096,6 @@ footer .newsletter .container {
 }
 
 .accordion__button:hover {
-  background-color: #0056b3; /* Optional: Change color on hover */
+  background-color: #0056b3;
+  /* Optional: Change color on hover */
 }

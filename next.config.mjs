@@ -8,6 +8,9 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  images: {
+    domains: ["woodesy.s3.ap-south-1.amazonaws.com"],
+  },
   env: {
     SQL_USERNAME: process.env.SQL_USERNAME,
     SQL_PASSWORD: process.env.SQL_PASSWORD,
@@ -23,3 +26,5 @@ const nextConfig = {
 };
 
 export default nextConfig;
+
+

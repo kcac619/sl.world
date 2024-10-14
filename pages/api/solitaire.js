@@ -26,25 +26,9 @@ export default async function handler(req, res) {
         const locations = JSON.parse(filterData.Locations);
 
         // Generate signed URLs for shapes
-        const shapesWithUrls = await Promise.all(
-          shapes.map(async (shape) => {
-            let imageUrl = null;
-            if (shape.ImageKey) {
-              try {
-                imageUrl = await getObjectSignedUrl(shape.ImageKey);
-              } catch (error) {
-                console.error(
-                  `Error generating signed URL for shape ${shape.ShapeID}:`,
-                  error
-                );
-              }
-            }
-            return { ...shape, imageUrl };
-          })
-        );
-
+       
         res.status(200).json({
-          shapes: shapesWithUrls,
+          shapes: shapes,
           carats: carats, // Use the parsed arrays
           colors: colors,
           flours: flours,

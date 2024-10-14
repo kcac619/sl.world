@@ -221,31 +221,23 @@ const Footer = () => {
                   <h5>share</h5>
                   <ul className="list-unstyled fsocial list-inline text-left social-media">
                     <li className="youtube">
-                      <a href="#">
-                        <svg>
-                          <use xlinkHref="#youtube" />
-                        </svg>
+                      <a href="#" target="_blank" rel="noopener noreferrer">
+                        <img src="/image/catalog/social/Youtube_white.svg" alt="youtube" />
                       </a>
                     </li>
                     <li className="massage">
-                      <a href="#">
-                        <svg>
-                          <use xlinkHref="#massage" />
-                        </svg>
+                      <a href="#" target="_blank" rel="noopener noreferrer">
+                        <img src="/image/catalog/social/Facebook_white.svg" alt="massage" />
                       </a>
                     </li>
                     <li className="instagram">
-                      <a href="#">
-                        <svg>
-                          <use xlinkHref="#instagram" />
-                        </svg>
+                      <a href="#" target="_blank" rel="noopener noreferrer">
+                        <img src="/image/catalog/social/Instagram_white.svg" alt="instagram" />
                       </a>
                     </li>
                     <li className="twitter">
-                      <a href="#">
-                        <svg>
-                          <use xlinkHref="#twitter" />
-                        </svg>
+                      <a href="#" target="_blank" rel="noopener noreferrer">
+                        <img src="/image/catalog/social/twitter_white.svg" alt="twitter" />
                       </a>
                     </li>
                   </ul>

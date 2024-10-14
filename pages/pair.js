@@ -1,10 +1,9 @@
-// pages/index.js
-import { useState, useEffect, useRef } from "react";
+"use client";
+import axios from "axios";
 import { useRouter } from "next/router";
-// import { useSession, signIn, signOut } from "next-auth/react";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState, useRef } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { setFilter, resetFilters } from "../filterSlice";
-import useFilterStore from '../lib/store';
 import {
   Box,
   Flex,
@@ -12,44 +11,26 @@ import {
   Button,
   SimpleGrid,
   useDisclosure,
-  Drawer,
-  DrawerBody,
-  DrawerOverlay,
-  DrawerContent,
-  DrawerCloseButton,
-  DrawerHeader,
-  useBreakpointValue,
   Text,
   Grid,
   GridItem,
 } from "@chakra-ui/react";
-import { ChevronDownIcon, HamburgerIcon } from "@chakra-ui/icons";
-import Image from "next/image";
-import vercel from "../public/next.svg";
+import { ChevronDownIcon } from "@chakra-ui/icons";
 import Link from "next/link";
-// Components
-import Sidebar from "../components/Sidebar";
+
 import DiamondShape from "../components/DiamondShape";
 import FilterSection from "../components/FilterSection";
-import {
-  getCartItemsFromLocalStorage,
-  addToCart,
-  removeFromCart,
-  updateCartItemQuantity,
-} from "../utils/cartfns";
-import SearchBar from "@/components/SearchBar";
-
-import axios from "axios";
+import { getCartItemsFromLocalStorage, addToCart } from "../utils/cartfns";
+import useCartStore from "../lib/store";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import { Skeleton } from "@chakra-ui/react";
+import PairSearchResults from "@/components/PairSearchResults";
 
-const Pair = () => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  // const { isOpen, onOpen, onClose } = useDisclosure();
+const PairSearch = () => {
   const router = useRouter();
-  const addFilter = useFilterStore(state => state.addFilter);
-  // const { data: session } = useSession();
   const dispatch = useDispatch();
-  const filtersFromRedux = useSelector((state) => state.filters); // Get filters from Redux store
+  const filters = useSelector((state) => state.filters);
   const [shapes, setShapes] = useState([]);
   const [loadingShapes, setLoadingShapes] = useState(true);
   const [carats, setCarats] = useState([]);
@@ -61,99 +42,10 @@ const Pair = () => {
   const [polishs, setPolishs] = useState([]);
   const [symmetries, setSymmetries] = useState([]);
   const [locations, setLocations] = useState([]);
-  const [totalCount, setTotalCount] = useState(0); // New state for total count
-  const [cartItems, setCartItems] = useState([]);
-  const [cartDropdownOpen, setCartDropdownOpen] = useState(false); // For dropdown
-  const [isOpen, setIsOpen] = useState(false);
 
-  const toggleDrawer = () => {
-    setIsOpen(!isOpen);
-  };
-  useEffect(() => {
-    const updateCart = () => {
-      setCartItems(getCartItemsFromLocalStorage());
-    };
-
-    window.addEventListener("storage", updateCart);
-    return () => window.removeEventListener("storage", updateCart);
-  }, []);
-
-  useEffect(() => {
-    setCartItems(getCartItemsFromLocalStorage());
-  }, []);
-
-  // Function to remove item from cart and update state
-  const handleRemoveFromCart = (solitaireId) => {
-    removeFromCart(solitaireId);
-    setCartItems(getCartItemsFromLocalStorage());
-  };
-
-  // Toggle the cart dropdown
-  const toggleCartDropdown = () => {
-    setCartDropdownOpen(!cartDropdownOpen);
-  };
-  // Calculate subtotal and total
-  const subTotal = cartItems.reduce(
-    (total, item) => total + item.Price * item.quantity,
-    0
-  );
-  const total = subTotal;
-
-  const sidebarWidth = useBreakpointValue({
-    base: "60px",
-    md: isSidebarOpen ? "200px" : "60px",
-  });
-
-  const sidebarContainerRef = useRef(null);
-
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
-  };
-
-  useEffect(() => {
-    setSelectedFilters(filtersFromRedux);
-  }, [filtersFromRedux]);
-
-  useEffect(() => {
-    fetchAllFilterData();
-  }, []);
-
-  const fetchAllFilterData = async () => {
-    setLoadingShapes(true);
-    // setError(null); // Reset error state
-
-    try {
-      const response = await axios.get("/api/solitaire");
-      // console.log("fetch all filter data response:", response);
-      if (response.status === 200) {
-        setShapes(response.data.shapes);
-        setCarats(response.data.carats);
-        setColors(response.data.colors);
-        setFlours(response.data.flours);
-        setPurities(response.data.purities);
-        setCuts(response.data.cuts);
-        setLabs(response.data.labs);
-        setPolishs(response.data.polishs);
-        setSymmetries(response.data.symmetries);
-        setLocations(response.data.locations);
-        setTotalCount(response.data.totalCount);
-      } else {
-        console.error("Error fetching filter data:", response.data.error);
-        // setError("Error fetching filter data.");
-      }
-    } catch (error) {
-      console.error("Error fetching all filter data:", error);
-      // setError("An error occurred. Please try again.");
-    } finally {
-      setLoadingShapes(false);
-    }
-  };
-
-  // useEffect(() => {
-  //   if (sidebarWidth !== "60px") {
-  //     onClose();
-  //   }
-  // }, [sidebarWidth, onClose]);
+  const [pairs, setPairs] = useState([]); // State for pair data
+  const [isLoadingPairs, setIsLoadingPairs] = useState(false); // Loading state for pairs
+  const [errorPairs, setErrorPairs] = useState(null); // Error state for pairs
 
   const [selectedFilters, setSelectedFilters] = useState({
     carat: [],
@@ -165,21 +57,64 @@ const Pair = () => {
     lab: [],
     symm: [],
     location: [],
-    shape: [], // Make sure 'shape' is in your selectedFilters
+    shape: [],
   });
 
-  const filters = {
-    // Define the filters object
-    carat: selectedFilters.carat,
-    fluor: selectedFilters.fluor,
-    cut: selectedFilters.cut,
-    polish: selectedFilters.polish,
-    color: selectedFilters.color,
-    clarity: selectedFilters.clarity,
-    lab: selectedFilters.lab,
-    symm: selectedFilters.symm,
-    location: selectedFilters.location,
-    shape: selectedFilters.shape,
+  // Fetch all filter data
+  useEffect(() => {
+    fetchAllFilterData();
+  }, []);
+
+  const fetchAllFilterData = async () => {
+    setLoadingShapes(true);
+
+    try {
+      const response = await axios.get("/api/solitaire");
+      if (response.status === 200) {
+        setShapes(response.data.shapes);
+        setCarats(response.data.carats);
+        setColors(response.data.colors);
+        setFlours(response.data.flours);
+        setPurities(response.data.purities);
+        setCuts(response.data.cuts);
+        setLabs(response.data.labs);
+        setPolishs(response.data.polishs);
+        setSymmetries(response.data.symmetries);
+        setLocations(response.data.locations);
+      } else {
+        console.error("Error fetching filter data:", response.data.error);
+      }
+    } catch (error) {
+      console.error("Error fetching all filter data:", error);
+    } finally {
+      setLoadingShapes(false);
+    }
+  };
+
+  // Fetch pair data based on selected filters
+  useEffect(() => {
+    fetchPairs();
+  }, [selectedFilters]);
+
+  const fetchPairs = async () => {
+    setIsLoadingPairs(true);
+    setErrorPairs(null);
+
+    try {
+      const response = await axios.get("/api/pairs");
+
+      if (response.status === 200) {
+        setPairs(response.data.pairs);
+      } else {
+        console.error("Error fetching pairs:", response.data.error);
+        setErrorPairs("Error fetching pairs.");
+      }
+    } catch (error) {
+      console.error("Error fetching pairs:", error);
+      setErrorPairs("An error occurred.");
+    } finally {
+      setIsLoadingPairs(false);
+    }
   };
 
   const handleFilterChange = (filterType, value) => {
@@ -204,6 +139,10 @@ const Pair = () => {
 
   const handleSearch = () => {
     console.log("Search Filters:", selectedFilters);
+    //move the search results div into focus
+    document
+      .getElementById("search-results")
+      .scrollIntoView({ behavior: "smooth" });
 
     // Helper function to get the name from an ID
     const getNameFromId = (filterType, id) => {
@@ -298,482 +237,419 @@ const Pair = () => {
         values: selectedFilters.shape.map((id) => getNameFromId("shape", id)),
       })
     );
-    // Add your search logic here
-    // if (session) {
-    //   // Authenticated user - redirect to the "search results" page
-    //   router.push({
-    //     pathname: "/search", // Or your desired results page
-    //     query: filters, // Pass filters in the query string
-    //   });
-    // } else {
-    //   // Unauthenticated user - redirect to login with callback URL
-    //   router.push({
-    //     pathname: "/auth/login",
-    //     query: { callbackUrl: router.asPath }, // Pass current URL as callback
-    //   });
-    // }
-    addFilter("pair", selectedFilters);
-    router.push({
-      pathname: "/pair-search", // Or your desired results page
-      // query: filters, // Pass filters in the query string
-    });
+    // Refresh the pair data
+    fetchPairs();
   };
 
-  const handleNavigation = () => {
-    if (session) {
-      if (session.user.role === "admin") {
-        router.push("/admin/dashboard");
-      } else {
-        router.push("/user/dashboard");
-      }
-    } else {
-      router.push("/auth/login");
-    }
+  const isPairMatch = (pair) => {
+    return (
+      isSolitaireMatch(pair, "Solitaire1") ||
+      isSolitaireMatch(pair, "Solitaire2")
+    );
   };
+
+  const isSolitaireMatch = (pair, solitairePrefix) => {
+    // Carat Range Matching
+    const caratMatch = filters.carat.some((caratValue) => {
+      if (typeof caratValue === "number") {
+        return pair[`${solitairePrefix}Carat`] <= caratValue;
+      }
+      return false;
+    });
+
+    // 2. Ignore "undefined" filter values
+    const validFilters = Object.fromEntries(
+      Object.entries(filters).map(([key, values]) => [
+        key,
+        Array.isArray(values) && values.length > 0
+          ? values.filter((value) => value !== undefined)
+          : values, // Keep the original value if not an array or empty
+      ])
+    );
+
+    // 3. Other Filter Matching (using validFilters - Corrected)
+    const shapeMatch =
+      validFilters.shape.length > 0 &&
+      validFilters.shape.includes(pair[`${solitairePrefix}ShapeName`]);
+    const colorMatch =
+      validFilters.color.length > 0 &&
+      validFilters.color.includes(pair[`${solitairePrefix}ColorName`]);
+    const fluorMatch =
+      validFilters.fluor.length > 0 &&
+      validFilters.fluor.includes(pair[`${solitairePrefix}FluorName`]);
+    const clarityMatch =
+      validFilters.clarity.length > 0 &&
+      validFilters.clarity.includes(pair[`${solitairePrefix}PurityName`]);
+    const cutMatch =
+      validFilters.cut.length > 0 &&
+      validFilters.cut.includes(pair[`${solitairePrefix}CutName`]);
+    const labMatch =
+      validFilters.lab.length > 0 &&
+      validFilters.lab.includes(pair[`${solitairePrefix}LabName`]);
+    const polishMatch =
+      validFilters.polish.length > 0 &&
+      validFilters.polish.includes(pair[`${solitairePrefix}PolishName`]);
+    const symmMatch =
+      validFilters.symm.length > 0 &&
+      validFilters.symm.includes(pair[`${solitairePrefix}SymmetryName`]);
+    const locationMatch =
+      validFilters.location.length > 0 &&
+      validFilters.location.includes(pair[`${solitairePrefix}LocationName`]);
+
+    // 4. Return true if any filter matches or carat is in range
+    return (
+      caratMatch ||
+      shapeMatch ||
+      colorMatch ||
+      fluorMatch ||
+      clarityMatch ||
+      cutMatch ||
+      labMatch ||
+      polishMatch ||
+      symmMatch ||
+      locationMatch
+    );
+  };
+
+  const matchedPairs = pairs.filter(isPairMatch);
 
   return (
-    <Box
-      backgroundColor={"transparent"}
-      backgroundImage="url('/img/cream-bg.jpg')"
-    >
-      {/* Header */}
-      {/* <Flex
-        backgroundColor="blue.700"
-        p={2}
-        align="center"
-        position={"-webkit-sticky"}
-        top={0}
-        right={0}
-        ml={{ base: 0, md: isSidebarOpen ? "205px" : "50px" }}
-        transition="margin-left 0.3s, width 0s"
-        overflowX={"hidden"}
-        width={{
-          base: "100%",
-          md: isSidebarOpen ? "calc(100% - 205px)" : "calc(100% - 50px)",
-        }}
-        zIndex={100}
-        // width="100%"
-        justifyContent="space-between" // Add justifyContent
+    <div style={{ width: "100vw" }}>
+      <Box
+        backgroundColor={"transparent"}
+        // backgroundImage="url('/img/cream-bg.jpg')"
       >
-        <Flex align="center">
-          {" "}
-          {/* Wrap HamburgerIcon and Image in a Flex */}
-      {/* <HamburgerIcon
-            display={{ base: "block", md: "none" }}
-            onClick={onOpen}
-            color={"white"}
-          />
-          <Image
-            src={vercel}
-            alt="Logo"
-            width={100}
-            height={50}
-            style={{ marginLeft: "20px", marginRight: "20px" }}
-          />
-          <SearchBar />
-        </Flex> */}
-      {/* {session ? (
-          <Button colorScheme={"blackAlpha"} onClick={() => signOut()}>
-            Logout
-          </Button>
-        ) : (
-          <Button
-            // mr={50}
-            colorScheme="whiteAlpha"
-            onClick={() => {
-              dispatch(
-                setFilter({
-                  filterType: "carat",
-                  values: selectedFilters.carat,
-                })
-              );
-              dispatch(
-                setFilter({
-                  filterType: "fluor",
-                  values: selectedFilters.fluor,
-                })
-              );
-              dispatch(
-                setFilter({
-                  filterType: "length",
-                  values: selectedFilters.length,
-                })
-              );
-              dispatch(
-                setFilter({
-                  filterType: "polish",
-                  values: selectedFilters.polish,
-                })
-              );
-              dispatch(
-                setFilter({
-                  filterType: "color",
-                  values: selectedFilters.color,
-                })
-              );
-              dispatch(
-                setFilter({
-                  filterType: "clarity",
-                  values: selectedFilters.clarity,
-                })
-              );
-              dispatch(
-                setFilter({
-                  filterType: "lab",
-                  values: selectedFilters.lab,
-                })
-              );
-              dispatch(
-                setFilter({
-                  filterType: "symm",
-                  values: selectedFilters.symm,
-                })
-              );
-              dispatch(
-                setFilter({
-                  filterType: "location",
-                  values: selectedFilters.location,
-                })
-              );
-              dispatch(
-                setFilter({
-                  filterType: "shape",
-                  values: selectedFilters.shape,
-                })
-              );
-
-              router.push({
-                pathname: "/auth/login",
-                query: { callbackUrl: router.asPath },
-              });
-            }}
+        <Flex mt={0} backgroundColor={"var(--main-color)"} opacity={0.9}>
+          <Box
+            flex="1"
+            m={5}
+            p={4}
+            borderRadius={"20px"}
+            backgroundColor={"transparent"}
+            overflowX="hidden"
+            transition="margin-left 0.3s"
+            fontFamily="outfit"
+            backgroundSize="cover"
+            backgroundPosition="center"
+            backgroundRepeat="no-repeat"
           >
-            Login
-          </Button>
-        )}
-      </Flex>  */}
+            {/* Diamond Shape Section */}
+            <Box mb={6}>
+              <Heading as="h2" size="md" color="var(--black)" mb={5}>
+                Shape
+              </Heading>
+              {loadingShapes ? (
+                <Text color="var(--main-color)">Loading shapes...</Text>
+              ) : (
+                <SimpleGrid columns={{ base: 4, md: 8, lg: 10 }} spacing={6}>
+                  {shapes ? (
+                    shapes.map((shape) => (
+                      <DiamondShape
+                        key={shape.ShapeID}
+                        shape={shape}
+                        isSelected={selectedFilters.shape.includes(
+                          shape.ShapeID
+                        )}
+                        onClick={() => {
+                          handleFilterChange("shape", shape.ShapeID);
+                        }}
+                      />
+                    ))
+                  ) : (
+                    <span color="var(--main-color)">error fetching shapes</span>
+                  )}
+                </SimpleGrid>
+              )}
+            </Box>
 
-      <Flex
-        ref={sidebarContainerRef}
-        mt={0}
-        backgroundColor={"var(--main-color)"}
-        opacity={0.9}
-      >
-        {/* Drawer (Mobile) */}
-        {/* <Drawer
-          isOpen={isOpen}
-          placement="left"
-          onClose={onClose}
-          size="xs"
-          // display={{ base: "block", md: "none", lg: "none" }}
-        >
-          <DrawerOverlay />
-          <DrawerContent>
-            <DrawerCloseButton />
-            <DrawerHeader>Menu</DrawerHeader>
-            <DrawerBody>
-              <Sidebar isOpen={isOpen} onClose={onClose} />
-            </DrawerBody>
-          </DrawerContent>
-        </Drawer> */}
+            <hr style={{ color: "var(--sub-color)", margin: "2px" }} />
+            <hr
+              style={{
+                color: "var(--sub-color)",
+                margin: "2px",
+                marginBottom: "16px",
+              }}
+            />
 
-        {/* Sidebar (Desktop) */}
-        {/* <Sidebar
-          isOpen={isSidebarOpen}
-          onClose={toggleSidebar}
-          onOpen={onOpen}
-          top={0}
-          width={sidebarWidth}
-          display={{ base: "none", md: "block" }}
-        /> */}
+            {/* Filters Section - Using Grid for two-column layout */}
+            <Grid templateColumns={{ base: "1fr", md: "1fr 1fr" }} gap={6}>
+              {/* Column 1 */}
+              <GridItem>
+                <FilterSection
+                  label="Carat"
+                  options={carats.map((carat) => ({
+                    label: `${carat.LowLimit} - ${carat.HighLimit}`,
+                    value: carat.CaratID,
+                  }))}
+                  selectedValues={selectedFilters.carat}
+                  onFilterChange={(value) => handleFilterChange("carat", value)}
+                />
+                <FilterSection
+                  label="Fluor."
+                  options={flours.map((fluor) => ({
+                    label: fluor.FluorName,
+                    value: fluor.FluorID,
+                  }))}
+                  selectedValues={selectedFilters.fluor}
+                  onFilterChange={(value) => handleFilterChange("fluor", value)}
+                />
+                <FilterSection
+                  label="Cut"
+                  options={cuts.map((cut) => ({
+                    label: cut.CutName,
+                    value: cut.CutID,
+                  }))}
+                  selectedValues={selectedFilters.cut}
+                  onFilterChange={(value) => handleFilterChange("cut", value)}
+                />
+                <FilterSection
+                  label="Polish"
+                  options={polishs.map((polish) => ({
+                    // Assuming 'polishs' is the correct state variable
+                    label: polish.PolishName,
+                    value: polish.PolishID,
+                  }))}
+                  selectedValues={selectedFilters.polish}
+                  onFilterChange={(value) =>
+                    handleFilterChange("polish", value)
+                  }
+                />
+              </GridItem>
 
-        {/* Main Content Area */}
-        <Box
-          flex="1"
-          m={5}
-          p={4}
-          borderRadius={"20px"}
-          backgroundColor={"transparent"}
-          ml={{ base: 0, md: isSidebarOpen ? "205px" : "50px" }}
-          overflowX="hidden"
-          transition="margin-left 0.3s"
-          fontFamily="outfit"
-          backgroundSize="cover"
-          backgroundPosition="center"
-          backgroundRepeat="no-repeat"
-        >
-          {/* Diamond Shape Section */}
-          <Box mb={6}>
-            <Heading as="h2" size="md" color="var(--black)" mb={5}>
-              Shape
-            </Heading>
-            {loadingShapes ? (
-              <Text color="var(--main-color)">Loading shapes...</Text>
-            ) : (
-              <SimpleGrid columns={{ base: 4, md: 8, lg: 10 }} spacing={6}>
-                {shapes ? (
-                  shapes.map((shape) => (
-                    <DiamondShape
-                      key={shape.ShapeID}
-                      shape={shape}
-                      isSelected={selectedFilters.shape.includes(shape.ShapeID)}
-                      onClick={() => {
-                        handleFilterChange("shape", shape.ShapeID); // Use handleFilterChange
-                      }}
-                    />
-                  ))
-                ) : (
-                  <span color="var(--main-color)">error fetching shapes</span>
-                )}
-              </SimpleGrid>
-            )}
+              {/* Column 2 */}
+              <GridItem>
+                <Box mb={4}>
+                  <Text
+                    fontWeight="bold"
+                    mb={2}
+                    // fontFamily="Playfair Display"
+                    color="var(--sub-color)"
+                  >
+                    Color
+                  </Text>
+                  <FilterSection
+                    options={colors.map((color) => ({
+                      label: color.ColorName,
+                      value: color.ColorID,
+                    }))}
+                    selectedValues={selectedFilters.color}
+                    onFilterChange={(value) =>
+                      handleFilterChange("color", value)
+                    }
+                  />
+                </Box>
+                <Box mb={4}>
+                  <Text
+                    fontWeight="bold"
+                    mb={2}
+                    // fontFamily="Playfair Display"
+                    color="var(--sub-color)"
+                  >
+                    Purity
+                  </Text>
+                  <FilterSection
+                    options={purities.map((purity) => ({
+                      label: purity.PurityName,
+                      value: purity.PurityID,
+                    }))}
+                    selectedValues={selectedFilters.clarity}
+                    onFilterChange={(value) =>
+                      handleFilterChange("clarity", value)
+                    }
+                  />
+                </Box>
+                <Box mb={4}>
+                  <Text
+                    fontWeight="bold"
+                    mb={2}
+                    // fontFamily="Playfair Display"
+                    color="var(--sub-color)"
+                  >
+                    Lab
+                  </Text>
+                  <FilterSection
+                    options={labs.map((lab) => ({
+                      label: lab.LabName,
+                      value: lab.LabID,
+                    }))}
+                    selectedValues={selectedFilters.lab}
+                    onFilterChange={(value) => handleFilterChange("lab", value)}
+                  />
+                </Box>
+                <Box mb={4}>
+                  <Text
+                    fontWeight="bold"
+                    mb={2}
+                    // fontFamily="Playfair Display"
+                    color="var(--sub-color)"
+                  >
+                    Symmerty
+                  </Text>
+                  <FilterSection
+                    options={symmetries.map((symm) => ({
+                      label: symm.SymmetryName,
+                      value: symm.SymmetryID,
+                    }))}
+                    selectedValues={selectedFilters.symm}
+                    onFilterChange={(value) =>
+                      handleFilterChange("symm", value)
+                    }
+                  />
+                </Box>
+                <Box mb={4}>
+                  <Text
+                    fontWeight="bold"
+                    mb={2}
+                    // fontFamily="Playfair Display"
+                    color="var(--sub-color)"
+                  >
+                    Location
+                  </Text>
+                  <FilterSection
+                    options={locations.map((location) => ({
+                      label: location.LocationName,
+                      value: location.LocationID,
+                    }))}
+                    selectedValues={selectedFilters.location}
+                    onFilterChange={(value) =>
+                      handleFilterChange("location", value)
+                    }
+                  />
+                </Box>
+              </GridItem>
+            </Grid>
+
+            <Button
+              backgroundColor="black"
+              color="var(--main-color)"
+              size="sm"
+              mt={4}
+              mb={6}
+              borderRadius="20px"
+              onClick={handleSearch}
+              sx={{
+                "&:hover": {
+                  backgroundColor: "var(--main-color)",
+                  color: "black",
+                  border: "1px solid var(--sub-color)",
+                },
+              }}
+            >
+              Show Advance Filters
+            </Button>
+
+            {/* Search Buttons */}
+            <Flex mt={6} justify="flex-end">
+              <Button
+                backgroundColor="black"
+                color="var(--main-color)"
+                mr={2}
+                borderRadius="20px"
+                sx={{
+                  "&:hover": {
+                    backgroundColor: "var(--main-color)",
+                    color: "black",
+                    border: "1px solid var(--sub-color)",
+                  },
+                }}
+              >
+                Cancel
+              </Button>
+              <Button
+                backgroundColor="black"
+                color="var(--main-color)"
+                mr={2}
+                borderRadius="20px"
+                onClick={() => {
+                  dispatch(resetFilters()); // Reset filters in Redux store
+                }}
+                sx={{
+                  "&:hover": {
+                    backgroundColor: "var(--main-color)",
+                    color: "black",
+                    border: "1px solid var(--sub-color)",
+                  },
+                }}
+              >
+                Reset
+              </Button>
+              <Button
+                backgroundColor="black"
+                color="var(--main-color)"
+                borderRadius="20px"
+                onClick={() => {
+                  handleSearch();
+                }}
+                sx={{
+                  "&:hover": {
+                    backgroundColor: "var(--main-color)",
+                    color: "black",
+                    border: "1px solid var(--sub-color)",
+                  },
+                }}
+              >
+                Search
+              </Button>
+            </Flex>
           </Box>
+        </Flex>
 
-          <hr style={{ color: "var(--sub-color)", margin: "2px" }} />
-          <hr
+        {/* Pair Search Results Section */}
+        <div
+          id="search-results"
+          className="container-fluid pt-5"
+          style={{
+            minHeight: "80vh",
+            maxWidth: "90%",
+            display: "flex",
+            flexDirection: "column",
+            backgroundColor: "var(--sub-color)",
+            justifyContent: "top",
+            padding: "0px",
+          }}
+        >
+          <h1
+            className="mb-4 "
             style={{
-              color: "var(--sub-color)",
-              margin: "2px",
-              marginBottom: "16px",
-            }}
-          />
-
-          {/* Filters Section - Using Grid for two-column layout */}
-          <Grid templateColumns={{ base: "1fr", md: "1fr 1fr" }} gap={6}>
-            {/* Column 1 */}
-            <GridItem>
-              <FilterSection
-                label="Carat"
-                options={carats.map((carat) => ({
-                  label: `${carat.LowLimit} - ${carat.HighLimit}`,
-                  value: carat.CaratID,
-                }))}
-                
-                selectedValues={selectedFilters.carat}
-                onFilterChange={(value) => handleFilterChange("carat", value)}
-              />
-              <FilterSection
-                label="Fluor."
-                options={flours.map((fluor) => ({
-                  label: fluor.FluorName,
-                  value: fluor.FluorID,
-                }))}
-                selectedValues={selectedFilters.fluor}
-                onFilterChange={(value) => handleFilterChange("fluor", value)}
-              />
-              <FilterSection
-                label="Cut"
-                options={cuts.map((cut) => ({
-                  label: cut.CutName,
-                  value: cut.CutID,
-                }))}
-                selectedValues={selectedFilters.cut}
-                onFilterChange={(value) => handleFilterChange("cut", value)}
-              />
-              <FilterSection
-                label="Polish"
-                options={polishs.map((polish) => ({
-                  // Assuming 'polishs' is the correct state variable
-                  label: polish.PolishName,
-                  value: polish.PolishID,
-                }))}
-                selectedValues={selectedFilters.polish}
-                onFilterChange={(value) => handleFilterChange("polish", value)}
-              />
-            </GridItem>
-
-            {/* Column 2 */}
-            <GridItem>
-              <Box mb={4}>
-                <Text
-                  fontWeight="bold"
-                  mb={2}
-                  // fontFamily="Playfair Display"
-                  color="var(--sub-color)"
-                >
-                  Color
-                </Text>
-                <FilterSection
-                  options={colors.map((color) => ({
-                    label: color.ColorName,
-                    value: color.ColorID,
-                  }))}
-                  selectedValues={selectedFilters.color}
-                  onFilterChange={(value) => handleFilterChange("color", value)}
-                />
-              </Box>
-              <Box mb={4}>
-                <Text
-                  fontWeight="bold"
-                  mb={2}
-                  // fontFamily="Playfair Display"
-                  color="var(--sub-color)"
-                >
-                  Purity
-                </Text>
-                <FilterSection
-                  options={purities.map((purity) => ({
-                    label: purity.PurityName,
-                    value: purity.PurityID,
-                  }))}
-                  selectedValues={selectedFilters.clarity}
-                  onFilterChange={(value) =>
-                    handleFilterChange("clarity", value)
-                  }
-                />
-              </Box>
-              <Box mb={4}>
-                <Text
-                  fontWeight="bold"
-                  mb={2}
-                  // fontFamily="Playfair Display"
-                  color="var(--sub-color)"
-                >
-                  Lab
-                </Text>
-                <FilterSection
-                  options={labs.map((lab) => ({
-                    label: lab.LabName,
-                    value: lab.LabID,
-                  }))}
-                  selectedValues={selectedFilters.lab}
-                  onFilterChange={(value) => handleFilterChange("lab", value)}
-                />
-              </Box>
-              <Box mb={4}>
-                <Text
-                  fontWeight="bold"
-                  mb={2}
-                  // fontFamily="Playfair Display"
-                  color="var(--sub-color)"
-                >
-                  Symmerty
-                </Text>
-                <FilterSection
-                  options={symmetries.map((symm) => ({
-                    label: symm.SymmetryName,
-                    value: symm.SymmetryID,
-                  }))}
-                  selectedValues={selectedFilters.symm}
-                  onFilterChange={(value) => handleFilterChange("symm", value)}
-                />
-              </Box>
-              <Box mb={4}>
-                <Text
-                  fontWeight="bold"
-                  mb={2}
-                  // fontFamily="Playfair Display"
-                  color="var(--sub-color)"
-                >
-                  Location
-                </Text>
-                <FilterSection
-                  options={locations.map((location) => ({
-                    label: location.LocationName,
-                    value: location.LocationID,
-                  }))}
-                  selectedValues={selectedFilters.location}
-                  onFilterChange={(value) =>
-                    handleFilterChange("location", value)
-                  }
-                />
-              </Box>
-            </GridItem>
-          </Grid>
-
-          <Button
-            backgroundColor="black"
-            color="var(--main-color)"
-            size="sm"
-            mt={4}
-            mb={6}
-            borderRadius="20px"
-            onClick={handleSearch}
-            sx={{
-              "&:hover": {
-                backgroundColor: "var(--main-color)",
-                color: "black",
-                border: "1px solid var(--sub-color)",
-              },
+              textAlign: "center",
+              color: "var(--main-color) !important",
             }}
           >
-            Show Advance Filters
-          </Button>
-
-          {/* Search Buttons */}
-          <Flex mt={6} justify="flex-end">
-            <Button
-              backgroundColor="black"
-              color="var(--main-color)"
-              mr={2}
-              borderRadius="20px"
-              sx={{
-                "&:hover": {
-                  backgroundColor: "var(--main-color)",
-                  color: "black",
-                  border: "1px solid var(--sub-color)",
-                },
-              }}
-            >
-              Cancel
-            </Button>
-            <Button
-              backgroundColor="black"
-              color="var(--main-color)"
-              mr={2}
-              borderRadius="20px"
-              onClick={() => {
-                dispatch(resetFilters()); // Reset filters in Redux store
-              }}
-              sx={{
-                "&:hover": {
-                  backgroundColor: "var(--main-color)",
-                  color: "black",
-                  border: "1px solid var(--sub-color)",
-                },
-              }}
-            >
-              Reset
-            </Button>
-            <Button
-              backgroundColor="black"
-              color="var(--main-color)"
-              borderRadius="20px"
-              onClick={() => {
-                handleSearch();
-              }}
-              sx={{
-                "&:hover": {
-                  backgroundColor: "var(--main-color)",
-                  color: "black",
-                  border: "1px solid var(--sub-color)",
-                },
-              }}
-            >
-              Search
-            </Button>
-            {/* <Button
-              backgroundColor="black"
-              color="var(--main-color)"
-              ml={2}
-              borderRadius="20px"
-              rightIcon={<ChevronDownIcon />}
-              onClick={handleSearch} // Redirect on "Save Search"
-              sx={{
-                "&:hover": {
-                  backgroundColor: "var(--main-color)",
-                  color: "black",
-                  border: "1px solid var(--sub-color)",
-                },
-              }}
-            >
-              Save Search
-            </Button> */}
-          </Flex>
-        </Box>
-      </Flex>
-    </Box>
+            Pair Search Results
+          </h1>
+          {/* Display PairSearchResults */}
+          {/* isLoadingPairs || errorPairs  ? (
+            <div className="row">
+              {[...Array(5)].map((_, index) => (
+                <div key={index} className="col-md-4 mb-4">
+                  <div className="product-block cless">
+                    <div className="blogshadow blog-thumbnail">
+                      <div className="card-body">
+                        <Skeleton height="150px" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ): ( */}
+          <PairSearchResults
+            pairs={matchedPairs}
+            isLoading={isLoadingPairs}
+            error={errorPairs}
+          />
+          {/* // ) */}
+          {/* Display "No Matching Pairs" message if needed */}
+          {!isLoadingPairs && pairs.length === 0 && (
+            <div className="col-md-12">
+              <p className="alert alert-warning">NO MATCHING PAIRS FOUND</p>
+            </div>
+          )}
+        </div>
+      </Box>
+      <Footer />
+    </div>
   );
 };
 
-export default Pair;
+export default PairSearch;
