@@ -34,6 +34,17 @@ const Header = () => {
   const [cartDropdownOpen, setCartDropdownOpen] = useState(false); // For dropdown
   const [isSearchOpen, setIsSearchOpen] = useState(false); // New state for search box
 
+  const [searchTerm, setSearchTerm] = useState("");
+  const handleSearchInputChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const handleSearchSubmit = async (event) => {
+    event.preventDefault();
+    // Redirect to the product-search page with the search term
+    router.push(`/product-search?searchTerm=${searchTerm}`);
+  };
+
   const toggleSearch = () => {
     setIsSearchOpen(!isSearchOpen);
   };
@@ -155,46 +166,62 @@ const Header = () => {
           <div className="container" style={{ height: "50px" }}>
             <div className="row" style={{ height: "50px" }}>
               <div className="col-md-12">
-                <div className="input-group">
-                  <input
-                    type="text"
-                    name="search"
-                    placeholder="Search Product..."
-                    className="form-control border-0"
-                    style={{
-                      backgroundColor: "var(--sub-color)",
-                      borderRadius: "25px 0 0 25px",
-                      height: "100%",
-                    }}
-                  />
-                  <div
-                    className="input-group-append"
-                    style={{ height: "110%" }}
+                <div
+                  className="input-group"
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    height: "100%",
+                  }}
+                >
+                  <form
+                    onSubmit={handleSearchSubmit}
+                    style={{ display: "flex", width: "100%", height: "100%" }}
                   >
-                    <button
-                      className="btn  border-0"
-                      type="button"
+                    <input
+                      type="text"
+                      name="search"
+                      placeholder="Search Product..."
+                      className="form-control border-0"
+                      value={searchTerm}
+                      onChange={handleSearchInputChange}
                       style={{
-                        borderRadius: "0 25px 25px 0",
+                        backgroundColor: "var(--sub-color)",
+                        borderRadius: "25px 0 0 25px",
                         height: "100%",
-                        backgroundColor: "var(--main-color)",
+                        flex: "1",
+                        marginTop: "10px",
                       }}
+                    />
+                    <div
+                      className="input-group-append"
+                      style={{ display: "flex", height: "100%" }}
                     >
-                      <i className="fa fa-search"></i>
-                    </button>
-                    <button
-                      onClick={toggleSearch}
-                      className="btn  border-0"
-                      type="button"
-                      style={{
-                        borderRadius: "0 25px 25px 0",
-                        height: "100%",
-                        backgroundColor: "var(--main-color)",
-                      }}
-                    >
-                      <i className="fa fa-times"></i>
-                    </button>
-                  </div>
+                      <button
+                        className="btn border-0"
+                        type="submit"
+                        style={{
+                          borderRadius: "0 25px 25px 0",
+                          height: "100%",
+                          backgroundColor: "var(--main-color)",
+                        }}
+                      >
+                        <i className="fa fa-search"></i>
+                      </button>
+                      <button
+                        onClick={toggleSearch}
+                        className="btn border-0"
+                        type="button"
+                        style={{
+                          borderRadius: "0 25px 25px 0",
+                          height: "100%",
+                          backgroundColor: "var(--main-color)",
+                        }}
+                      >
+                        <i className="fa fa-times"></i>
+                      </button>
+                    </div>
+                  </form>
                 </div>
               </div>
             </div>
