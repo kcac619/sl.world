@@ -134,7 +134,7 @@ const Index = () => {
                     <div className="row">
                       <div className="col-md-4 service">
                         <div className="home-sup">
-                          <img alt="icon" src="image/catalog/support.svg" />
+                          <img alt="icon" src="/image/catalog/support.svg" />
                           <div className="home-sup-ctn">
                             <h4>Finished Products</h4>
                             <p>products and gift wrapping</p>
@@ -143,7 +143,7 @@ const Index = () => {
                       </div>
                       <div className="col-md-4 service">
                         <div className="home-sup">
-                          <img alt="icon" src="image/catalog/pay.svg" />
+                          <img alt="icon" src="/image/catalog/pay.svg" />
                           <div className="home-sup-ctn">
                             <h4>Large And Frequent</h4>
                             <p>Promotions With Numerous Discounts</p>
@@ -152,7 +152,7 @@ const Index = () => {
                       </div>
                       <div className="col-md-4 service">
                         <div className="home-sup">
-                          <img alt="icon" src="image/catalog/ship.svg" />
+                          <img alt="icon" src="/image/catalog/ship.svg" />
                           <div className="home-sup-ctn">
                             <h4>Free Shipping</h4>
                             <p>On Any Order From $ 150</p>
@@ -187,7 +187,7 @@ const Index = () => {
                             check more product
                             <img
                               alt="stor-bg"
-                              src="image/catalog/stor-bg.svg"
+                              src="/image/catalog/stor-bg.svg"
                             />
                           </span>
                         </a>
@@ -197,7 +197,7 @@ const Index = () => {
                       <div className="beffect">
                         <a href="#">
                           <img
-                            src="diamond/image/cache/catalog/left-banner/1-580x465.png"
+                            src="https://woodesy.s3.ap-south-1.amazonaws.com/banner1.jpg"
                             alt="left-banner"
                             className="mx-auto img-fluid"
                           />
@@ -243,7 +243,7 @@ const Index = () => {
                               check more product
                               <img
                                 alt="stor-bg"
-                                src="image/catalog/stor-bg.svg"
+                                src="/image/catalog/stor-bg.svg"
                               />
                             </span>
                           </a>
@@ -254,7 +254,7 @@ const Index = () => {
                       <div className="beffect">
                         <a href="#">
                           <img
-                            src="diamond/image/cache/catalog/specialbanner/1-580x465.png"
+                            src="https://woodesy.s3.ap-south-1.amazonaws.com/banner2.png"
                             alt="special-banner"
                             className="mx-auto img-fluid"
                           />
@@ -308,7 +308,7 @@ const Index = () => {
                             check more product
                             <img
                               alt="stor-bg"
-                              src="image/catalog/stor-bg.svg"
+                              src="/image/catalog/stor-bg.svg"
                             />
                           </span>
                         </a>
